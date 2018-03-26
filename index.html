@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="UTF-8">
+      <title>钱包</title>
+    </head>
+    <body>
+      <div id="app">
+        <main-layout>
+          <component :is="currentView" :globalData="globalData">
+          </component>
+        </main-layout>
+      </div>
+      <script src="./dist/build.js"></script>
+    </body>
+  </html>
