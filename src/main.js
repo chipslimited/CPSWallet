@@ -54,6 +54,13 @@ const app = new Vue({
         };
         _this.globalData.wallet_list.push(wallet);
       }
+      else{
+          wallet = {
+              address: address,
+              keystore: null
+          };
+          _this.globalData.wallet_list.push(wallet);
+      }
     });
 
     dbUtils.set("address_list", address_list.join(" "));

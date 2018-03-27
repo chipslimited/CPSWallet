@@ -5,6 +5,9 @@ const dbUtils = {
     set: function(key, value){
         localStorage.setItem(key, value);
         return value;
+    },
+    remove: function (key) {
+        localStorage.removeItem(key);
     }
 }
 export default dbUtils;

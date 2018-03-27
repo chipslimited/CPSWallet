@@ -448,7 +448,7 @@ export default {
 
                       web3.eth.defaultAccount = fromAddr;
 
-                      gas = 50000;
+                      gas = 100000;
 
                       var data = contract.transfer.getData(
                           toAddr,

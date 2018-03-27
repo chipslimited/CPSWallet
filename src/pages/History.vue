@@ -12,6 +12,7 @@
       </i-input>
       <Button class="button filter-button" @click="search">搜索</Button>
       <Button class="button filter-button" @click="filter(keyword)" :disabled="filter_list.length>0?false:true">在结果中搜索</Button>
+      <button class="button filter-button" @click="openExternal(explorer_address_link)" v-if="explorer_address_link.length > 0">浏览器</button>
     </div>
     <div class="content-wrapper">
       <ul class="transaction-list">
@@ -39,6 +40,7 @@ import _ from 'lodash';
 import BigNumber from 'bignumber.js';
 import MainLayout from "../layouts/MainLayout.vue";
 import web3Utils from "../web3Utils";
+const {shell} = require('electron');
 
 export default {
   data() {
@@ -48,6 +50,7 @@ export default {
       current_wallet: {},
       keyword: "",
       address: "",
+      explorer_address_link:"",
       transaction_list: [],
       filter_list:[]
     };
@@ -58,7 +61,7 @@ export default {
   filters: {
     formatDate: function(timestamp) {
       let newDate = new Date();
-      newDate.setTime(timestamp * 1000);
+      newDate.setTime(timestamp);
       return newDate.toLocaleString();
     },
     translateAddressToToken: function(address) {
@@ -81,31 +84,31 @@ export default {
     toRealAmount : web3Utils.toRealAmount,
     loadHistory(address) {
       let _this = this,
-          requestUrl = `${web3Utils.getHttpBaseUrl(this.net)}&module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc`;
+          requestUrl = `${web3Utils.getHttpBaseUrl(this.net)}/getAccountTransactions`;
       this.$Loading.start();
+
+        var bodyFormData = new FormData();
+        bodyFormData.set('address', address);
+        bodyFormData.set('cntPerPage', 25);
+        bodyFormData.set('pageIndex', 0);
+
       
-      axios.get(requestUrl)
+      axios({
+            method: 'post',
+                url: requestUrl,
+                data: bodyFormData,
+                config: { headers: {'Content-Type': 'multipart/form-data' }}
+        })
         .then(response => {
-          _this.transaction_list = response.data.result;
+          _this.transaction_list = response.data && response.data.data?response.data.data.list:[];
           if(_this.transaction_list && _this.transaction_list.length > 0){
               _this.transaction_list = _this.transaction_list.map(function (txn) {
-                  var tokens = web3Utils.getErc20Tokens();
-                  txn.symbol = 'ETH';
-                  txn.amount = _this.toRealAmount(txn.value, 18);
-                  txn.realto = txn.to;
-
-                  for(var token_index in tokens){
-                      var token = tokens[token_index];
-
-                      if(txn.to.toLowerCase() == token.address.toLowerCase() && txn.input && txn.input.length >= 10 && txn.input.substring(0, 10) == "0xa9059cbb"){
-                          txn.symbol = token.symbol;
-                          txn.contractAddress = token.address;
-                          txn.realto = "0x"+txn.input.substring(10+24,64+10);
-                          //0xa9059cbb000000000000000000000000a1dacb7d193259724c59a3e497e881089af2decd0000000000000000000000000000000000000000000000000000000005f5e100
-                          var amount = new BigNumber(txn.input.substring(74,74+64),16);
-                          txn.amount = _this.toRealAmount(amount, token.decimals);
-                      }
-                  }
+                  txn.from = txn.fromAddr;
+                  txn.to = txn.toAddr;
+                  txn.realto = txn.toAddr;
+                  txn.amount = _this.toRealAmount(txn.value, 8);
+                  txn.symbol = 'CPS';
+                  txn.timeStamp = txn.blockTimestamp;
                   return txn;
               });
           }
@@ -121,7 +124,7 @@ export default {
       let _this = this,
         web3 = web3Utils.getWeb3(),
         current_wallet = _.find(this.$root.globalData.wallet_list, ["address", address]);
-
+        _this.explorer_address_link = "https://explorer.cpscoin.org/address/"+address;
       web3Utils.setWebProvider(current_wallet.keystore);
     },
     search(){
@@ -136,6 +139,9 @@ export default {
       }else{
         this.filter_list = [].concat(this.transaction_list);
       }
+    },
+    openExternal(explorer_address_link){
+        shell.openExternal(explorer_address_link)
     }
   }
 };

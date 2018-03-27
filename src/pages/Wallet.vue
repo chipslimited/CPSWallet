@@ -62,12 +62,36 @@
             <i-button class="button" @click="closeModal()">关闭</i-button>
         </div>
       </Modal>
+        <Modal v-model="modal.delete_wallet" width="460" :closable="false" :mask-closable="false">
+            <p slot="header" style="text-align:center">
+                <span>删除钱包</span>
+            </p>
+            <div style="text-align:center" v-if="current_wallet && current_wallet.keystore && !(seed && seed.length > 0)">
+                验证密码: <i-input type="password" v-model="user_password" placeholder="请输入密码" style="width: 100%"></i-input>
+            </div>
+            <div style="text-align:center" v-if="!current_wallet || !current_wallet.keystore">
+                您确定要删除这个钱包吗？删除后您将无法在钱包应用内查看对应的地址的余额。
+            </div>
+            <p slot="header" style="text-align:center" v-if="seed && seed.length > 0">
+                <span>删除钱包之前，请牢记您的助记词，写在纸上并妥善保管</span>
+            </p>
+            <div style="text-align:center">
+                <p class="seed-export" v-if="seed && seed.length > 0">{{seed}}</p>
+                <p v-if="download_key_url && download_key_url.length > 0"><a :href="download_key_url" download="privatekey.txt">同时，请<span style="color:red">点击这里下载私钥文件</span>，妥善保存。</a></p>
+            </div>
+            <div slot="footer" style="text-align:center;">
+                <i-button class="button" :loading="modal_loading" @click="confirmDeleteWallet()">确定删除</i-button>
+                <i-button class="button" @click="closeModal()">关闭</i-button>
+            </div>
+        </Modal>
       <Modal v-model="modal.seed_export" width="360" :closable="false" :mask-closable="false">
         <p slot="header" style="text-align:center">
-            <span>请牢记您的助记词，写在纸上并妥善保管</span>
+            <span v-if="!export_private_key">请牢记您的助记词，写在纸上并妥善保管</span>
+            <span v-if="export_private_key">下载导出的私钥</span>
         </p>
         <div style="text-align:center">
-          <p class="seed-export">{{seed}}</p>    
+          <p class="seed-export" v-if="!export_private_key">{{seed}}</p>
+            <p class="" v-if="export_private_key"><a :href="download_key_url" download="privatekey.txt">点击这里下载私钥文件，妥善保存并请确保该文件的安全，泄露该文件会造成巨大财产损失</a></p>
         </div>
         <div slot="footer" style="text-align:center;">
             <i-button class="button" @click="closeModal()">关闭</i-button>
@@ -107,7 +131,9 @@
               </p>
             </h1>
           </div>
-          <button class="button" v-if="wallet && wallet.keystore" @click="proceedExport(wallet)">备份钱包(导出助记词)</button>
+          <button class="button" v-if="wallet && wallet.keystore" @click="proceedExport(wallet)">导出助记词</button>
+          <button class="button" v-if="wallet && wallet.keystore" @click="proceedExport(wallet, true)">导出私钥</button>
+          <button class="button" @click="deleteWallet(wallet)">删除</button>
         </li>
       </ul>
     </div>
@@ -127,6 +153,8 @@ export default {
     return {
       modal: {},
       modal_loading: false,
+      export_private_key: false,
+      download_key_url: "",
       user_entropy: "",
       user_password: "",
       wallet_list: [],
@@ -416,6 +444,22 @@ export default {
         _this.closeModal();
       }
     },
+    removeWallet(wallet){
+        let index = _.findIndex(this.wallet_list, ["address", wallet.address]);
+        if (index != -1) {
+            this.wallet_list.splice(index, 1);
+
+            var addresses = this.wallet_list.map(function(x) {
+                return x.address;
+            })
+            dbUtils.set(
+                "address_list",
+                addresses.join(" ")
+            );
+        }
+        dbUtils.remove(wallet.address);
+        this.$root.globalData.wallet_list = this.wallet_list;
+    },
     updateWallet(wallet) {
       let index = _.findIndex(this.wallet_list, ["address", wallet.address]);
       if (index != -1) {
@@ -434,7 +478,8 @@ export default {
             );
         }
       }
-      if(wallet.keystore)dbUtils.set(wallet.address, wallet.keystore.serialize());
+      if(wallet.keystore)
+          dbUtils.set(wallet.address, wallet.keystore.serialize());
       this.$root.globalData.wallet_list = this.wallet_list;
     },
     loadWallet() {
@@ -443,7 +488,8 @@ export default {
         return _this.getBalance(wallet);
       });
     },
-    proceedExport(wallet) {
+    proceedExport(wallet, exportPrivateKey) {
+      this.export_private_key = exportPrivateKey;
       this.openModal("password_export");
       this.current_wallet = wallet;//_.cloneDeep(wallet);
     },
@@ -452,9 +498,11 @@ export default {
         password = this.user_password,
         keystore = undefined
         //_.find(this.wallet_list, this.current_wallet).keystore; //_.find causes problems in offline mode
+        var signingAddress = "";
         for(var i=0;i<this.wallet_list.length;i++){
           if(this.wallet_list[i].address == this.current_wallet.address){
               keystore = this.wallet_list[i].keystore
+              signingAddress = this.wallet_list[i].address;
           }
         }
 
@@ -466,12 +514,60 @@ export default {
         }
         try {
           _this.seed = keystore.getSeed(pwDerivedKey);
+          if(_this.export_private_key){
+              var privKey = keystore.exportPrivateKey(signingAddress, pwDerivedKey);
+              _this.download_key_url = "data:text/txt,"+privKey.toString();
+          }
           _this.openModal("seed_export");
         } catch (e) {
           _this.$Message.error("导出失败");
         }
       });
     },
+      deleteWallet(wallet) {
+        this.download_key_url = "";
+        this.seed = "";
+        this.openModal("delete_wallet");
+        this.current_wallet = wallet;//_.cloneDeep(wallet);
+      },
+      confirmDeleteWallet(){
+        var wallet = this.current_wallet;
+        if(wallet.keystore){
+            let _this = this,
+                password = _this.user_password,
+                keystore = _this.current_wallet.keystore,
+                signingAddress = _this.current_wallet.address;
+
+            if(_this.download_key_url && _this.download_key_url.length > 0){
+                this.removeWallet(wallet);
+                _this.closeModal();
+            }
+            else{
+                _this.modal_loading = true;
+                keystore.keyFromPassword(password, function(err, pwDerivedKey) {
+                    _this.modal_loading = false;
+                    if (err) {
+                        reportUtils.report(err);
+                        _this.$Message.error(err);
+                        _this.closeModal();
+                        return;
+                    }
+                    try {
+                        _this.seed = keystore.getSeed(pwDerivedKey);
+                        var privKey = keystore.exportPrivateKey(signingAddress, pwDerivedKey);
+                        _this.download_key_url = "data:text/txt,"+privKey.toString();
+                    } catch (e) {
+                        _this.$Message.error("密码错误");
+                        _this.closeModal();
+                    }
+                });
+            }
+        }
+        else{
+            //只读钱包，直接删除
+            this.removeWallet(wallet);
+        }
+      },
     showtooltip(tip, e){
 
       var tooltip = document.createElement('div')
