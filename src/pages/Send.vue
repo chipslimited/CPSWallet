@@ -7,7 +7,7 @@
     <div class="content-wrapper">
       <div class="form-item">
         从:<i-select v-model="current_wallet.address" class="wallet-source round-corner-input" placeholder="选择钱包" @on-change="changeTransferWallet">
-            <Option v-for="item in wallet_list.filter(function(x){return x.keystore})" :value="item.address" :key="item.address">{{ item.address }}</Option>
+            <Option v-for="item in wallet_list.filter(function(x){return x.keystore})" :value="item.address" :key="item.address">{{ item.address+(item.alias.length>0?"("+item.alias+")":"") }}</Option>
         </i-select>
       </div>
         <div class="gap clearfix"></div>
@@ -31,6 +31,14 @@
             <span class="have-token" v-text="max"></span><span class="token" v-text="token"></span>
         </div>
       </div>
+        <div class="gap clearfix"></div>
+        <div class="form-item-slider">
+            <span style="width: 20%; line-height:36px;">燃料上限: </span><div style="top: 30px; width:80%;"><Slider v-model="gas" :step="1" show-input :min="21000" :max="210000"></Slider></div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-item-slider">
+            <span style="width: 20%; line-height:36px;">燃料价格(Gwei): </span><div style="top: 30px; width:80%;"><Slider v-model="gasPrice" :step="1" show-input :min="1" :max="50"></Slider></div>
+        </div>
       <div class="result-wrapper">
         <div class="form-item">
           共计<span class="transfer-amount" v-text="transfer_token"  v-if="token"></span><span class="token"  v-text="token"></span>
@@ -119,6 +127,8 @@ export default {
       current_wallet: {
         balances:[]
       },
+      gas:80000,
+      gasPrice:21,
       target_address: "",
       qrcode: "",
       user_password: "",
@@ -299,8 +309,8 @@ export default {
         try {
           if (this.token_address === "ETH") {
             value = parseFloat(valueEth) * 1.0e18;
-            gasPrice = 18000000000;
-            gas = 50000;
+            gasPrice = parseFloat(_this.gasPrice)*1e9;
+            gas = _this.gas;
             var txn = {
                 from: fromAddr,
                 to: toAddr,
@@ -336,11 +346,12 @@ export default {
               decimals = erc20token.decimals;
 
             value = new BigNumber(valueEth + "e+" + decimals);
-            gasPrice = 21000000000;
+            gasPrice = parseFloat(this.gasPrice)*1e9;
 
             web3.eth.defaultAccount = fromAddr;
 
             gas = contract.transfer.estimateGas(toAddr, value.toString());
+            _this.gas = gas;
 
             contract.transfer(
               toAddr,
@@ -417,8 +428,8 @@ export default {
               try {
                   if (this.token_address === "ETH") {
                       value = parseFloat(valueEth) * 1.0e18;
-                      gasPrice = 18000000000;
-                      gas = 50000;
+                      gasPrice = parseFloat(_this.gasPrice)*1e9;
+                      gas = _this.gas;
                       var txn = {
                           nonce: _this.current_wallet.custom_nonce,
                           from: fromAddr,
@@ -444,11 +455,11 @@ export default {
                           decimals = erc20token.decimals;
 
                       value = new BigNumber(valueEth + "e+" + decimals);
-                      gasPrice = 21000000000;
+                      gasPrice = parseFloat(_this.gasPrice)*1e9;
 
                       web3.eth.defaultAccount = fromAddr;
 
-                      gas = 100000;
+                      gas = _this.gas;
 
                       var data = contract.transfer.getData(
                           toAddr,
@@ -500,6 +511,13 @@ export default {
     font-size: 16px;
     width: 45%;
   }
+    .form-item-slider {
+        display: inline-flex;
+        align-items: flex-end;
+        color: #ccc;
+        font-size: 16px;
+        width: 65%;
+    }
   .wallet-source,
   .wallet-target,
   .transfer {

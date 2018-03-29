@@ -30,13 +30,25 @@
             <span>恢复钱包</span>
         </p>
         <div style="text-align:center">
-            <i-input v-model="seed" placeholder="请输入助记词" style="width: 100%"></i-input>
+            <i-input v-model="seed" placeholder="请输入助记词或私钥" style="width: 100%"></i-input>
         </div>
         <div slot="footer" style="text-align:center;">
             <i-button class="button" @click="proceedStoreToPassword">确定</i-button>
             <i-button class="button" @click="closeModal()">关闭</i-button>
         </div>
       </Modal>
+        <Modal v-model="modal.edit_alias" width="360" :closable="false" :mask-closable="false">
+            <p slot="header" style="text-align:center">
+                <span>编辑钱包备注</span>
+            </p>
+            <div style="text-align:center">
+                <i-input v-model="wallet_alias" placeholder="请输入钱包备注" style="width: 100%" :maxlength="5"></i-input>
+            </div>
+            <div slot="footer" style="text-align:center;">
+                <i-button class="button" @click="confirmEditAlias">确定</i-button>
+                <i-button class="button" @click="closeModal()">关闭</i-button>
+            </div>
+        </Modal>
         <Modal v-model="modal.watch_wallet" width="360" :closable="false" :mask-closable="false">
             <p slot="header" style="text-align:center">
                 <span>只读钱包</span>
@@ -66,7 +78,7 @@
             <p slot="header" style="text-align:center">
                 <span>删除钱包</span>
             </p>
-            <div style="text-align:center" v-if="current_wallet && current_wallet.keystore && !(seed && seed.length > 0)">
+            <div style="text-align:center" v-if="current_wallet && current_wallet.keystore && !(download_key_url && download_key_url.length > 0)">
                 验证密码: <i-input type="password" v-model="user_password" placeholder="请输入密码" style="width: 100%"></i-input>
             </div>
             <div style="text-align:center" v-if="!current_wallet || !current_wallet.keystore">
@@ -77,7 +89,8 @@
             </p>
             <div style="text-align:center">
                 <p class="seed-export" v-if="seed && seed.length > 0">{{seed}}</p>
-                <p v-if="download_key_url && download_key_url.length > 0"><a :href="download_key_url" download="privatekey.txt">同时，请<span style="color:red">点击这里下载私钥文件</span>，妥善保存。</a></p>
+                <p v-if="!(seed && seed.length > 0) && download_key_url && download_key_url.length > 0">无法备份助记词，因为您之前通过私钥恢复了钱包。</p>
+                <p v-if="download_key_url && download_key_url.length > 0"><a :href="download_key_url" download="privatekey.txt">请<span style="color:red">点击这里下载私钥文件</span>，妥善保存。</a></p>
             </div>
             <div slot="footer" style="text-align:center;">
                 <i-button class="button" :loading="modal_loading" @click="confirmDeleteWallet()">确定删除</i-button>
@@ -125,13 +138,18 @@
                 <img src="../assets/copy.png" class="icon icon-address-copy"  @click="processTransaction(wallet)"/>
                 <span style="font-size: 12px;">总交易数:{{wallet.nonce[0]}}</span>
               <p>
+               <span class="token-wrapper">
+                <span v-if="wallet.alias.length > 0">({{wallet.alias}})</span>
+                <button class="token-wrapper-button" @click="editAlias(wallet)" v-if="wallet.alias.length == 0">添加地址别名</button>
+                <button class="token-wrapper-button" @click="editAlias(wallet)" v-if="wallet.alias.length > 0">修改别名</button>
+               </span>
               <span class="token-wrapper" v-for="(token, index) in wallet.balances" v-bind:key="index">
                 <span>{{token.balance}} {{token.symbol}}</span>
               </span>
               </p>
             </h1>
           </div>
-          <button class="button" v-if="wallet && wallet.keystore" @click="proceedExport(wallet)">导出助记词</button>
+          <button class="button" v-if="wallet && wallet.keystore && wallet.keystore.encSeed && wallet.keystore.encSeed.encStr" @click="proceedExport(wallet)">导出助记词</button>
           <button class="button" v-if="wallet && wallet.keystore" @click="proceedExport(wallet, true)">导出私钥</button>
           <button class="button" @click="deleteWallet(wallet)">删除</button>
         </li>
@@ -155,6 +173,9 @@ export default {
       modal_loading: false,
       export_private_key: false,
       download_key_url: "",
+      edit_alias:false,
+      wallet_alias:"",
+      current_wallet: null,
       user_entropy: "",
       user_password: "",
       wallet_list: [],
@@ -408,6 +429,16 @@ export default {
             _this.$Message.error("错误的地址");
         }
       },
+      editAlias(wallet){
+          this.current_wallet = wallet;
+          this.wallet_alias = this.current_wallet.alias;
+          this.openModal("edit_alias");
+      },
+      confirmEditAlias(){
+          this.current_wallet.alias = this.wallet_alias;
+          this.closeModal();
+          this.updateWallet(this.current_wallet);
+      },
     restoreWallet() {
       var _this = this,
         password = this.user_password,
@@ -415,7 +446,9 @@ export default {
 
       this.modal_loading = true;
 
-      if (lightwallet.keystore.isSeedValid(seed)) {
+      var seedValid = lightwallet.keystore.isSeedValid(seed);
+      var privValid = lightwallet.keystore.isPrivateKeyValid(seed);
+      if (seedValid || privValid) {
         lightwallet.keystore.createVault(
           {
             password: password,
@@ -458,6 +491,7 @@ export default {
             );
         }
         dbUtils.remove(wallet.address);
+        dbUtils.remove(wallet.address+"_alias");
         this.$root.globalData.wallet_list = this.wallet_list;
     },
     updateWallet(wallet) {
@@ -467,6 +501,7 @@ export default {
         //   wallet.keystore = keystore;
         // })
         this.wallet_list[index] = wallet;
+        dbUtils.set(wallet.address+"_alias", wallet.alias);
       } else {
         this.wallet_list.push(wallet);
         var addresses = dbUtils.get("address_list");
@@ -477,6 +512,7 @@ export default {
                 [addresses, wallet.address].join(" ")
             );
         }
+        dbUtils.set(wallet.address+"_alias", wallet.alias);
       }
       if(wallet.keystore)
           dbUtils.set(wallet.address, wallet.keystore.serialize());
@@ -532,11 +568,12 @@ export default {
       },
       confirmDeleteWallet(){
         var wallet = this.current_wallet;
+        let _this = this,
+             password = _this.user_password,
+             keystore = _this.current_wallet.keystore,
+             signingAddress = _this.current_wallet.address;
+
         if(wallet.keystore){
-            let _this = this,
-                password = _this.user_password,
-                keystore = _this.current_wallet.keystore,
-                signingAddress = _this.current_wallet.address;
 
             if(_this.download_key_url && _this.download_key_url.length > 0){
                 this.removeWallet(wallet);
@@ -566,6 +603,7 @@ export default {
         else{
             //只读钱包，直接删除
             this.removeWallet(wallet);
+            _this.closeModal();
         }
       },
     showtooltip(tip, e){
@@ -619,6 +657,13 @@ export default {
   margin-right: 10px;
   font-size: 14px;
   color: #ffffff;
+}
+.token-wrapper-button{
+    margin-right: 10px;
+    font-size: 14px;
+    color: #ffffff;
+    background: transparent;
+    border: none;
 }
 .wallet-list {
   display: flex;

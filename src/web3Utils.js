@@ -8,10 +8,13 @@ let erc20tokens;
 const CPS_TEST_ADDR = "0x0E3E4BfD5a2572c1E0475029D43Ac0D274466017";
 const CPS_PROD_ADDR = "0xf239fAb41De78533FA974B74d7605f1E68F8772e";
 const CPST_PROD_ADDR = "0x978f6ee1D834704D0B9aFa4318d016Da4f9E6Ad6";
+const CHIPS_ADDR = "0x68b16039d79e0f51f109015e55a3311fe999a723";
 
 const erc20addrs = [
+  //  "0x0E3E4BfD5a2572c1E0475029D43Ac0D274466017",
     "0xf239fAb41De78533FA974B74d7605f1E68F8772e",
     "0x978f6ee1D834704D0B9aFa4318d016Da4f9E6Ad6",
+ //   CHIPS_ADDR,
   //"0xFFAB690958a463EB859B6348279A2F5FDdB8Eba1",
   //"0x60B6a6420e6295eaa7dEa24eb780eC567205ee05",
 ];
@@ -46,6 +49,9 @@ function setWebProvider(ks){
       }
       else if(addr == CPST_PROD_ADDR){
           return {"address":addr, "contract": contract, "decimals": 2, "symbol": "CPST" };
+      }
+      else if(addr == CHIPS_ADDR){
+          return {"address":addr, "contract": contract, "decimals": 8, "symbol": "CHIPS" };
       }
     return {"address":addr, "contract": contract, "decimals": contract.decimals.call(), "symbol": contract.symbol.call() };
   })

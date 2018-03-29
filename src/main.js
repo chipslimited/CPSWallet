@@ -41,6 +41,10 @@ const app = new Vue({
 
     _.each(address_list, function(address) {
       let serialized_keystore = dbUtils.get(address);
+
+      var alias = dbUtils.get(address+"_alias");
+      if(typeof(alias) == 'undefined' || alias == null)alias = "";
+
       if (serialized_keystore) {
           var ks = null;
           try{
@@ -50,14 +54,16 @@ const app = new Vue({
           }
         wallet = {
           address: address,
-          keystore: ks
+          keystore: ks,
+          alias: alias
         };
         _this.globalData.wallet_list.push(wallet);
       }
       else{
           wallet = {
               address: address,
-              keystore: null
+              keystore: null,
+              alias:alias
           };
           _this.globalData.wallet_list.push(wallet);
       }

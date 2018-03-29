@@ -18,9 +18,9 @@
       <ul class="transaction-list">
         <li class="transaction-item" v-for="transaction in filter_list" v-bind:key="transaction.hash">
           <div class="transaction-wrapper">
-            <h3 class="transaction-title" v-text="transaction.hash"></h3>
+            <h3 class="transaction-title" v-text="transaction.hash" @click="openTransaction(transaction.hash)"></h3>
             <p class="transaction-sub">
-              <span v-text="transaction.from"></span> => <span v-text="transaction.to?transaction.realto:'创建合约('+transaction.contractAddress+')'"></span>
+              <span @click="openAddress(transaction.from)" v-text="transaction.from"></span> => <span @click="openAddress(transaction.realto)" v-text="transaction.to?transaction.realto:'创建合约('+transaction.contractAddress+')'"></span>
             </p>
           </div>
           <div class="transaction-token-wrapper">
@@ -142,7 +142,16 @@ export default {
     },
     openExternal(explorer_address_link){
         shell.openExternal(explorer_address_link)
-    }
+    },
+    openTransaction(txHash){
+        var link = "https://explorer.cpscoin.org/tx/"+txHash;
+        shell.openExternal(link);
+    },
+    openAddress(address){
+        if(!address || address.length == 0)return;
+        var link = "https://explorer.cpscoin.org/address/"+address;
+        shell.openExternal(link);
+     }
   }
 };
 </script>
