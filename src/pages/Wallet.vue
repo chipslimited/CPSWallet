@@ -500,6 +500,9 @@ export default {
         // lightwallet.keystore.upgradeOldSerialized(wallet.keystore, password, function(keystore){
         //   wallet.keystore = keystore;
         // })
+          if(typeof(wallet.alias)=='undefined' && wallet.alias == null){
+              wallet.alias = "";
+          }
         this.wallet_list[index] = wallet;
         dbUtils.set(wallet.address+"_alias", wallet.alias);
       } else {

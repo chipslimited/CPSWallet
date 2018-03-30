@@ -2463,9 +2463,9 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
 
-eth-lightwallet-jh@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/eth-lightwallet-jh/-/eth-lightwallet-jh-3.0.2.tgz#8b33efa481e5780b9529c49dc4cf34926a0da7e8"
+eth-lightwallet-jh@3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/eth-lightwallet-jh/-/eth-lightwallet-jh-3.0.3.tgz#1bb9c7ee0258f0debe669347abd5dfedc542b2ea"
   dependencies:
     bitcore-lib "^0.15.0"
     bitcore-mnemonic "^1.5.0"

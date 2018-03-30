@@ -37,7 +37,8 @@ sudo apt-get update && sudo apt-get install yarn
 
 # Install dependencies
 ``` bash
-yarn add --dev electron-installer-windows
+npm install -g electron-packager
+yarn add --dev electron-installer-windows electron-packager
 ```
 # Serve with hot reload at localhost:8080
 ``` bash
@@ -63,6 +64,11 @@ yarn add --dev
 ```
 
 Build package and upload
+
+```bash
+pip install oss2
+```
+
 ```bash
 ./ci.sh
 ```
