@@ -45,7 +45,7 @@
             <Poptip placement="right" trigger="hover">
                 <span style="line-height:36px; ">&nbsp;<img src="../assets/help.png" style="width:16px;height: 16px;"/></span>
                 <div slot="content" style="color: #000; width: 400px;" class="wordwrap">
-                    <p>“燃料上限” -> 一般设置200000</p>
+                    <p>“燃料上限” -> 一般设置80000</p>
  <p>“燃料价格” -> 一般设置20</p>
 <br/>
  <p>矿工费用＝实际燃料数量*实际燃料价格。实际燃料数量和价格不会高于用户指定的上述两个上限，多余的会退回。较低的燃料数量和价格可以节省矿工费用，但是也会降低交易到账的速度。</p>
@@ -53,6 +53,7 @@
  <p>在联网设备发送时，会自动获取燃料上限，在离线设备发送时，需手动设定燃料上限。如果矿工费用不足以完成打包，或者当前交易的燃料超过了区块的限制，这笔交易将失败。</p>
                 </div>
             </Poptip>
+        </span>
         </div>
       <div class="result-wrapper">
         <div class="form-item">
@@ -143,7 +144,7 @@ export default {
         balances:[]
       },
       gas:80000,
-      gasPrice:21,
+      gasPrice:20,
       target_address: "",
       qrcode: "",
       user_password: "",
