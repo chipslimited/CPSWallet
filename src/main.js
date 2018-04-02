@@ -8,12 +8,6 @@ import dbUtils from "./dbUtils";
 
 Vue.use(iView);
 
-if(location.href.startsWith("file://")) {
-    require('electron-context-menu')({
-        showInspectElement: false,
-        labels: {"cut": "剪切", "copy": "复制", "save": "保存", "paste": "粘贴", "copyLink": "复制链接"}
-    });
-}
 
 const app = new Vue({
   el: "#app",

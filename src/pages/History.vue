@@ -40,7 +40,7 @@ import _ from 'lodash';
 import BigNumber from 'bignumber.js';
 import MainLayout from "../layouts/MainLayout.vue";
 import web3Utils from "../web3Utils";
-const {shell} = require('electron');
+//const {shell} = require('electron');
 
 export default {
   data() {
@@ -141,16 +141,19 @@ export default {
       }
     },
     openExternal(explorer_address_link){
-        shell.openExternal(explorer_address_link)
+        //shell.openExternal(explorer_address_link)
+        window.open(explorer_address_link, "_blank");
     },
     openTransaction(txHash){
         var link = "https://explorer.cpscoin.org/tx/"+txHash;
-        shell.openExternal(link);
+        //shell.openExternal(link);
+        window.open(link, "_blank");
     },
     openAddress(address){
         if(!address || address.length == 0)return;
         var link = "https://explorer.cpscoin.org/address/"+address;
-        shell.openExternal(link);
+        //shell.openExternal(link);
+        window.open(link, "_blank");
      }
   }
 };
