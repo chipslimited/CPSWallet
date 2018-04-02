@@ -102,7 +102,6 @@
                 <i-button class="button" @click="closeModal()">关闭</i-button>
             </div>
         </Modal>
-    </div>
       <Modal v-model="modal.show_offline_txn" width="900" :closable="false" :mask-closable="false">
       <div class="content-wrapper" v-show="qrcode.length > 0">
           <div class="receive-wallet-wrapper">
