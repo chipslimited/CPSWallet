@@ -40,6 +40,8 @@ const app = new Vue({
       wallet = {};
 
     _.each(address_list, function(address) {
+        if(!address || address == "")return;
+        
       let serialized_keystore = dbUtils.get(address);
 
       var alias = dbUtils.get(address+"_alias");
