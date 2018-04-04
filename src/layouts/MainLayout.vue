@@ -2,7 +2,7 @@
   <div class="container">
     <div class="sidebar">
       <div class="logobar">
-        <a href="/"><img class="logo" src="../assets/logo.png" alt=""></a>
+       <img class="logo" src="../assets/logo.png" alt="">
       </div>
       <ul class="menu">
         <li class="menu-item" v-bind:class="{'menu-item-selected': this.$root.currentView == 'wallet','menu-item-normal': this.$root.currentView != 'wallet'}">
