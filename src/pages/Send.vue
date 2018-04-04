@@ -18,17 +18,17 @@
       <div class="form-item">
         数量
         <div class="transfer">
-          <i-input-number v-model="transfer_token" class="transfer-token" :max="max" :min="min" :step="step">
+          <i-input-number v-model="transfer_token" class="transfer-token" :max="max" :min="min" :step="step" :disabled="!token_address || token_address.length == 0">
           </i-input-number>
-            <i-select v-model="token_address" slot="append" class="transfer-token-selector" placeholder="币种">
+            <i-select v-model="token_address" slot="append" class="transfer-token-selector" placeholder="币种" @on-change="onTokenChange">
                 <Option v-for="item in current_wallet.balances" :value="item.address" :key="item.address">{{ item.symbol }}</Option>
             </i-select>
         </div>
       </div>
       <div class="form-item" v-show="token_address && current_wallet">
-        持有
-        <div class="have-token-group">
-            <span class="have-token" v-text="max"></span><span class="token" v-text="token"></span>
+
+        <div class="have-token-group" v-if="bal">
+            持有 <span class="have-token" v-text="bal"></span><span class="token" v-text="token"></span>
         </div>
       </div>
         <div class="gap clearfix"></div>
@@ -57,7 +57,6 @@
         </div>
       <div class="result-wrapper">
         <div class="form-item">
-          共计<span class="transfer-amount" v-text="transfer_token"  v-if="token"></span><span class="token"  v-text="token"></span>
           <i-button class="button ready-to-transfer" size="large" @click="proceedTranfer">确定</i-button>
         </div>
       </div>
@@ -70,6 +69,7 @@
       <Modal v-model="modal.password_transaction" width="360" :closable="false" :mask-closable="false">
         <p slot="header" style="text-align:center">
             <span>身份验证</span>
+            <span v-if=""></span>
         </p>
         <div style="text-align:center">
             <i-input type="password" v-model="user_password" placeholder="请输入密码" style="width: 100%"></i-input>
@@ -164,10 +164,16 @@ export default {
       return _token ? _token.symbol : "";
     },
     max: function() {
-      let _this = this,
-        //_token = _.find(this.current_wallet.balances, { value: _this.token_address });
-        _token = this.current_wallet && this.current_wallet.balances?this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined
-      return _token && _token.balance ? _token.balance : 9999999999;
+        let _this = this,
+            //_token = _.find(this.current_wallet.balances, { value: _this.token_address });
+            _token = this.current_wallet && this.current_wallet.balances?this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined
+        return _token && _token.balance ? _token.balance : 9999999999;
+    },
+    bal:  function() {
+        let _this = this,
+            //_token = _.find(this.current_wallet.balances, { value: _this.token_address });
+            _token = this.current_wallet && this.current_wallet.balances?this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined
+        return _token && _token.balance ? _token.balance : null;
     },
     min: function() {
       return 0;
@@ -262,22 +268,32 @@ export default {
     },
     proceedTranfer(){
       var _this = this,
-        text = [];
-      if (!this.current_wallet || !this.current_wallet.address) {
+          web3 = web3Utils.getWeb3(),
+          text = [];
+
+      if (!_this.current_wallet || !_this.current_wallet.address) {
         text.push("未选择钱包");
       }
-      if (!this.target_address) {
+      if (!_this.target_address) {
         text.push("未填写转入地址");
       }
-      if(!this.transfer_token){
+      if (!web3.isAddress(this.target_address)) {
+         text.push("转入地址不正确");
+      }
+      if(!_this.transfer_token){
         text.push("转入数量小于等于0")
       }
+
+      if(!_this.token_address || _this.token_address.length == 0){
+        text.push("未选择币种")
+      }
+
       if (text.length) {
         text.unshift("错误：");
-        this.$Message.error(text.join(" "));
+          _this.$Message.error(text.join(" "));
         return;
       }
-      this.openModal('password_transaction')
+        _this.openModal('password_transaction')
     },
     transfer() {
       var _this = this;
@@ -510,7 +526,8 @@ export default {
       },
     onWalletChange() {},
     onTokenChange(value) {
-      this.token = value;
+      this.transfer_token = 0;
+
     }
   }
 };
@@ -586,11 +603,14 @@ export default {
     padding-top: 40px;
     margin-top: 50px;
     width: 100%;
+    color: #fff;
     .ready-to-transfer {
       flex-grow: 0;
     }
     .form-item {
       width: 90%;
+      color: #fff;
+      font-size: 16px;
     }
     .transfer-amount,
     .amount-token {

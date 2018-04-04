@@ -8,6 +8,20 @@
         </p>
         <div style="text-align:center">
             <i-input v-model="user_entropy" placeholder="请输入一串随机的字符串，以随机生成助记词" style="width: 100%"></i-input>
+            <br/>
+            <div style="display:flex;">
+            <div style="width:300px">
+            <i-select v-model="hdpath" slot="append" placeholder="创建选项">
+                <Option v-for="item in hdpaths" :value="item.value" :key="item.label">{{ item.label }}</Option>
+            </i-select>
+            </div>
+            <Poptip placement="bottom-end" trigger="hover">
+                <span style="line-height:36px; ">&nbsp;<img src="../assets/help_b.png" style="width:16px;height: 16px;"/></span>
+                <div slot="content" style="color: #000; width: 300px; height: 100px; overflow: visible; white-space: normal; text-align: left;" class="wordwrap">
+                    <p class="wordwrap">默认情况下，您应该选择 m/44'/60'/0'/0 (兼容MetaMask/imToken)，然而，其他钱包应用可能使用不同的选项，如果您需要和其他钱包应用兼容，您应该咨询其他钱包的开发者，以确保您在其他钱包应用中恢复的时候能恢复出正确的钱包。</p>
+                </div>
+            </Poptip>
+        </div>
         </div>
         <div slot="footer" style="text-align:center;">
             <i-button class="button" @click="proceedCreateToPassword">创建</i-button>
@@ -31,6 +45,20 @@
         </p>
         <div style="text-align:center">
             <i-input v-model="seed" placeholder="请输入助记词或私钥" style="width: 100%"></i-input>
+            <br/>
+            <div style="display:flex;">
+            <div style="width:300px">
+            <i-select v-model="hdpath" slot="append" placeholder="恢复选项">
+                <Option v-for="item in hdpaths" :value="item.value" :key="item.label">{{ item.label }}</Option>
+            </i-select>
+            </div>
+            <Poptip placement="bottom-end" trigger="hover">
+                <span style="line-height:36px; ">&nbsp;<img src="../assets/help_b.png" style="width:16px;height: 16px;"/></span>
+                <div slot="content" style="color: #000;width:360px;height:100px; white-space: normal; text-align: left;" class="wordwrap">
+                    <p class="wordwrap">默认情况下，您应该选择 m/44'/60'/0'/0 (兼容MetaMask/imToken)，然而，其他钱包应用可能使用不同的选项，如果您需要在其他钱包中恢复，请确保该选项与其他钱包应用中的值相兼容。</p>
+                </div>
+            </Poptip>
+            </div>
         </div>
         <div slot="footer" style="text-align:center;">
             <i-button class="button" @click="proceedStoreToPassword">确定</i-button>
@@ -180,7 +208,13 @@ export default {
       user_password: "",
       wallet_list: [],
       seed: "",
-      readonly_address:""
+      readonly_address:"",
+      hdpath:"m/44'/60'/0'/0",
+        hdpaths:[
+            {"label":"m/44'/60'/0'/0 (兼容MetaMask/imToken)", "value":"m/44'/60'/0'/0"},
+            {"label":"m/0'/0'/0' (定制)", "value":"m/0'/0'/0'"},
+            {"label":"m/44'/60'/1'/0/0 (imToken自定义)", "value":"m/44'/60'/1'/0/0"},
+        ]
     };
   },
   mounted() {
@@ -246,7 +280,7 @@ export default {
           password: password,
           seedPhrase: _this.seed,
           //random salt
-          hdPathString: "m/0'/0'/0'"
+          hdPathString: _this.hdpath //originally, this is "m/0'/0'/0'"
         },
         function(err, ks) {
           if (err) {
@@ -405,14 +439,10 @@ export default {
       proceedStoreToAddress() {
         var web3 = web3Utils.getWeb3();
         var address = this.readonly_address;
+        var _this = this;
         try {
-            if(address.startsWith("0x") || address.startsWith("0X")){
-                address = address.slice(2);
-            }
-            var iban = web3.eth.iban.fromAddress(address);
-            var _this = this;
 
-            if (iban && web3.eth.iban.isValid(iban.toString())) {
+            if (web3.isAddress(address)) {
                 _this.updateWallet(
                     _this.getBalance({
                         address: "0x"+address,
@@ -421,6 +451,7 @@ export default {
                 );
                 _this.loadWallet();
                 _this.closeModal();
+                _this.readonly_address = "";
             }
             else {
                 _this.$Message.error("错误的地址");
@@ -454,7 +485,7 @@ export default {
             password: password,
             seedPhrase: seed,
             //random salt
-            hdPathString: "m/44'/60'/0'/0"
+            hdPathString: _this.hdpath
           },
           function(err, ks) {
             if (err) {
@@ -720,5 +751,15 @@ export default {
       }
     }
   }
+    /* Source: http://snipplr.com/view/10979/css-cross-browser-word-wrap */
+    .wordwrap {
+        white-space: pre-wrap;      /* CSS3 */
+        white-space: -moz-pre-wrap; /* Firefox */
+        white-space: -pre-wrap;     /* Opera <7 */
+        white-space: -o-pre-wrap;   /* Opera 7 */
+        word-wrap: break-word;      /* IE */
+        white-space: normal;
+        text-align: left;
+    }
 }
 </style>
