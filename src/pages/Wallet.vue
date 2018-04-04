@@ -55,7 +55,7 @@
             <Poptip placement="bottom-end" trigger="hover">
                 <span style="line-height:36px; ">&nbsp;<img src="../assets/help_b.png" style="width:16px;height: 16px;"/></span>
                 <div slot="content" style="color: #000;width:360px;height:100px; white-space: normal; text-align: left;" class="wordwrap">
-                    <p class="wordwrap">默认情况下，您应该选择 m/44'/60'/0'/0 (兼容MetaMask/imToken)，然而，其他钱包应用可能使用不同的选项，如果您需要在其他钱包中恢复，请确保该选项与其他钱包应用中的值相兼容。</p>
+                    <p class="wordwrap">默认情况下，您应该选择 m/44'/60'/0'/0 (兼容MetaMask/imToken)，然而，其他钱包应用可能使用不同的选项，如果您的助记词是由其他钱包应用生成的，请确保您选择了兼容的选项。</p>
                 </div>
             </Poptip>
             </div>
