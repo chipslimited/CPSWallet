@@ -90,10 +90,8 @@
 
             <div class="wallet_tips_main">
                 <div class="tips_main_title">删除钱包</div>
-                <div class="tips_form has_input"v-if="!current_wallet || !current_wallet.keystore">
-                    <div style="text-align:center">
-                        您确定要删除这个钱包吗？删除后您将无法在钱包应用内查看对应的地址的余额。
-                    </div>
+                <div style="text-align:center" v-if="!current_wallet || !current_wallet.keystore">
+                    您确定要删除这个钱包吗？删除后您将无法在钱包应用内查看对应的地址的余额。
                 </div>
 
                 <div class="tips_main_tips" v-if="seed && seed.length > 0">删除钱包之前，请牢记您的助记词，写在纸上并妥善保管</div>
@@ -296,6 +294,7 @@ export default {
           try {
             _this.newAddresses(password, ks);
             web3Utils.setWebProvider(ks);
+            setTimeout(_this.loadWallet, 1000);
           } catch (err) {
             reportUtils.report(err);
             _this.$Message.error("创建失败");
