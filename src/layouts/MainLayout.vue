@@ -1,53 +1,20 @@
 <template>
-  <div class="container">
-    <div class="sidebar">
-      <div class="logobar">
-       <img class="logo" src="../assets/logo.png" alt="">
-      </div>
-      <ul class="menu">
-        <li class="menu-item" v-bind:class="{'menu-item-selected': this.$root.currentView == 'wallet','menu-item-normal': this.$root.currentView != 'wallet'}">
-          <v-link href="/wallet" class="menu-item-link">
-            <i class="icon iconfont icon-wallet"></i>
-            <span class="menu-item-text">钱包</span>
-            <!-- <span class="tip" v-text="wallet_list.length"></span> -->
-          </v-link>
-        </li>
-         <!-- <li class="menu-item" v-bind:class="{'menu-item-selected': this.$root.currentView == 'transaction','menu-item-normal': this.$root.currentView != 'transaction'}">
-              <v-link href="/transaction" class="menu-item-link">
-                  <i class="icon iconfont icon-trade"></i>
-                  <span class="menu-item-text">交易</span>
-              </v-link>
-          </li>-->
-          <li class="menu-item" v-bind:class="{'menu-item-selected': this.$root.currentView == 'send','menu-item-normal': this.$root.currentView != 'send'}">
-              <v-link href="/send" class="menu-item-link">
-                  <i class="icon iconfont icon-trade"></i>
-                  <span class="menu-item-text">发送</span>
-              </v-link>
-          </li>
-          <li class="menu-item" v-bind:class="{'menu-item-selected': this.$root.currentView == 'receive','menu-item-normal': this.$root.currentView != 'receive'}">
-              <v-link href="/receive" class="menu-item-link">
-                  <i class="icon iconfont icon-trade"></i>
-                  <span class="menu-item-text">收款</span>
-              </v-link>
-          </li>
-        <li class="menu-item" v-bind:class="{'menu-item-selected': this.$root.currentView == 'history','menu-item-normal': this.$root.currentView != 'history'}">
-          <v-link href="/history" class="menu-item-link">
-            <i class="icon iconfont icon-tradelist"></i>
-            <span class="menu-item-text">交易历史</span>
-          </v-link>
-        </li>
-          <li class="menu-item" v-bind:class="{'menu-item-selected': this.$root.currentView == 'sendr','menu-item-normal': this.$root.currentView != 'sendr'}">
-              <v-link href="/sendr" class="menu-item-link">
-                  <i class="icon iconfont icon-trade"></i>
-                  <span class="menu-item-text">已签名交易发送</span>
-              </v-link>
-          </li>
-      </ul>
+    <div class="wallet-body">
+    <div class="lay-left">
+        <ul class="menu-list">
+            <li><v-link href="/wallet" v-bind:class="{'active': this.$root.currentView == 'wallet','': this.$root.currentView != 'wallet'}"><i class="icon-wallet"></i><span>钱包</span></v-link></li>
+            <li><v-link href="/send"  v-bind:class="{'active': this.$root.currentView == 'send','': this.$root.currentView != 'send'}"><i class="icon-send"></i><span>发送</span></v-link></li>
+            <li><v-link href="/receive" v-bind:class="{'active': this.$root.currentView == 'receive','': this.$root.currentView != 'receive'}"><i class="icon-receive"></i><span>收款</span></v-link></li>
+            <li><v-link href="/history" v-bind:class="{'active': this.$root.currentView == 'history','': this.$root.currentView != 'history'}"><i class="icon-history"></i><span>交易历史</span></v-link></li>
+            <li><v-link href="/sendr" v-bind:class="{'active': this.$root.currentView == 'sendr','': this.$root.currentView != 'sendr'}"><i class="icon-sign"></i><span>已签名交易发送</span></v-link></li>
+        </ul>
     </div>
-    <div class="content">
-      <slot></slot>
+    <div class="lay-right">
+        <div class="lay-right-main">
+            <slot></slot>
+        </div>
     </div>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -64,6 +31,13 @@ export default {
   },
   mounted(){
     this.wallet_list = this.$root.globalData.wallet_list;
+
+  },
+  updated(){
+      var buttons = document.getElementsByClassName("wallet-buttons");
+      for(var i=0;i<buttons.length;i++){
+          buttons[i].style.display = this.$root.currentView == 'wallet'?"":"none";
+      }
   }
 };
 </script>
@@ -73,6 +47,136 @@ export default {
 @import url(../assets/base.less);
 @import url(../assets/iconfont.less);
 @import url(../../node_modules/iview/dist/styles/iview.css);
+
+.ivu-modal-content{
+    background-color: transparent;
+
+}
+.ivu-modal {
+    top:40%;
+}
+
+.ivu-select-item-selected{
+    background-color: #212121;
+}
+
+.ivu-modal-footer{
+    display: none;
+}
+
+.ivu-select{
+    font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:54px;font-weight: bold;
+    font-size: 15px;
+    border-color: #212121;
+}
+.ivu-select-single .ivu-select-selection{
+    height: 54px;
+}
+.ivu-select-selection:hover{border-color:#333333;}
+.ivu-select-selection{
+    background-color: #dcdcdc;
+    border-radius: 4px;
+    border:none;
+    height: 54px;
+    font-size: 22px;
+    font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:54px;font-weight: bold;
+}
+.ivu-select-visible .ivu-select-selection {
+    border-color:#333333;
+    height: 54px;
+    font-size: 22px;
+    font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:54px;font-weight: bold;
+}
+
+.ivu-select-dropdown .ivu-select-dropdown-list .ivu-select-item {
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    padding: 0 14px;
+    box-sizing: border-box;
+    font-size: 15px;
+    color: #212121;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    &:nth-child(odd) {
+        background-color: #b2b2b2;
+    }
+    &:nth-child(even) {
+        background-color: #ccc;
+    }
+    &:hover {
+        background-color: #646464;
+        color: #fff;
+    }
+}
+
+.ivu-select-single .ivu-select-selection .ivu-select-placeholder, .ivu-select-single .ivu-select-selection .ivu-select-selected-value{
+    height: 54px;
+    font-size: 22px;
+    font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:54px;font-weight: bold;
+
+    position: relative;
+    width:100%;
+    padding:0 36px 0 14px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 22px;
+    cursor: pointer;
+
+}
+
+.num-input .ivu-input-number-input-wrap{
+    height: 54px;
+}
+.num-input .ivu-input-number-input{
+    width: 100%;
+    height: 54px;
+    margin-right: 20px;
+    padding-left: 10px;
+    border-radius: 3px;
+    background-color: #ffffff;
+    font-size: 22px;
+    color: #212121;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+.slider {
+    width: 500px;
+    background-color: transparent;
+}
+
+.ivu-slider-bar{
+    background-color: #e9eaec;
+}
+
+.ivu-slider-button{
+    top: 50%;
+    transform: translateY(-25%);
+    width: 30px;
+    height: 30px;
+    margin-left: -15px;
+    border: none;
+    border-radius: 50%;
+    background-color: #aaaaaa;
+    cursor: pointer;
+    &:focus {
+        border: none;
+        outline: none;
+    }
+    &:hover{
+        transform: translateY(-25%);
+    }
+}
+
+.ivu-slider-wrap{
+    margin-top: 0px;
+}
+
 
 .container {
   display: flex;

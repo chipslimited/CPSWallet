@@ -1,4 +1,5 @@
 import Vue from "vue";
+import VueI18n from 'vue-i18n'
 import _ from "lodash";
 import lightwallet from "eth-lightwallet-jh";
 import iView from "iview";
@@ -7,6 +8,7 @@ import MainLayout from "./layouts/MainLayout.vue";
 import dbUtils from "./dbUtils";
 
 Vue.use(iView);
+Vue.use(VueI18n);
 
 if(location.href.startsWith("file://")) {
     require('electron-context-menu')({
@@ -15,8 +17,18 @@ if(location.href.startsWith("file://")) {
     });
 }
 
+const i18n = new VueI18n({
+    locale: 'CN',    // 语言标识
+    messages: {
+        'CN': require('./assets/common/lang/cn'),   // 中文语言包
+        'EN': require('./assets/common/lang/en')    // 英文语言包
+    },
+})
+
+
 const app = new Vue({
   el: "#app",
+    i18n,
   data: {
     currentView: "wallet",
     globalData: {
@@ -77,6 +89,13 @@ const app = new Vue({
       _this.currentView = window.location.hash.replace("#", "");
     };
   },
+    mounted(){
+      window.changeLanguage = this.changeLanguage;
+    },
   methods: {
+      changeLanguage(type){
+          this.$root.$broadcast('language',type)
+          this.$dispatch('language',type)
+      }
   }
 });

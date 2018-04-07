@@ -1,43 +1,19 @@
 <template>
   <div>
+      <Modal v-model="modal.show_info" width="600" :closable="false" :mask-closable="false">
+          <div class="wallet_tips_main">
+              <div class="tips_main_title">提示</div>
+              <div class="tips_main_tips">{{modal_info}}</div>
+              <div class="tips_form_btn">
+                  <a href="javascript:;" class="js_tips_btn " @click="closeModal()">关闭</a>
+              </div>
+          </div>
+      </Modal>
 
-    <div class="filter-wrapper">
-    </div>
-
-    <div class="result-wrapper">
-      <div class="form-item">
-        <div class="form-item">
-          <i-input v-model="target_address" placeholder="请输入已签名的交易数据" class="wallet-target"></i-input>
-      </div>
-      </div>
-
-    <div class="form-item">
-        <div class="form-item">
-            <span>&nbsp;</span>
-        </div>
-    </div>
-
-      <div class="result-wrapper">
-        <div class="form-item">
-          <i-button class="button ready-to-transfer" size="large" @click="transfer">确定</i-button>
-        </div>
-      </div>
-      <div class="content-wrapper">
-          <div class="gap clearfix"></div>
-        <div class="content-wrapper token-amount">
-            <p>（温馨提示：转帐前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊网络的GAS手续费。您可以从任何钱包或交易所直接将ETH转入您的CPS地址，因为您的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币存储。 ）</p>
-        </div>
-      </div>
-
-        <Modal v-model="modal.show_info" width="600" :closable="false" :mask-closable="false">
-            <p slot="header" style="text-align:center">
-                <span>提示</span>
-            </p>
-            <div style="text-align:center"><span>{{modal_info}}</span></div>
-            <div slot="footer" style="text-align:center;">
-                <i-button class="button" @click="closeModal()">关闭</i-button>
-            </div>
-        </Modal>
+    <div class="signed-sent-main">
+        <div><textarea v-model="target_address"  placeholder="请输入已签名交易数据" class="signed-textarea"></textarea></div>
+        <div class="signed-tips">温馨提示：转账前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊的GAS手续费。您可以从任何钱包或交易所直接将ETH转入你的CPS地址，因为你的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币储存。</div>
+        <div class="signed-btn"><a href="javascript:;" class="js_submit" @click="transfer">确定</a></div>
     </div>
   </div>
 </template>

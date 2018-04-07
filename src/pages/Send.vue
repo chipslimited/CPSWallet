@@ -1,126 +1,115 @@
 <template>
   <div>
+      <div class="send-top">
+          <div class="input-item from">
+              <div class="text">从</div>
+              <i-select v-model="current_wallet.address" class="dropdown-box" placeholder="选择钱包" @on-change="changeTransferWallet">
+                  <Option v-for="item in wallet_list.filter(function(x){return x.keystore})" :value="item.address" :key="item.address">{{ item.address+(item.alias.length>0?"("+item.alias+")":"") }}</Option>
+              </i-select>
+          </div>
+          <div class="input-item to">
+              <div class="text">付给</div>
+              <div class="dropdown-box" ><input class="num-input" type="text" v-model="target_address" placeholder="转入地址"></div>
+          </div>
+          <div class="input-item cps-num mb-10">
+              <div class="text">数量</div>
+              <div class="input-box">
+                  <i-input-number v-model="transfer_token" class="num-input" :max="max" :min="min" :step="step" :disabled="!token_address || token_address.length == 0">
+                  </i-input-number>
+                  <i-select v-model="token_address" slot="append" class="type-dropdown" placeholder="币种" @on-change="onTokenChange">
+                      <Option v-for="item in current_wallet.balances" :value="item.address" :key="item.address">{{ item.symbol }}</Option>
+                  </i-select>
+              </div>
+              <div class="balance" v-if="bal">持有:<span class="num">{{bal}}</span> {{token}}</div>
+          </div>
+          <div class="slider-item">
+              <div class="text">燃料上限</div>
+              <Slider v-model="gas" :step="1" show-input :min="21000" :max="1000000" class="slider"/>
+          </div>
+          <div class="slider-item">
+              <div class="text">燃料价格(Gwei)</div>
+              <Slider v-model="gasPrice" :step="1" show-input :min="1" :max="100" class="slider"></Slider>
+          </div>
+          <div class="input-item">
+              <div class="text">矿工费用</div>
+              <div class="value">{{parseFloat(gas)*parseFloat(gasPrice)/1e9}} ether
+                  <div class="prompt">
+                      <span class="prompt-img"></span>
+                      <div class="prompt-content">
+                          <div class="prompt-text">“燃料上限” -> 燃料数量上限</div>
+                          <div class="prompt-text mb-25">“燃料价格” -> 燃料单价上限</div>
+                          <div class="prompt-text">矿工费用＝实际燃料数量*实际燃料单价。实际燃料数 量和单价不会高于用户指定的上述两个上限，多余的会 退回。较低的燃料单价和数量可以节省矿工费用，但是
+                              也会降低交易到账的速度。在联网设备发送时，会自动 获取燃料上限，在离线设备发送时，需手动设定燃料上 限。如果矿工费用不足以完成打包，或者当前交易的燃 料数量超过了区块的限制，这笔交易将失败。
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="send-bottom">
+          <div class="total">共计：<span class="total-num">{{transfer_token}}</span>{{token}}</div>
+          <div class="prompt">（温馨提示：转帐前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊网络的GAS手续费。您可以从任何钱包或交易所直接将<br>ETH转入您的CPS地址，因为您的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币存储。
+              ）
+          </div>
+          <div class="btn"><a href="javascript:;" class="js_submit" @click="proceedTranfer">确定</a></div>
+      </div>
 
-    <div class="filter-wrapper">
-    </div>
-
-    <div class="content-wrapper">
-      <div class="form-item">
-        从:<i-select v-model="current_wallet.address" class="wallet-source round-corner-input" placeholder="选择钱包" @on-change="changeTransferWallet">
-            <Option v-for="item in wallet_list.filter(function(x){return x.keystore})" :value="item.address" :key="item.address">{{ item.address+(item.alias.length>0?"("+item.alias+")":"") }}</Option>
-        </i-select>
-      </div>
-        <div class="gap clearfix"></div>
-      <div class="form-item">
-        付给:<i-input v-model="target_address" placeholder="转入地址" class="wallet-target"></i-input>
-      </div>
-      <div class="gap clearfix"></div>
-      <div class="form-item">
-        数量
-        <div class="transfer">
-          <i-input-number v-model="transfer_token" class="transfer-token" :max="max" :min="min" :step="step" :disabled="!token_address || token_address.length == 0">
-          </i-input-number>
-            <i-select v-model="token_address" slot="append" class="transfer-token-selector" placeholder="币种" @on-change="onTokenChange">
-                <Option v-for="item in current_wallet.balances" :value="item.address" :key="item.address">{{ item.symbol }}</Option>
-            </i-select>
-        </div>
-      </div>
-      <div class="form-item" v-show="token_address && current_wallet">
-
-        <div class="have-token-group" v-if="bal">
-            持有 <span class="have-token" v-text="bal"></span><span class="token" v-text="token"></span>
-        </div>
-      </div>
-        <div class="gap clearfix"></div>
-        <div class="form-item-slider">
-            <span style="width: 20%; line-height:36px;">燃料上限: </span><div style="top: 30px; width:80%;"><Slider v-model="gas" :step="1" show-input :min="21000" :max="1000000"></Slider></div>
-        </div>
-        <div class="clearfix"></div>
-        <div class="form-item-slider">
-            <span style="width: 20%; line-height:36px;">燃料价格(Gwei): </span><div style="top: 30px; width:80%;"><Slider v-model="gasPrice" :step="1" show-input :min="1" :max="100"></Slider></div>
-        </div>
-        <div class="clearfix"></div>
-        <span class="form-item-slider">
-             <span style="width: 20%; line-height:36px;">矿工费用: </span><span style="line-height:36px;">{{parseFloat(gas)*parseFloat(gasPrice)/1e9}} ETH</span>
-            <Poptip placement="right" trigger="hover">
-                <span style="line-height:36px; ">&nbsp;<img src="../assets/help.png" style="width:16px;height: 16px;"/></span>
-                <div slot="content" style="color: #000; width: 400px;" class="wordwrap">
-                    <p>“燃料上限” -> 一般设置80000</p>
- <p>“燃料价格” -> 一般设置20</p>
-<br/>
- <p>矿工费用＝实际燃料数量*实际燃料价格。实际燃料数量和价格不会高于用户指定的上述两个上限，多余的会退回。较低的燃料数量和价格可以节省矿工费用，但是也会降低交易到账的速度。</p>
-<br/>
- <p>在联网设备发送时，会自动获取燃料上限，在离线设备发送时，需手动设定燃料上限。如果矿工费用不足以完成打包，或者当前交易的燃料超过了区块的限制，这笔交易将失败。</p>
-                </div>
-            </Poptip>
-        </span>
-        </div>
-      <div class="result-wrapper">
-        <div class="form-item">
-          <i-button class="button ready-to-transfer" size="large" @click="proceedTranfer">确定</i-button>
-        </div>
-      </div>
-      <div class="content-wrapper">
-          <div class="gap clearfix"></div>
-        <div class="content-wrapper token-amount">
-            <p>（温馨提示：转帐前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊网络的GAS手续费。您可以从任何钱包或交易所直接将ETH转入您的CPS地址，因为您的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币存储。 ）</p>
-        </div>
-      </div>
       <Modal v-model="modal.password_transaction" width="360" :closable="false" :mask-closable="false">
-        <p slot="header" style="text-align:center">
-            <span>身份验证</span>
-            <span v-if=""></span>
-        </p>
-        <div style="text-align:center">
-            <i-input type="password" v-model="user_password" placeholder="请输入密码" style="width: 100%"></i-input>
-        </div>
-        <div slot="footer" style="text-align:center;">
-            <i-button class="button" @click="transferOffline" :loading="modal_loading" >离线交易</i-button>
-            <i-button class="button" @click="transfer" :loading="modal_loading" >现在发送</i-button>
-            <i-button class="button" @click="closeModal()">关闭</i-button>
-        </div>
+          <div class="wallet_tips_main">
+              <div class="tips_main_title">身份验证</div>
+              <div class="tips_form has_input">
+                  <div class="tips_input">
+                      <input type="password" placeholder="请输入密码" value="" v-model="user_password"  maxlength=""></div>
+                  <div class="tips_form_btn btn-flex more_btn">
+                      <a href="javascript:;" class="js_tips_btn " @click="transferOffline" :loading="modal_loading" >离线交易</a>
+                      <a href="javascript:;" class="js_tips_btn " @click="transfer" :loading="modal_loading">现在发送</a>
+                      <a href="javascript:;" class="js_tips_btn " @click="closeModal()">关闭</a>
+                  </div>
+              </div>
+          </div>
       </Modal>
         <Modal v-model="modal.input_nonce" width="360" :closable="false" :mask-closable="false">
-            <p slot="header" style="text-align:center">
-                <span>请输入nonce:</span>
-            </p>
-            <div style="text-align:center">
-                <span>nonce应该等于转出地址的累计交易数，如果您已联网，应用将自动获取nonce</span>
-                <i-input type="text" v-model="current_wallet.custom_nonce" placeholder="请输入nonce" style="width: 100%"></i-input>
-            </div>
-            <div slot="footer" style="text-align:center;">
-                <i-button class="button" @click="transferOffline2" :loading="modal_loading" >生成交易</i-button>
-                <i-button class="button" @click="closeModal()">关闭</i-button>
+            <div class="wallet_tips_main">
+                <div class="tips_main_title">请输入nonce</div>
+                <div class="tips_main_tips">nonce应该等于转出地址的累计交易数，如果你已联网，应用将自动获取nonce</div>
+                <div class="tips_form has_input">
+                    <div class="tips_input"><input type="text" v-model="current_wallet.custom_nonce"  placeholder="请输入nonce" value="0" id="wallet_input" maxlength=""></div>
+                    <div class="tips_form_btn btn-flex">
+                        <a href="javascript:;" class="js_tips_btn " @click="transferOffline2">确定</a>
+                        <a href="javascript:;" class="js_tips_btn " @click="closeModal('show_offline_txn')">关闭</a>
+                    </div>
+                </div>
             </div>
         </Modal>
         <Modal v-model="modal.show_info" width="600" :closable="false" :mask-closable="false">
-            <p slot="header" style="text-align:center">
-                <span>提示</span>
-            </p>
-            <div style="text-align:center"><span>{{modal_info}}</span></div>
-            <div slot="footer" style="text-align:center;">
-                <i-button class="button" @click="closeModal()">关闭</i-button>
+            <div class="wallet_tips_main">
+                <div class="tips_main_title">提示</div>
+                <div class="tips_main_tips">{{modal_info}}</div>
+                <div class="tips_form_btn">
+                    <a href="javascript:;" class="js_tips_btn " @click="closeModal()">关闭</a>
+                </div>
             </div>
         </Modal>
-      <Modal v-model="modal.show_offline_txn" width="900" :closable="false" :mask-closable="false">
-      <div class="content-wrapper" v-show="qrcode.length > 0">
-          <div class="receive-wallet-wrapper">
-              <div>
-                  <p>交易数据:</p>
-                  <p style="word-break: break-all;margin: 15px; font-size: 14px;" v-text="qrcode"></p>
-                  <p>请保存上面的签名，在联网的设备下，粘贴至已签名交易发送功能处，即可完成一次离线交易。</p>
+
+          <div class="mask" v-bind:style="{'display':modal.show_offline_txn?'':'none'}">
+              <div class="wallet_tips_main">
+              <div class="title">交易数据</div>
+              <div class="hash">
+                  {{qrcode}}
+              </div>
+              <div class="msg">请保留上面的签名，在互联网的设备下，粘贴至已签名交易发送功能处，即可完成一笔交易。</div>
+              <div class="dotted"></div>
+              <div class="transData-wrapper">
+                  <div class="transData-title">交易数据</div>
+                  <p class="qrcode" id="qrcode"></p>
+              </div>
+              <div class="dotted"></div>
+
+                  <div class="tips_form_btn">
+                      <a href="javascript:;" class="js_tips_btn " @click="closeModal('show_offline_txn')">关闭</a>
+                  </div>
               </div>
           </div>
-          <div class="receive-wallet-wrapper">
-              <div class="receive-wallet-qrcode">
-                  交易数据：<p class="qrcode" id="qrcode"></p>
-              </div>
-          </div>
-      </div>
-      <div slot="footer">
-          <Button type="info" size="medium" :loading="modal_loading" @click="closeModal();">好</Button>
-      </div>
-      </Modal>
   </div>
 </template>
 
@@ -167,7 +156,7 @@ export default {
         let _this = this,
             //_token = _.find(this.current_wallet.balances, { value: _this.token_address });
             _token = this.current_wallet && this.current_wallet.balances?this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined
-        return _token && _token.balance ? _token.balance : 9999999999;
+        return _token && _token.balance > 0 ? _token.balance : 9999999999;
     },
     bal:  function() {
         let _this = this,
@@ -189,6 +178,9 @@ export default {
       this.current_wallet = this.$root.globalData.current_wallet;
     }
   },
+    updated(){
+        this.modal.show_offline_txn = false;
+    },
   methods: {
     openModal(modalname) {
       this.modal = {};
@@ -433,7 +425,8 @@ export default {
               _this.closeModal();
               _this.qrcode = txhash;
               _this.generateQRCode(txhash);
-              _this.openModal('show_offline_txn');
+              //_this.openModal('show_offline_txn');
+              _this.modal.show_offline_txn = true;
           })
           .catch(err => {
               _this.$Loading.error();

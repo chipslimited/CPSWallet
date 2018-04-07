@@ -72,6 +72,7 @@
     "uglify-js": "^2.7.2",
     "url-loader": "^1.0.1",
     "vue": "^2.3.3",
+    "vue-i18n": "^7.6.0",
     "vue-loader": "^12.0.3",
     "vue-qart": "^2.1.1",
     "vue-template-compiler": "^2.3.3",

@@ -1,37 +1,36 @@
 <template>
   <div>
-    <!-- <div class="btn-wrapper">
-      <Button class="button" @click="changeNet('TEST')" v-show="net==='PROD'">切换到测试网</Button>
-      <Button class="button" @click="changeNet('PROD')" v-show="net==='TEST'">切换到正式网</Button>
-    </div> -->
-    <div class="filter-wrapper">
-      <i-input v-model="keyword" class="keyword" placeholder="地址">
-        <i-select v-model="address" slot="append" class="transfer-wallet-selector" placeholder="选择钱包" @on-change="onWalletChange">
-            <Option v-for="item in wallet_list" :value="item.address" :key="item.address">{{ item.address }}</Option>
-        </i-select>
-      </i-input>
-      <Button class="button filter-button" @click="search">搜索</Button>
-      <Button class="button filter-button" @click="filter(keyword)" :disabled="filter_list.length>0?false:true">在结果中搜索</Button>
-      <button class="button filter-button" @click="openExternal(explorer_address_link)" v-if="explorer_address_link.length > 0">浏览器</button>
+    <div class="history-main">
+        <div class="his-lay-search">
+            <div class="his-search-form">
+                <div class="form-item"><input v-model="keyword" type="text" placeholder="地址"></div>
+                <i-select v-model="address" slot="append" class="form-item" placeholder="选择钱包" @on-change="onWalletChange">
+                    <Option v-for="item in wallet_list" :value="item.address" :key="item.address">{{ item.address }}</Option>
+                </i-select>
+                </div>
+            </div>
+            <div class="his-search-btn">
+                <a href="javascript:;" class="js_search" @click="search">搜索</a><a href="javascript:;" @click="filter(keyword)">在结果中搜索</a>
+                <a href="javascript:;" @click="openExternal(explorer_address_link)" v-if="explorer_address_link.length > 0">浏览器</a>
+            </div>
+        </div>
+        <ul class="his-lay-list">
+            <li class="list-item" v-for="transaction in filter_list" v-bind:key="transaction.hash">
+                <div class="item-hash">
+                    <div>{{transaction.hash}}</div>
+                    <div class="item-hash-flow">
+                        <p @click="openAddress(transaction.from)">{{transaction.from}}</p>
+                        <p class="flow-arrow">=></p>
+                        <p @click="openAddress(transaction.realto)">{{transaction.to?transaction.realto:'创建合约('+transaction.contractAddress+')'}}</p>
+                    </div>
+                </div>
+                <div class="item-info">
+                    <div class="item-amount">{{transaction.amount}}&nbsp;{{transaction.symbol}}</div>
+                    <div class="item-time">{{transaction.timeStamp | formatDate}}</div>
+                </div>
+            </li>
+        </ul>
     </div>
-    <div class="content-wrapper">
-      <ul class="transaction-list">
-        <li class="transaction-item" v-for="transaction in filter_list" v-bind:key="transaction.hash">
-          <div class="transaction-wrapper">
-            <h3 class="transaction-title" v-text="transaction.hash" @click="openTransaction(transaction.hash)"></h3>
-            <p class="transaction-sub">
-              <span @click="openAddress(transaction.from)" v-text="transaction.from"></span> => <span @click="openAddress(transaction.realto)" v-text="transaction.to?transaction.realto:'创建合约('+transaction.contractAddress+')'"></span>
-            </p>
-          </div>
-          <div class="transaction-token-wrapper">
-            <span class="token-amount" v-text="transaction.amount"></span>
-            <span class="token">{{transaction.symbol}}</span>
-          </div>
-          <div class="transaction-time-wrapper">{{transaction.timeStamp | formatDate}}</div>
-        </li>
-      </ul>
-    </div>
-  </div>
 </template>
 
 <script>

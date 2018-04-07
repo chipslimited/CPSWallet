@@ -1,25 +1,25 @@
 <template>
   <div>
-    <div class="filter-wrapper">
-    </div>
-    <div class="content-wrapper">
-      <div class="receive-wallet-wrapper">
-        <div class="receive-wallet-selector">
-          当前钱包：
-          <i-select v-model="current_wallet.address" class="wallet-source" placeholder="选择钱包" @on-change="changeReceiveWallet">
-            <Option v-for="item in wallet_list" :value="item.address" :key="item.address">{{ item.address }}</Option>
-          </i-select><img src="../assets/copy.png" class="icon icon-address-copy"  @click="copyAddress()"/>
-        </div>
-        <div class="receive-wallet-qrcode">
-          收款二维码：
-            <span id="selected_address"></span>
-            <p class="qrcode" id="qrcode"></p>
-            <div style="width:200px;text-align:center;background:#A5A5A5;height:24px;" class="qrcode" v-show="qrcode.length > 0">
-                <a id="qrcode_download" href="" class="icon icon-address-copy"><img src="../assets/download.png" class="icon" style="width:20px;height:20px;"/></a>
-            </div>
-        </div>
+      <div class="receive-top">
+          <div class="wallet-wrapper">
+              <div class="title">当前钱包地址 :</div>
+              <div class="hash-wrapper">
+                  <i-select v-model="current_wallet.address" class="wallet-source" placeholder="选择钱包" @on-change="changeReceiveWallet">
+                      <Option v-for="item in wallet_list" :value="item.address" :key="item.address">{{ item.address }}</Option>
+                  </i-select>
+                  <span class="copy" @click="copyAddress()"></span>
+              </div>
+          </div>
       </div>
-    </div>
+      <div class="receive-bottom">
+          <div class="title">收款二维码 : <span id="selected_address">{{current_wallet.address}}</span></div>
+          <div class="img-group" v-bind:style="current_wallet && current_wallet.address && current_wallet.address.length > 0?'':'display:none'">
+              <p class="qrcode" id="qrcode"></p><a id="qrcode_download" href="">
+              <div class="download"></div>
+              <div class="text">点击下载</div>
+          </a>
+          </div>
+      </div>
   </div>
 </template>
 
@@ -91,7 +91,7 @@ export default {
 
       _qrcode = document.querySelector("#qrcode");
       _qrcode.innerHTML = "";
-      _qrcode.appendChild(kjua({ text: text }));
+      _qrcode.appendChild(kjua({ text: text, size: 317 }));
 
       var _selectedAddress = document.querySelector('#selected_address');
       _selectedAddress.innerHTML = text;
