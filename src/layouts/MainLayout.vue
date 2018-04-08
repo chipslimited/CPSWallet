@@ -43,10 +43,9 @@ export default {
 </script>
 
 <style lang="less">
-@import url(../assets/reset.less);
-@import url(../assets/base.less);
-@import url(../assets/iconfont.less);
 @import url(../../node_modules/iview/dist/styles/iview.css);
+
+body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-serif";line-height:1;font-weight: bold; }
 
 .ivu-modal-content{
     background-color: transparent;
@@ -55,6 +54,7 @@ export default {
 .ivu-modal {
     top:40%;
 }
+
 
 .ivu-select-item-selected{
     background-color: #212121;
@@ -66,7 +66,7 @@ export default {
 
 .ivu-select{
     font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:54px;font-weight: bold;
-    font-size: 15px;
+    font-size: 12px;
     border-color: #212121;
 }
 .ivu-select-single .ivu-select-selection{
@@ -78,14 +78,19 @@ export default {
     border-radius: 4px;
     border:none;
     height: 54px;
-    font-size: 22px;
+    font-size: 16px;
     font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:54px;font-weight: bold;
 }
 .ivu-select-visible .ivu-select-selection {
     border-color:#333333;
     height: 54px;
-    font-size: 22px;
+    font-size: 16px;
     font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:54px;font-weight: bold;
+}
+
+.ivu-select-dropdown{
+    margin:0px;
+    padding: 0px;
 }
 
 .ivu-select-dropdown .ivu-select-dropdown-list .ivu-select-item {
@@ -94,7 +99,7 @@ export default {
     line-height: 35px;
     padding: 0 14px;
     box-sizing: border-box;
-    font-size: 15px;
+    font-size: 15px!important;
     color: #212121;
     cursor: pointer;
     white-space: nowrap;
@@ -112,9 +117,30 @@ export default {
     }
 }
 
+.ivu-select-item {
+    font-size: 15px!important;
+}
+
+.ivu-select-arrow {
+    content: "";
+    position: absolute;
+    right: 14px;
+    top:50% ;
+    margin-top:-5px;
+    border:10px solid transparent;
+    border-top-color:#212121;
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+}
+
+.ivu-icon-arrow-down-b:before {
+    content: "";
+}
+
 .ivu-select-single .ivu-select-selection .ivu-select-placeholder, .ivu-select-single .ivu-select-selection .ivu-select-selected-value{
     height: 54px;
-    font-size: 22px;
+    font-size: 16px;
     font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:54px;font-weight: bold;
 
     position: relative;
@@ -124,7 +150,6 @@ export default {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 22px;
     cursor: pointer;
 
 }
@@ -139,7 +164,7 @@ export default {
     padding-left: 10px;
     border-radius: 3px;
     background-color: #ffffff;
-    font-size: 22px;
+    font-size: 16px;
     color: #212121;
     box-sizing: border-box;
     vertical-align: middle;
