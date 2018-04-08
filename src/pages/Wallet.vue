@@ -228,6 +228,7 @@ export default {
     openModal(modalname) {
       this.modal = {};
       this.modal[modalname] = true;
+      this.hdpath = "m/44'/60'/0'/0";
     },
     closeModal(modalname) {
       let modal_map = JSON.parse(JSON.stringify(this.modal));
@@ -263,7 +264,6 @@ export default {
       if (!this.user_entropy) {
         this.$Message.error($t("输入字符先"));
       } else {
-        this.hdpath = "m/44'/60'/0'/0";
         this.openModal("password_create");
         this.seed = lightwallet.keystore.generateRandomSeed(this.user_entropy);
       }
@@ -443,7 +443,6 @@ export default {
       if (!this.seed) {
         this.$Message.error("输入seed");
       } else {
-          this.hdpath = "m/44'/60'/0'/0";
         this.openModal("password_restore");
       }
     },

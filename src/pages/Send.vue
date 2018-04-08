@@ -49,7 +49,7 @@
           <div class="total">{{$t('共计：')}}<span class="total-num">{{transfer_token}}</span>{{token}}</div>
           <div class="prompt">{{$t('（温馨提示：转帐前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊网络的GAS手续费。您可以从任何钱包或交易所直接将\nETH转入您的CPS地址，因为您的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币存储。）')}}
           </div>
-          <div class="btn"><a href="javascript:;" class="js_submit" @click="proceedTranfer">确定</a></div>
+          <div class="btn"><a href="javascript:;" class="js_submit" @click="proceedTranfer">{{$t('确定')}}</a></div>
       </div>
 
       <Modal v-model="modal.password_transaction" width="360" :closable="false" :mask-closable="false">
