@@ -48,7 +48,6 @@
   width:22%;
   max-width:320px;
   min-width:290px;
-  height:100%;
   border-radius:10px;
   background:url("../images/wallet-menu-bg.png") no-repeat center; background-size: cover;
 
@@ -166,7 +165,7 @@
       width:30% ;
       padding-left:20px;
       font-size:18px;
-      .item-amount{flex:1;text-align:right; min-width: 90px;}
+      .item-amount{flex:1;text-align:right; }
       .item-time{padding-left:20px;}
     }
   }
@@ -211,7 +210,7 @@
         flex: 0 0 100px;
         width: 100px;
         text-align: right;
-        font-size: 18px;
+        font-size: 25px;
         color: #ffffff;
         padding-right: 20px;
       }
@@ -333,10 +332,10 @@
         margin-bottom: 0;
       }
       .text {
-        flex: 0 0 120px;
-        width: 120px;
+        flex: 0 0 100px;
+        width: 100px;
         text-align: right;
-        font-size: 18px;
+        font-size: 25px;
         color: #ffffff;
         padding-right: 20px;
       }
@@ -388,11 +387,11 @@
     overflow-y: auto;
     .total {
       margin-bottom: 20px;
-      font-size: 22px;
+      font-size: 32px;
       color: #fff;
       .total-num {
         padding: 0 20px;
-        font-size: 52px;
+        font-size: 58px;
       }
     }
     .prompt {
@@ -411,7 +410,7 @@
         height: 50px;
         line-height: 50px;
         text-align: center;
-        font-size: 24px;
+        font-size: 30px;
         color: #131313;
         background-color: #ffffff;
         border-radius:4px;
@@ -433,20 +432,20 @@
     z-index: 500;
     .title {
       margin-bottom: 42px;
-      font-size: 29px;
+      font-size: 35px;
       color: #343434;
     }
     .hash {
       margin-bottom: 35px;
       line-height: 1.4;
-      font-size: 16px;
+      font-size: 22px;
       color: #212121;
       word-break: break-all;
     }
     .msg {
       line-height: 1.6;
       margin-bottom: 10px;
-      font-size: 18px;
+      font-size: 24px;
       color: #343434;
     }
     .dotted {
@@ -458,7 +457,7 @@
       padding: 25px 0;
       .transData-title {
         margin-bottom: 15px;
-        font-size: 29px;
+        font-size: 35px;
         color: #343434;
       }
     }
@@ -476,7 +475,7 @@
       width: 100%;
       .title {
         margin-bottom: 30px;
-        font-size: 18px;
+        font-size: 25px;
         color: #fff;
       }
       .hash-wrapper {
@@ -514,7 +513,7 @@
     .title {
       margin-bottom: 30px;
       line-height: 1.5;
-      font-size: 18px;
+      font-size: 25px;
       color: #fff;
       word-break: break-all;
     }

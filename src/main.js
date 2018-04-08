@@ -17,11 +17,23 @@ if(location.href.startsWith("file://")) {
     });
 }
 
+var locale = localStorage.getItem("cps-wallet-locale");
+if(!locale){
+    locale = 'CN';
+    localStorage.setItem("cps-wallet-locale", locale);
+}
+
+if(locale != 'CN' && locale != 'TW' && locale != 'EN'){
+    locale = 'CN';
+    localStorage.setItem("cps-wallet-locale", locale);
+}
+
 const i18n = new VueI18n({
-    locale: 'CN',    // 语言标识
+    locale: locale,    // 语言标识
     messages: {
-        'CN': require('./assets/common/lang/cn'),   // 中文语言包
-        'EN': require('./assets/common/lang/en')    // 英文语言包
+        'CN': require('./assets/common/lang/cn.js'),   // 中文语言包
+        'TW': require('./assets/common/lang/tw.js') ,   // 中文语言包
+        'EN': require('./assets/common/lang/en.js')    // 英文语言包
     },
 })
 
@@ -91,11 +103,17 @@ const app = new Vue({
   },
     mounted(){
       window.changeLanguage = this.changeLanguage;
+      window.i18n = i18n;
     },
   methods: {
       changeLanguage(type){
-          this.$root.$broadcast('language',type)
-          this.$dispatch('language',type)
+          i18n.locale = type;
+          localStorage.setItem("cps-wallet-locale", type);
+
+          document.getElementById('header_create_wallet').innerText = i18n.t('创建新钱包');
+          document.getElementById('header_restore_wallet').innerText = i18n.t('恢复钱包');
+          document.getElementById('header_watch_wallet').innerText = i18n.t('只读钱包');
+          document.getElementById('current_locale').innerText = window.i18n.locale;
       }
   }
 });

@@ -97,6 +97,8 @@ function createWindow() {
     })
   );
 
+  win.maximize();
+
   win.webContents.executeJavaScript(`
     var path = require('path');
     module.paths.push(path.resolve('node_modules'));

@@ -2,11 +2,11 @@
     <div class="wallet-body">
     <div class="lay-left">
         <ul class="menu-list">
-            <li><v-link href="/wallet" v-bind:class="{'active': this.$root.currentView == 'wallet','': this.$root.currentView != 'wallet'}"><i class="icon-wallet"></i><span>钱包</span></v-link></li>
-            <li><v-link href="/send"  v-bind:class="{'active': this.$root.currentView == 'send','': this.$root.currentView != 'send'}"><i class="icon-send"></i><span>发送</span></v-link></li>
-            <li><v-link href="/receive" v-bind:class="{'active': this.$root.currentView == 'receive','': this.$root.currentView != 'receive'}"><i class="icon-receive"></i><span>收款</span></v-link></li>
-            <li><v-link href="/history" v-bind:class="{'active': this.$root.currentView == 'history','': this.$root.currentView != 'history'}"><i class="icon-history"></i><span>交易历史</span></v-link></li>
-            <li><v-link href="/sendr" v-bind:class="{'active': this.$root.currentView == 'sendr','': this.$root.currentView != 'sendr'}"><i class="icon-sign"></i><span>已签名交易发送</span></v-link></li>
+            <li><v-link href="/wallet" v-bind:class="{'active': this.$root.currentView == 'wallet','': this.$root.currentView != 'wallet'}"><i class="icon-wallet"></i><span>{{$t('钱包')}}</span></v-link></li>
+            <li><v-link href="/send"  v-bind:class="{'active': this.$root.currentView == 'send','': this.$root.currentView != 'send'}"><i class="icon-send"></i><span>{{$t('发送')}}</span></v-link></li>
+            <li><v-link href="/receive" v-bind:class="{'active': this.$root.currentView == 'receive','': this.$root.currentView != 'receive'}"><i class="icon-receive"></i><span>{{$t('收款')}}</span></v-link></li>
+            <li><v-link href="/history" v-bind:class="{'active': this.$root.currentView == 'history','': this.$root.currentView != 'history'}"><i class="icon-history"></i><span>{{$t('交易历史')}}</span></v-link></li>
+            <li><v-link href="/sendr" v-bind:class="{'active': this.$root.currentView == 'sendr','': this.$root.currentView != 'sendr'}"><i class="icon-sign"></i><span>{{$t('已签名交易发送')}}</span></v-link></li>
         </ul>
     </div>
     <div class="lay-right">
@@ -66,7 +66,7 @@ body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-s
 
 .ivu-select{
     font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:54px;font-weight: bold;
-    font-size: 12px;
+    font-size: 15px;
     border-color: #212121;
 }
 .ivu-select-single .ivu-select-selection{
@@ -78,13 +78,13 @@ body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-s
     border-radius: 4px;
     border:none;
     height: 54px;
-    font-size: 16px;
+    font-size: 22px;
     font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:54px;font-weight: bold;
 }
 .ivu-select-visible .ivu-select-selection {
     border-color:#333333;
     height: 54px;
-    font-size: 16px;
+    font-size: 22px;
     font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:54px;font-weight: bold;
 }
 
@@ -99,7 +99,7 @@ body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-s
     line-height: 35px;
     padding: 0 14px;
     box-sizing: border-box;
-    font-size: 15px!important;
+    font-size: 15px;
     color: #212121;
     cursor: pointer;
     white-space: nowrap;
@@ -115,10 +115,6 @@ body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-s
         background-color: #646464;
         color: #fff;
     }
-}
-
-.ivu-select-item {
-    font-size: 15px!important;
 }
 
 .ivu-select-arrow {
@@ -140,7 +136,7 @@ body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-s
 
 .ivu-select-single .ivu-select-selection .ivu-select-placeholder, .ivu-select-single .ivu-select-selection .ivu-select-selected-value{
     height: 54px;
-    font-size: 16px;
+    font-size: 22px;
     font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:54px;font-weight: bold;
 
     position: relative;
@@ -150,6 +146,7 @@ body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-s
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 22px;
     cursor: pointer;
 
 }
@@ -164,7 +161,7 @@ body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-s
     padding-left: 10px;
     border-radius: 3px;
     background-color: #ffffff;
-    font-size: 16px;
+    font-size: 22px;
     color: #212121;
     box-sizing: border-box;
     vertical-align: middle;

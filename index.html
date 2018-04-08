@@ -14,15 +14,16 @@
     <body style="background-color: rgb(33,33,33);">
     <div class="wallet-header clear-fix">
         <i class="h-logo"></i>
-        <a href="javascript:openModal('create_wallet');" class="h-button js_newWallet wallet-buttons" style="display:none">创建新钱包</a>
-        <a href="javascript:openModal('restore_wallet');" class="h-button js_restoreWallet wallet-buttons" style="display:none">恢复钱包</a>
-        <a href="javascript:openModal('watch_wallet');" class="h-button js_readOnlyWallet wallet-buttons" style="display:none">只读钱包</a>
+        <a id="header_create_wallet" href="javascript:openModal('create_wallet');" class="h-button js_newWallet wallet-buttons" style="display:none">创建新钱包</a>
+        <a id="header_restore_wallet" href="javascript:openModal('restore_wallet');" class="h-button js_restoreWallet wallet-buttons" style="display:none">恢复钱包</a>
+        <a id="header_watch_wallet" href="javascript:openModal('watch_wallet');" class="h-button js_readOnlyWallet wallet-buttons" style="display:none">只读钱包</a>
         <div class="language-list">
-            <a href="javascript:changeLanguage('cn');">CN</a>
+            <a id="current_locale" href="javascript:;">CN</a>
             <div class="language-change">
                 <div class="language-link">
-                    <a href="javascript:changeLanguage('cn');">TW</a>
-                    <a href="javascript:changeLanguage('en');">EN</a>
+                    <a href="javascript:changeLanguage('CN');">CN</a>
+                    <a href="javascript:changeLanguage('TW');">TW</a>
+                    <a href="javascript:changeLanguage('EN');">EN</a>
                 </div>
             </div>
         </div>
@@ -34,5 +35,11 @@
         </main-layout>
     </div>
       <script src="./dist/build.js"></script>
+    <script>
+        document.getElementById('header_create_wallet').innerText = window.i18n.t('创建新钱包');
+        document.getElementById('header_restore_wallet').innerText = window.i18n.t('恢复钱包');
+        document.getElementById('header_watch_wallet').innerText = window.i18n.t('只读钱包');
+        document.getElementById('current_locale').innerText = window.i18n.locale;
+    </script>
     </body>
   </html>
