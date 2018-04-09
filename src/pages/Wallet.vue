@@ -260,9 +260,9 @@ export default {
       });
     },
     proceedCreateToPassword() {
-        var $t = this.$root.$i18n.t;
+        var _this = this;
       if (!this.user_entropy) {
-        this.$Message.error($t("输入字符先"));
+        this.$Message.error(_this.$root.$i18n.t("输入字符先"));
       } else {
         this.openModal("password_create");
         this.seed = lightwallet.keystore.generateRandomSeed(this.user_entropy);
@@ -271,10 +271,8 @@ export default {
     createWallet() {
       if (this.modal_loading) return;
 
-        var $t = this.$root.$i18n.t;
-
       if (!this.user_password) {
-        this.$Message.error($t("输入密码"));
+        this.$Message.error(_this.$root.$i18n.t("输入密码"));
       }
 
       let _this = this,
@@ -292,7 +290,7 @@ export default {
         function(err, ks) {
           if (err) {
             reportUtils.report(err);
-            this.$Message.error($t("创建失败"));
+            this.$Message.error(_this.$root.$i18n.t("创建失败"));
             return;
           }
           try {
@@ -301,7 +299,7 @@ export default {
             setTimeout(_this.loadWallet, 1000);
           } catch (err) {
             reportUtils.report(err);
-            _this.$Message.error($t("创建失败"));
+            _this.$Message.error(_this.$root.$i18n.t("创建失败"));
           } finally {
             _this.closeModal();
           }
@@ -311,7 +309,7 @@ export default {
     updateBalances(displayError){
         var _this = this;
         var web3 = web3Utils.getWeb3()
-        var $t = this.$root.$i18n.t;
+
         this.$root.currentView == 'wallet'  && _this.wallet_list && _this.wallet_list.map(function (_wallet) {
 
             var wallet = _wallet;
@@ -329,7 +327,7 @@ export default {
                     web3.eth.getBalance(_wallet.address, function (err, result) {
                         if (err) {
                             reportUtils.report(e);
-                            if(displayError)_this.$Message.error($t("获取余额失败"));
+                            if(displayError)_this.$Message.error(_this.$root.$i18n.t("获取余额失败"));
                             return
                         }
                         //console.log(_wallet.address);
@@ -350,7 +348,7 @@ export default {
                     contract && contract.balanceOf("" + _wallet.address, function (err, balance) {
                         if(err){
                             reportUtils.report(e);
-                            if(displayError)_this.$Message.error($t("获取余额失败"));
+                            if(displayError)_this.$Message.error(_this.$root.$i18n.t("获取余额失败"));
                             return
                         }
                         //console.log(_wallet.address+", "+balance.toString());
@@ -435,7 +433,7 @@ export default {
       }
       catch (e) {
           reportUtils.report(e);
-          _this.$Message.error($t("获取余额失败"));
+          _this.$Message.error(_this.$root.$i18n.t("获取余额失败"));
       }
       return _.defaults({}, wallet, _wallet);
     },
@@ -465,10 +463,10 @@ export default {
                 _this.readonly_address = "";
             }
             else {
-                _this.$Message.error($t("错误的地址"));
+                _this.$Message.error(_this.$root.$i18n.t("错误的地址"));
             }
         }catch(err){
-            _this.$Message.error($t("错误的地址"));
+            _this.$Message.error(_this.$root.$i18n.t("错误的地址"));
         }
       },
       editAlias(wallet){
@@ -485,7 +483,6 @@ export default {
       var _this = this,
         password = this.user_password,
         seed = this.seed;
-        var $t = this.$root.$i18n.t;
 
       this.modal_loading = true;
 
@@ -516,7 +513,7 @@ export default {
           }
         );
       } else {
-        _this.$Message.error($t("无效的Seed"));
+        _this.$Message.error(_this.$root.$i18n.t("无效的Seed"));
         _this.closeModal();
       }
     },
@@ -579,8 +576,6 @@ export default {
       let _this = this,
         password = this.user_password,
         keystore = undefined
-
-        var $t = this.$root.$i18n.t;
         //_.find(this.wallet_list, this.current_wallet).keystore; //_.find causes problems in offline mode
         var signingAddress = "";
         for(var i=0;i<this.wallet_list.length;i++){
@@ -604,7 +599,7 @@ export default {
           }
           _this.openModal("seed_export");
         } catch (e) {
-          _this.$Message.error($t("导出失败"));
+          _this.$Message.error(_this.$root.$i18n.t("密码错误"));
         }
       });
     },
@@ -644,8 +639,8 @@ export default {
                         var privKey = keystore.exportPrivateKey(signingAddress, pwDerivedKey);
                         _this.download_key_url = "data:text/txt,"+privKey.toString();
                     } catch (e) {
-                        _this.$Message.error($t("密码错误"));
-                        _this.closeModal();
+                        _this.$Message.error(_this.$root.$i18n.t("密码错误"));
+                        //_this.closeModal();  1121308131001000714  do not close dialog if password is incorrect
                     }
                 });
             }
@@ -680,7 +675,7 @@ export default {
     processTransaction(wallet) {
       //this.$root.globalData.current_wallet = _.cloneDeep(wallet);
 
-        var $t = this.$root.$i18n.t;
+        var _this = this;
 
         function selectElementText(el){
             var range = document.createRange() // create new range object
@@ -693,7 +688,7 @@ export default {
         selectElementText(event.target.parentElement.parentElement.children[0]);
         document.execCommand("copy");
 
-        this.showtooltip($t("复制成功!"))
+        this.showtooltip(_this.$root.$i18n.t("复制成功!"))
         var selection = window.getSelection() // get Selection object from currently user selected text
         selection.removeAllRanges() // unselect any user selected text (if any)
       //window.location.hash = "send";

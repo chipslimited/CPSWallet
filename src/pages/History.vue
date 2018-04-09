@@ -5,7 +5,7 @@
             <div class="his-search-form">
                 <div class="form-item"><input v-model="keyword" type="text" v-bind:placeholder="$t('地址')"></div>
                 <i-select v-model="address" slot="append" class="form-item" v-bind:placeholder="$t('选择钱包')" @on-change="onWalletChange">
-                    <Option v-for="item in wallet_list" :value="item.address" :key="item.address">{{ item.address }}</Option>
+                    <Option v-for="item in wallet_list" :value="item.address" :key="item.address">{{ item.address+(item.alias.length>0?"("+item.alias+")":"") }}</Option>
                 </i-select>
                 </div>
             </div>

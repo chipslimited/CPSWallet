@@ -5,7 +5,7 @@
               <div class="title">{{$t('当前钱包地址 :')}}</div>
               <div class="hash-wrapper">
                   <i-select v-model="current_wallet.address" class="wallet-source" v-bind:placeholder="$t('选择钱包')" @on-change="changeReceiveWallet">
-                      <Option v-for="item in wallet_list" :value="item.address" :key="item.address">{{ item.address }}</Option>
+                      <Option v-for="item in wallet_list" :value="item.address" :key="item.address">{{ item.address+(item.alias.length>0?"("+item.alias+")":"") }}</Option>
                   </i-select>
                   <span class="copy" @click="copyAddress()"></span>
               </div>
@@ -97,8 +97,8 @@ export default {
       _selectedAddress.innerHTML = text;
 
       var _qrcode_download = document.querySelector("#qrcode_download");
-      _qrcode_download.download = text+".txt";
-      _qrcode_download.href = "data:text/txt,"+text;
+      _qrcode_download.download = text+".png";
+      _qrcode_download.href = document.querySelector('p img').src;//"data:text/txt,"+text;
 
       this.qrcode = text;
 
@@ -153,13 +153,13 @@ export default {
     },
       showtooltip(tip, e){
 
-          var $t = this.$root.$i18n.t;
+        var _this = this;
           var tooltip = document.createElement('div')
           tooltip.style.cssText =
               'position:absolute; background:black; color:white; padding:4px;z-index:10000;'
               + 'border-radius:2px; font-size:12px;box-shadow:3px 3px 3px rgba(0,0,0,.4);'
               + 'opacity:0;transition:opacity 0.3s'
-          tooltip.innerHTML = tip || $t('已复制!')
+          tooltip.innerHTML = tip || _this.$root.$i18n.t('已复制!')
           document.body.appendChild(tooltip)
 
           var evt = e || event
@@ -173,7 +173,7 @@ export default {
           }, 500)
       },
       copyAddress(){
-          var $t = this.$root.$i18n.t;
+          var _this = this;
           function selectElementText(el){
               var range = document.createRange() // create new range object
               range.selectNodeContents(el) // set range to encompass desired element text
@@ -185,7 +185,7 @@ export default {
           selectElementText(document.querySelector("#selected_address"));
           document.execCommand("copy");
 
-          this.showtooltip($t("复制成功!"))
+          this.showtooltip(_this.$root.$i18n.t("复制成功!"))
       }
   }
 };

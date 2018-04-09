@@ -261,27 +261,25 @@ export default {
           web3 = web3Utils.getWeb3(),
           text = [];
 
-        var $t = this.$root.$i18n.t;
-
       if (!_this.current_wallet || !_this.current_wallet.address) {
-        text.push($t("未选择钱包"));
+        text.push(_this.$root.$i18n.t("未选择钱包"));
       }
       if (!_this.target_address) {
-        text.push($t("未填写转入地址"));
+        text.push(_this.$root.$i18n.t("未填写转入地址"));
       }
       if (!web3.isAddress(this.target_address)) {
-         text.push($t("转入地址不正确"));
+         text.push(_this.$root.$i18n.t("转入地址不正确"));
       }
       if(!_this.transfer_token){
-        text.push($t("转入数量小于等于0"))
+        text.push(_this.$root.$i18n.t("转入数量小于等于0"))
       }
 
       if(!_this.token_address || _this.token_address.length == 0){
-        text.push($t("未选择币种"))
+        text.push(_this.$root.$i18n.t("未选择币种"))
       }
 
       if (text.length) {
-        text.unshift($t("错误："));
+        text.unshift(_this.$root.$i18n.t("错误："));
           _this.$Message.error(text.join(" "));
         return;
       }
@@ -293,15 +291,13 @@ export default {
       _this.$Loading.start();
       _this.modal_loading = true;
 
-        var $t = this.$root.$i18n.t;
-
       this.doTransfer()
         .then(txhash => {
           _this.$Loading.finish();
           _this.modal_loading = false;
           _this.closeModal();
-          _this.$Message.success($t('提交成功：')+`${txhash}`);
-          _this.modal_info = $t('提交成功：')+`${txhash}`;
+          _this.$Message.success(_this.$root.$i18n.t('提交成功：')+`${txhash}`);
+          _this.modal_info = _this.$root.$i18n.t('提交成功：')+`${txhash}`;
           _this.openModal('show_info');
           _this.getBalance(this.current_wallet);
 
@@ -310,8 +306,8 @@ export default {
           _this.$Loading.error();
           _this.modal_loading = false;
           _this.closeModal();
-          _this.$Message.error($t("提交失败"));
-          _this.modal_info = $t('提交失败')+err.toString();
+          _this.$Message.error(_this.$root.$i18n.t("提交失败"));
+          _this.modal_info = _this.$root.$i18n.t('提交失败')+err.toString();
            _this.openModal('show_info');
         });
     },
@@ -421,8 +417,6 @@ export default {
       transferOffline2(){
         var _this = this;
 
-          var $t = this.$root.$i18n.t;
-
         _this.doTransferOffline()
           .then(txhash => {
               _this.$Loading.finish();
@@ -437,7 +431,7 @@ export default {
               _this.$Loading.error();
               _this.modal_loading = false;
               _this.closeModal();
-              _this.$Message.error($t("提交失败")+err.toString());
+              _this.$Message.error(_this.$root.$i18n.t("提交失败")+err.toString());
               console.error(err)
           });
       },
