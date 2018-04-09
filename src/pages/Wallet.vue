@@ -120,8 +120,6 @@
               <div class="tips_main_title" v-if="export_private_key">{{$t('下载导出的私钥')}}</div>
               <div class="tips_form has_input" v-if="export_private_key">
                 <div class="tips_internal">{{$t('下载私钥文件，妥善保存并确保文件的安全，泄露该文件会造成巨大的财产损失')}}</div>
-              </div>
-              <div class="tips_form">
                   <div class="tips_form_btn btn-flex" v-if="export_private_key"><a :href="download_key_url" download="privatekey.txt" class="js_tips_btn hasdownload">DownLoad</a>
                       <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                   </div>
@@ -168,9 +166,8 @@
                     </div>
                 </div>
                 <div class="list-balance">
-                    <span class="b-unit" v-if="wallet.alias.length > 0">({{wallet.alias}})</span>
                     <a href="javascript:;" class="js_addName" @click="editAlias(wallet)" v-if="wallet.alias.length == 0">{{$t('添加地址別名')}}</a>
-                    <a href="javascript:;" class="js_addName" @click="editAlias(wallet)" v-if="wallet.alias.length > 0">{{$t('修改別名')}}</a>
+                    <a href="javascript:;" class="js_addName" @click="editAlias(wallet)" v-if="wallet.alias.length > 0"><span v-if="wallet.alias.length > 0">({{wallet.alias}})</span><i class="icon-edit"></i> </a>
                     <span class="token-wrapper" v-for="(token, index) in wallet.balances" v-bind:key="index">
                         <span class="b-num">{{token.balance}}</span><span  class="b-unit">{{token.symbol}}</span>
                     </span>
@@ -228,7 +225,9 @@ export default {
     openModal(modalname) {
       this.modal = {};
       this.modal[modalname] = true;
-      this.hdpath = "m/44'/60'/0'/0";
+
+      if(modalname == 'create_wallet' || modalname == 'restore_wallet')
+          this.hdpath = "m/44'/60'/0'/0";
     },
     closeModal(modalname) {
       let modal_map = JSON.parse(JSON.stringify(this.modal));
@@ -331,7 +330,7 @@ export default {
                             return
                         }
                         //console.log(_wallet.address);
-                        token.balance = web3Utils.toRealAmount(result);
+                        token.balance = web3Utils.toRealAmount(result, 18);
                         wallet.balances[i] = token;
                     })
                 }
@@ -398,7 +397,7 @@ export default {
                   _this.$Message.error($t("获取余额失败"));
                   return
               }
-              _token.balance = web3Utils.toRealAmount(result);
+              _token.balance = web3Utils.toRealAmount(result, 18);
               _wallet.balances.push(_token);
 
               _.forEach(erc20tokens, (token, index) => {

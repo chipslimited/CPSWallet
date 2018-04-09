@@ -173,6 +173,9 @@ export default {
           }, 500)
       },
       copyAddress(){
+
+        if(document.querySelector('#selected_address').innerText == "")return;
+
           var _this = this;
           function selectElementText(el){
               var range = document.createRange() // create new range object

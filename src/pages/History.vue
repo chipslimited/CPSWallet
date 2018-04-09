@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="history-main">
+  <div class="history-main">
+    <div>
         <div class="his-lay-search">
             <div class="his-search-form">
                 <div class="form-item"><input v-model="keyword" type="text" v-bind:placeholder="$t('地址')"></div>
@@ -156,65 +156,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.filter-wrapper {
-  display: inline-flex;
-  flex-wrap: nowrap;
-  align-items: center;
-}
-.keyword {
-  width: 620px;
-}
-.transfer-wallet-selector {
-  width: 320px;
-}
-.filter-button {
-  height: 34px;
-  margin-left: 10px;
-}
-.transaction-list {
-  display: flex;
-  flex-direction: column;
-  .transaction-item {
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    height: 70px;
-    margin-bottom: 10px;
-    color: #ccc;
-    border: 1px solid #999;
-    border-left: 5px solid #ccc;
-    background: rgb(90, 84, 110);
-    padding: 0 10px;
-    &:nth-child(2n) {
-      background: rgb(177, 156, 171);
+    .his-search-btn{
+        line-height: 16px;
     }
-    &:hover {
-      border: 1px solid #fff;
-      border-left: 5px solid #fff;
-      color: #fff;
-    }
-    .transaction-wrapper {
-      flex-grow: 1;
-      .transaction-title {
-        display: inline-flex;
-        font-size: 14px;
-      }
-      .transaction-sub {
-        color: #eee;
-        font-size: 12px;
-        margin-top: 10px;
-      }
-    }
-    .transaction-token-wrapper {
-      font-size: 14px;
-      align-content: left;
-    }
-    .transaction-time-wrapper {
-      width: 150px;
-      font-size: 12px;
-      padding: 0 0 0 10px;
-    }
-  }
-}
 </style>

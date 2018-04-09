@@ -57,7 +57,7 @@
               <div class="tips_main_title">{{$t('身份验证')}}</div>
               <div class="tips_form has_input">
                   <div class="tips_input">
-                      <input type="password" placeholder="{{$t('请输入密码')}}" value="" v-model="user_password"  maxlength=""></div>
+                      <input type="password" v-bind:placeholder="$t('请输入密码')" value="" v-model="user_password"  maxlength=""></div>
                   <div class="tips_form_btn btn-flex more_btn">
                       <a href="javascript:;" class="js_tips_btn " @click="transferOffline" :loading="modal_loading" >{{$t('离线交易')}}</a>
                       <a href="javascript:;" class="js_tips_btn " @click="transfer" :loading="modal_loading">{{$t('现在发送')}}</a>
@@ -71,7 +71,7 @@
                 <div class="tips_main_title">{{$t('请输入nonce')}}</div>
                 <div class="tips_main_tips">{{$t('nonce应该等于转出地址的累计交易数，如果你已联网，应用将自动获取nonce')}}</div>
                 <div class="tips_form has_input">
-                    <div class="tips_input"><input type="text" v-model="current_wallet.custom_nonce"  placeholder="{{$t('请输入nonce')}}" value="0" id="wallet_input" maxlength=""></div>
+                    <div class="tips_input"><input type="text" v-model="current_wallet.custom_nonce"  v-bind:placeholder="$t('请输入nonce')" value="0" id="wallet_input" maxlength=""></div>
                     <div class="tips_form_btn btn-flex">
                         <a href="javascript:;" class="js_tips_btn " @click="transferOffline2">{{$t('确定')}}</a>
                         <a href="javascript:;" class="js_tips_btn " @click="closeModal('show_offline_txn')">{{$t('关闭')}}</a>
