@@ -39,6 +39,8 @@ module.exports = {
     '修改別名':'Edit address alias',
     '导出助记词':'Export mnemonics',
     '导出私钥':'Export private key',
+    '地址已经存在':'Address already in wallet.',
+
     '从':'From',
     '付给':'To',
     '选择钱包':'Select a wallet',

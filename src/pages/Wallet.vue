@@ -448,10 +448,17 @@ export default {
         var web3 = web3Utils.getWeb3();
         var address = this.readonly_address;
         var _this = this;
-          var $t = this.$root.$i18n.t;
         try {
 
             if (web3.isAddress(address)) {
+                address = address.toLocaleLowerCase();
+
+                let index = _.findIndex(this.wallet_list, ["address", address]);
+                if(index >= 0){
+                    _this.$Message.error(_this.$root.$i18n.t("地址已经存在"));
+                    return;//地址已经存在
+                }
+
                 _this.updateWallet(
                     _this.getBalance({
                         address: address,
