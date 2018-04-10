@@ -118,12 +118,13 @@
               <div class="tips_main_title" v-if="!export_private_key">{{$t('请牢记您的助记词，写在纸上并妥善保管')}}</div>
               <div class="tips_emphasis_tips" v-if="!export_private_key">{{seed}}</div>
               <div class="tips_main_title" v-if="export_private_key">{{$t('下载导出的私钥')}}</div>
-              <div class="tips_form has_input" v-if="export_private_key">
-                <div class="tips_internal">{{$t('下载私钥文件，妥善保存并确保文件的安全，泄露该文件会造成巨大的财产损失')}}</div>
-                  <div class="tips_form_btn btn-flex" v-if="export_private_key"><a :href="download_key_url" download="privatekey.txt" class="js_tips_btn hasdownload">DownLoad</a>
+              <div v-bind:class="export_private_key?'tips_form has_input':'tips_form'">
+                <div class="tips_internal" v-if="export_private_key">{{$t('下载私钥文件，妥善保存并确保文件的安全，泄露该文件会造成巨大的财产损失')}}</div>
+                  <div class="tips_form_btn btn-flex" v-if="export_private_key">
+                      <a :href="download_key_url" download="privatekey.txt" class="js_tips_btn hasdownload">DownLoad</a>
                       <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                   </div>
-                  <div class="tips_form_btn" v-if="!export_private_key">
+                  <div class="tips_form_btn" v-else>
                       <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                   </div>
               </div>
@@ -326,6 +327,7 @@ export default {
                     web3.eth.getBalance(_wallet.address, function (err, result) {
                         if (err) {
                             reportUtils.report(e);
+                            wallet.balances[i] = token;
                             if(displayError)_this.$Message.error(_this.$root.$i18n.t("获取余额失败"));
                             return
                         }
@@ -346,6 +348,7 @@ export default {
 
                     contract && contract.balanceOf("" + _wallet.address, function (err, balance) {
                         if(err){
+                            wallet.balances[i] = token;
                             reportUtils.report(e);
                             if(displayError)_this.$Message.error(_this.$root.$i18n.t("获取余额失败"));
                             return
@@ -394,6 +397,16 @@ export default {
           web3.eth.getBalance(_wallet.address, function (err, result) {
               if(err){
                   reportUtils.report(err);
+                  _wallet.balances.push(_token);
+                  _.forEach(erc20tokens, (token, index) => {
+                      var _token = {
+                          address: token.address,
+                          symbol: token.symbol,
+                          decimals: token.decimals,
+                          //contract: token.contract
+                      };
+                      _wallet.balances.push(_token);
+                  });
                   _this.$Message.error($t("获取余额失败"));
                   return
               }

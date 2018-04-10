@@ -8,6 +8,18 @@ const url = require("url");
 // 当 JavaScript 对象被垃圾回收， window 会被自动地
 let win;
 
+const isSecondInstance = app.makeSingleInstance((commandLine, workingDirectory) => {
+    // Someone tried to run a second instance, we should focus our window.
+    if (win) {
+        if (win.isMinimized()) win.restore()
+        win.focus()
+    }
+})
+
+if (isSecondInstance) {
+    app.quit()
+}
+
 if(process.platform == "win32"){
     if (require('electron-squirrel-startup')) return;
     // this should be placed at top of main.js to handle setup events quickly

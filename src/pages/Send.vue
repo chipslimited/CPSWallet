@@ -74,7 +74,7 @@
                     <div class="tips_input"><input type="text" v-model="current_wallet.custom_nonce"  v-bind:placeholder="$t('请输入nonce')" value="0" id="wallet_input" maxlength=""></div>
                     <div class="tips_form_btn btn-flex">
                         <a href="javascript:;" class="js_tips_btn " @click="transferOffline2">{{$t('确定')}}</a>
-                        <a href="javascript:;" class="js_tips_btn " @click="closeModal('show_offline_txn')">{{$t('关闭')}}</a>
+                        <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                     </div>
                 </div>
             </div>
