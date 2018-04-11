@@ -271,11 +271,11 @@ export default {
          text.push(_this.$root.$i18n.t("转入地址不正确"));
       }
 
-      if(_this.transfer_token.endsWith('.')){
+      if((_this.transfer_token+"").endsWith('.')){
           _this.transfer_token = _this.transfer_token+".0";
       }
 
-      if(!_this.transfer_token){
+      if(!_this.transfer_token || (_this.transfer_token+"").length == 0){
         text.push(_this.$root.$i18n.t("转入数量小于等于0"))
       }
 
