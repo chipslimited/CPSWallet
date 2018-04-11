@@ -130,6 +130,13 @@ body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-s
     -moz-transition: all 0.3s ease-in-out;
 }
 
+.ivu-select-visible .ivu-select-arrow:nth-of-type(2){
+    margin-top: -15px;
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+}
+
 .ivu-icon-arrow-down-b:before {
     content: "";
 }
