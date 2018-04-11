@@ -61,7 +61,15 @@ export default {
     formatDate: function(timestamp) {
       let newDate = new Date();
       newDate.setTime(timestamp);
-      return newDate.toLocaleString();
+      var locale = window.i18n.locale;
+      if(locale == 'EN'){
+          locale = 'en-US';
+      }else if(locale == 'TW'){
+          locale = 'zh-TW';
+      }else if(locale == 'CN'){
+          locale = 'zh-CN';
+      }
+      return newDate.toLocaleString(locale);
     },
     translateAddressToToken: function(address) {
       if(!address) return 'ETH';
