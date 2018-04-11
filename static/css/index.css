@@ -535,6 +535,7 @@
       align-items: center;
       max-width: 950px;
       margin-bottom: 26px;
+        min-height: 34px;
       font-size: 0; }
       .lay-right-main .send-top .slider-item:last-child {
         margin-bottom: 0; }

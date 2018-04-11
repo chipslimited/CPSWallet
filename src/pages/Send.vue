@@ -528,6 +528,9 @@ export default {
     },
     transferTokenChange(){
       var amount = this.transfer_token + "";
+
+      if(amount == "")return;
+
       var prev_amount = this.transfer_token + "";
       if(prev_amount.startsWith('.')){
           amount = "0"+prev_amount;
@@ -540,6 +543,28 @@ export default {
           while(amountValid.startsWith("00")){
               amountValid = amountValid.substring(1);
           }
+
+          var decimals = 18;
+          if (this.token_address === "ETH") {
+
+          }
+          else{
+              let erc20tokens = web3Utils.getErc20Tokens();
+
+              let erc20token = _.find(erc20tokens, {
+                      address: this.token_address
+                  });
+
+              decimals = erc20token.decimals;
+          }
+          var amount_decimals = /\.[0-9]+/.exec(amountValid);
+          if(amount_decimals){
+              amount_decimals = amount_decimals[0];
+          }
+          if(amount_decimals && amount_decimals.length > decimals+1){
+              amountValid = amountValid.substring(0, amountValid.length-(amount_decimals.length-decimals-1));
+          }
+
           if(prev_amount != amountValid){
 
               setTimeout(function(){
