@@ -1,6 +1,6 @@
 <template>
   <div style="height: 100%;">
-      <div class="send-top">
+      <div class="send-top" v-bind:style="{'display':modal.show_offline_txn?'none':''}">
           <div class="input-item from">
               <div class="text">{{$t('从')}}</div>
               <i-select v-model="current_wallet.address" class="dropdown-box" v-bind:placeholder="$t('选择钱包')" @on-change="changeTransferWallet">
@@ -45,7 +45,7 @@
               </div>
           </div>
       </div>
-      <div class="send-bottom">
+      <div class="send-bottom" v-bind:style="{'display':modal.show_offline_txn?'none':''}">
           <div class="total">{{$t('共计：')}}<span class="total-num">{{transfer_token}}</span>{{token}}</div>
           <div class="prompt">{{$t('（温馨提示：转帐前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊网络的GAS手续费。您可以从任何钱包或交易所直接将\nETH转入您的CPS地址，因为您的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币存储。）')}}
           </div>
@@ -102,7 +102,7 @@
                   <p class="qrcode" id="qrcode"></p>
               </div>
               <div class="dotted"></div>
-
+                  <br/>
                   <div class="tips_form_btn">
                       <a href="javascript:;" class="js_tips_btn " @click="closeModal('show_offline_txn')">{{$t('关闭')}}</a>
                   </div>
@@ -462,7 +462,7 @@ export default {
                           nonce: _this.current_wallet.custom_nonce,
                           from: fromAddr,
                           to: toAddr,
-                          value: value,
+                          value: value.toString(),
                           gasPrice: gasPrice,
                           gas: gas
                       }
@@ -528,22 +528,30 @@ export default {
     },
     transferTokenChange(){
       var amount = this.transfer_token + "";
-      var prev_amount = amount;
+      var prev_amount = this.transfer_token + "";
       if(prev_amount.startsWith('.')){
           amount = "0"+prev_amount;
       }
 
-      var amountValid = /[0-9]+.[0-9]*/g.exec(amount)[0];
-      while(amountValid.startsWith("00")){
-          amountValid = amountValid.substring(1);
-      }
-      if(prev_amount != amountValid){
-          var _this = this;
+      var _this = this;
 
+      try{
+          var amountValid = /[0-9]+\.*[0-9]*/g.exec(amount)[0];
+          while(amountValid.startsWith("00")){
+              amountValid = amountValid.substring(1);
+          }
+          if(prev_amount != amountValid){
+
+              setTimeout(function(){
+                  _this.transfer_token = amountValid;
+              },0);
+          }
+      }catch(err){
           setTimeout(function(){
-              _this.transfer_token = amountValid;
+              _this.transfer_token = "0";
           },0);
       }
+
     }
   }
 };
