@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100%;">
       <div class="receive-top">
           <div class="wallet-wrapper">
               <div class="title">{{$t('当前钱包地址 :')}}</div>

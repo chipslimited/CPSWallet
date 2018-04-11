@@ -158,13 +158,37 @@ body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-s
     width: 100%;
     height: 54px;
     margin-right: 20px;
-    padding-left: 10px;
     border-radius: 3px;
     background-color: #ffffff;
     font-size: 22px;
     color: #212121;
     box-sizing: border-box;
     vertical-align: middle;
+}
+
+.num-input .ivu-input-wrap{
+    height: 54px;
+}
+.num-input .ivu-input{
+    width: 100%;
+    height: 54px;
+    margin-right: 20px;
+    border-radius: 3px;
+    background-color: #ffffff;
+    font-size: 22px;
+    color: #212121;
+    box-sizing: border-box;
+    vertical-align: middle;
+    border: none;
+    &:active{
+        border: none;
+    }
+}
+
+.ivu-input:focus {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 }
 
 .slider {
@@ -294,5 +318,9 @@ body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-s
 }
 .content-wrapper {
 
+}
+
+#app{
+    height:calc(100% - 88px);
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100%;">
       <div class="send-top">
           <div class="input-item from">
               <div class="text">{{$t('从')}}</div>
@@ -14,8 +14,8 @@
           <div class="input-item cps-num mb-10">
               <div class="text">{{$t('数量')}}</div>
               <div class="input-box">
-                  <i-input-number v-model="transfer_token" class="num-input" :max="max" :min="min" :step="step" :disabled="!token_address || token_address.length == 0">
-                  </i-input-number>
+                  <i-input v-model="transfer_token" class="num-input"  @on-change="transferTokenChange" :disabled="!token_address || token_address.length == 0">
+                  </i-input>
                   <i-select v-model="token_address" slot="append" class="type-dropdown" v-bind:placeholder="$t('币种')" @on-change="onTokenChange">
                       <Option v-for="item in current_wallet.balances" :value="item.address" :key="item.address">{{ item.symbol }}</Option>
                   </i-select>
@@ -124,7 +124,7 @@ export default {
     return {
       method: "transfer",
       token_address: "",
-      transfer_token: 0,
+      transfer_token: "0",
       wallet_list: [],
       current_wallet: {
         balances:[]
@@ -270,6 +270,11 @@ export default {
       if (!web3.isAddress(this.target_address)) {
          text.push(_this.$root.$i18n.t("转入地址不正确"));
       }
+
+      if(_this.transfer_token.endsWith('.')){
+          _this.transfer_token = _this.transfer_token+".0";
+      }
+
       if(!_this.transfer_token){
         text.push(_this.$root.$i18n.t("转入数量小于等于0"))
       }
@@ -329,7 +334,7 @@ export default {
 
         try {
           if (this.token_address === "ETH") {
-            value = parseFloat(valueEth) * 1.0e18;
+            value = new BigNumber(valueEth + "e+" + "18");
             gasPrice = parseFloat(_this.gasPrice)*1e9;
             gas = _this.gas;
             var txn = {
@@ -450,7 +455,7 @@ export default {
 
               try {
                   if (this.token_address === "ETH") {
-                      value = parseFloat(valueEth) * 1.0e18;
+                      value = new BigNumber(valueEth + "e+" + "18");
                       gasPrice = parseFloat(_this.gasPrice)*1e9;
                       gas = _this.gas;
                       var txn = {
@@ -520,6 +525,25 @@ export default {
     onTokenChange(value) {
       this.transfer_token = 0;
 
+    },
+    transferTokenChange(){
+      var amount = this.transfer_token + "";
+      var prev_amount = amount;
+      if(prev_amount.startsWith('.')){
+          amount = "0"+prev_amount;
+      }
+
+      var amountValid = /[0-9]+.[0-9]*/g.exec(amount)[0];
+      while(amountValid.startsWith("00")){
+          amountValid = amountValid.substring(1);
+      }
+      if(prev_amount != amountValid){
+          var _this = this;
+
+          setTimeout(function(){
+              _this.transfer_token = amountValid;
+          },0);
+      }
     }
   }
 };
