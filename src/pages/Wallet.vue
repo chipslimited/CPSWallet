@@ -25,7 +25,7 @@
               <div class="tips_emphasis_tips">{{seed}}</div>
               <div class="tips_lower_tit">{{$t('温馨提示')}}</div>
               <div class="tips_main_tips">{{$t('请写在纸上并妥善保管，您将需要它来访问钱包。不要让任何人看到这段助记词，否则将存在巨大的数字资产安全风险。请在下方输入刚才的密码，确认您已经将助记词写在纸上并妥善保管，并完成新钱包的创建。')}}</div>
-              <div class="tips_form has_input"><div class="tips_input"><input type="password" v-model="user_password"  placeholder="请输入密码" value="" maxlength=""></div>
+              <div class="tips_form has_input"><div class="tips_input"><input type="password" v-model="user_password"  v-bind:placeholder="$t('请输入密码')" value="" maxlength=""></div>
                   <div class="tips_form_btn btn-flex"><a href="javascript:;" class="js_tips_btn ":loading="modal_loading" @click="createWallet">{{$t('确定')}}</a>
                       <a href="javascript:;" class="js_tips_btn " @click="closeModal('password_create')">{{$t('关闭')}}</a></div>
               </div>
