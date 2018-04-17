@@ -59,8 +59,8 @@
                   <div class="tips_input">
                       <input type="password" v-bind:placeholder="$t('请输入密码')" value="" v-model="user_password"  maxlength=""></div>
                   <div class="tips_form_btn btn-flex more_btn">
-                      <a href="javascript:;" class="js_tips_btn " @click="transferOffline" :loading="modal_loading" >{{$t('离线交易')}}</a>
-                      <a href="javascript:;" class="js_tips_btn " @click="transfer" :loading="modal_loading">{{$t('现在发送')}}</a>
+                      <a href="javascript:;" class="js_tips_btn " @click="transferOffline" :loading="modal_loading">{{$t('离线交易')}}</a>
+                      <a href="javascript:;" v-bind:class="{'js_tips_btn ':!modal_loading,'js_tips_btn ivu-btn-loading':modal_loading}" @click="transfer" :loading="modal_loading">{{$t('现在发送')}}</a>
                       <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                   </div>
               </div>
@@ -293,6 +293,8 @@ export default {
     transfer() {
       var _this = this;
 
+      if(_this.modal_loading)return;
+
       _this.$Loading.start();
       _this.modal_loading = true;
 
@@ -405,6 +407,7 @@ export default {
     },
       transferOffline() {
           var _this = this;
+          if(_this.modal_loading)return;
           this.qrcode = "";
 
           _this.$Loading.start();

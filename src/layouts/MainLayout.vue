@@ -158,6 +158,10 @@ body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-s
 
 }
 
+.ivu-btn-loading {
+    pointer-events: none;
+}
+
 .num-input .ivu-input-number-input-wrap{
     height: 54px;
 }
