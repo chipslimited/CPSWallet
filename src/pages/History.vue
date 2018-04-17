@@ -1,3 +1,4 @@
+
 <template>
   <div class="history-main">
     <div>
@@ -12,6 +13,9 @@
             <div class="his-search-btn">
                 <a href="javascript:;" class="js_search" @click="search">{{$t('搜索')}}</a><a href="javascript:;" @click="filter(keyword)">{{$t('在结果中搜索')}}</a>
                 <a href="javascript:;" @click="openExternal(explorer_address_link)" v-if="explorer_address_link.length > 0">{{$t('浏览器')}}</a>
+            </div>
+            <div class="his-search-btn" v-if="pageCount > 1">
+                <MultiPage :total="pageCount" @on-change="refreshSearch" simple size="small"></MultiPage>
             </div>
         </div>
         <ul class="his-lay-list">
@@ -38,6 +42,7 @@ import axios from "axios";
 import _ from 'lodash';
 import BigNumber from 'bignumber.js';
 import MainLayout from "../layouts/MainLayout.vue";
+import MultiPage from "../components/MultiPage.vue"
 import web3Utils from "../web3Utils";
 const {shell} = require('electron');
 
@@ -51,7 +56,10 @@ export default {
       address: "",
       explorer_address_link:"",
       transaction_list: [],
-      filter_list:[]
+      filter_list:[],
+      page: 0,
+      pageCount:0,
+      total:0,
     };
   },
   mounted() {
@@ -97,7 +105,7 @@ export default {
         var bodyFormData = new FormData();
         bodyFormData.set('address', address);
         bodyFormData.set('cntPerPage', 25);
-        bodyFormData.set('pageIndex', 0);
+        bodyFormData.set('pageIndex', _this.page);
 
       
       axios({
@@ -111,6 +119,8 @@ export default {
           if (_this.transaction_list && _this.transaction_list.length > 0){
             if (_this.transaction_list[0].bcTransferDOList){
                 _this.transaction_list = _this.transaction_list[0].bcTransferDOList;
+                _this.pageCount = response.data.data.pageCount;
+                _this.total = response.data.data.size;
             }
           }
 
@@ -133,6 +143,12 @@ export default {
           _this.$Loading.error();
         });
     },
+     refreshSearch(page){
+        var _this = this;
+       _this.page = page;
+       _this.loadHistory(_this.address);
+
+     },
     onWalletChange(address) {
       let _this = this,
         web3 = web3Utils.getWeb3(),
@@ -141,6 +157,7 @@ export default {
       web3Utils.setWebProvider(current_wallet.keystore);
     },
     search(){
+      this.page = 0;
       this.loadHistory(this.address);
       // this.loadHistory("0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a");
     },

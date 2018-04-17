@@ -22,7 +22,7 @@ import VLink from "../components/VLink.vue";
 
 export default {
   components: {
-    VLink
+    VLink,
   },
   data(){
     return {
@@ -329,6 +329,32 @@ body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-s
 }
 .content-wrapper {
 
+}
+
+.ivu-page-item a {
+    font-size: 12px;
+    line-height: 12px;
+    height: 16px;
+}
+
+.ivu-page-prev a {
+    font-size: 12px;
+    line-height: 12px;
+    height: 16px;
+}
+
+.ivu-page-next a {
+    font-size: 12px;
+    line-height: 12px;
+    height: 16px;
+}
+
+.ivu-page-item-active {
+    color: #495060;
+}
+
+.ivu-page-simple-pager {
+    color: #ffffff;
 }
 
 #app{

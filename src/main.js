@@ -5,6 +5,7 @@ import lightwallet from "eth-lightwallet-jh";
 import iView from "iview";
 import routes from "./routes";
 import MainLayout from "./layouts/MainLayout.vue";
+import MultiPage from "./components/MultiPage.vue"
 import dbUtils from "./dbUtils";
 
 Vue.use(iView);
@@ -28,15 +29,30 @@ if(locale != 'CN' && locale != 'TW' && locale != 'EN'){
     localStorage.setItem("cps-wallet-locale", locale);
 }
 
+import zh from 'iview/dist/locale/zh-CN';
+import en from 'iview/dist/locale/en-US';
+import tw from 'iview/dist/locale/zh-TW';
+
 const i18n = new VueI18n({
     locale: locale,    // 语言标识
     messages: {
-        'CN': require('./assets/common/lang/cn.js'),   // 中文语言包
-        'TW': require('./assets/common/lang/tw.js') ,   // 中文语言包
-        'EN': require('./assets/common/lang/en.js')    // 英文语言包
+        'CN': Object.assign(require('./assets/common/lang/cn.js'), zh),   // 中文语言包
+        'TW': Object.assign(require('./assets/common/lang/tw.js') , tw),   // 中文语言包
+        'EN': Object.assign(require('./assets/common/lang/en.js'), en)    // 英文语言包
     },
 })
 
+if(locale == 'EN'){
+    Vue.use(iView, { en });
+}
+else if(locale == 'CN'){
+    Vue.use(iView, { cn });
+}
+else if(locale == 'TW'){
+    Vue.use(iView, { tw });
+}
+
+Vue.component('MultiPage', MultiPage);
 
 const app = new Vue({
   el: "#app",
@@ -114,6 +130,17 @@ const app = new Vue({
           document.getElementById('header_restore_wallet').innerText = i18n.t('恢复钱包');
           document.getElementById('header_watch_wallet').innerText = i18n.t('只读钱包');
           document.getElementById('current_locale').innerText = window.i18n.locale;
+
+          if(type == 'EN'){
+              Vue.use(iView, { en });
+          }
+          else if(type == 'CN'){
+              Vue.use(iView, { zh });
+          }
+          else if(type == 'TW'){
+              Vue.use(iView, { tw });
+          }
+
       }
   }
 });
