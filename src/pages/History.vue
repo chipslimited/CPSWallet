@@ -108,6 +108,12 @@ export default {
         })
         .then(response => {
           _this.transaction_list = response.data && response.data.data?response.data.data.list:[];
+          if (_this.transaction_list && _this.transaction_list.length > 0){
+            if (_this.transaction_list[0].bcTransferDOList){
+                _this.transaction_list = _this.transaction_list[0].bcTransferDOList;
+            }
+          }
+
           if(_this.transaction_list && _this.transaction_list.length > 0){
               _this.transaction_list = _this.transaction_list.map(function (txn) {
                   txn.from = txn.fromAddr;
