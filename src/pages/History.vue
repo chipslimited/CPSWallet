@@ -15,7 +15,7 @@
                 <a href="javascript:;" @click="openExternal(explorer_address_link)" v-if="explorer_address_link.length > 0">{{$t('浏览器')}}</a>
             </div>
             <div class="his-search-btn" v-if="pageCount > 1">
-                <MultiPage :total="pageCount" @on-change="refreshSearch" simple size="small"></MultiPage>
+                <MultiPage :total="total" @on-change="refreshSearch" simple size="small" pageSize="25"></MultiPage>
             </div>
         </div>
         <ul class="his-lay-list">
