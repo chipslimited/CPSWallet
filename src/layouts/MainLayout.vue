@@ -357,6 +357,10 @@ body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-s
     color: #ffffff;
 }
 
+.ivu-page-simple .ivu-page-simple-pager input {
+    width: auto;
+}
+
 #app{
     height:calc(100% - 88px);
 }

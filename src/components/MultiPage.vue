@@ -9,12 +9,12 @@
         <div :class="simplePagerClasses" :title="currentPage + '/' + allPages">
             <input
                 type="text"
-                :value="currentPage"
+                :value="currentPageStr"
                 autocomplete="off"
                 spellcheck="false"
                 @keydown="keyDown"
                 @keyup="keyUp"
-                @change="keyUp">
+                @onchange="valueChange" v-bind:size="currentPageStrLen">
             <span>/</span>
             {{ allPages }}
         </div>
@@ -136,7 +136,9 @@
             return {
                 prefixCls: prefixCls,
                 currentPage: this.current,
-                currentPageSize: this.pageSize
+                currentPageStr: this.current+"",
+                currentPageSize: this.pageSize,
+                currentPageStrLen: 1,
             };
         },
         watch: {
@@ -148,6 +150,8 @@
             },
             current (val) {
                 this.currentPage = val;
+                this.currentPageStr = val + "";
+                this.currentPageStrLen = (val+"").length;
             },
             pageSize (val) {
                 this.currentPageSize = val;
@@ -219,6 +223,8 @@
             changePage (page) {
                 if (this.currentPage != page) {
                     this.currentPage = page;
+                    this.currentPageStr = page +"";
+                    this.currentPageStrLen = (page+"").length;
                     this.$emit('update:current', page);
                     this.$emit('on-change', page);
                 }
@@ -268,9 +274,20 @@
                     e.preventDefault();
                 }
             },
+            valueChange(e){
+
+                const val = parseInt(e.target.value);
+                this.currentPageStrLen = (val+"").length;
+
+            },
             keyUp (e) {
                 const key = e.keyCode;
                 const val = parseInt(e.target.value);
+
+                this.currentPageStrLen = (val+"").length;
+                this.currentPageStr = val+"";
+
+
                 if (key === 38) {
                     this.prev();
                 } else if (key === 40) {
@@ -285,6 +302,7 @@
                         page = val;
                     }
                     e.target.value = page;
+
                     this.changePage(page);
                 }
             }
