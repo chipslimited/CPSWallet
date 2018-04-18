@@ -15,7 +15,7 @@
                 <a href="javascript:;" @click="openExternal(explorer_address_link)" v-if="explorer_address_link.length > 0">{{$t('浏览器')}}</a>
             </div>
             <div class="his-search-btn" v-if="pageCount > 1">
-                <MultiPage :total="total" @on-change="refreshSearch" simple size="small" pageSize="25"></MultiPage>
+                <MultiPage :current="page" :total="total" @on-change="refreshSearch" simple size="small" pageSize="25"></MultiPage>
             </div>
         </div>
         <ul class="his-lay-list">
@@ -57,7 +57,7 @@ export default {
       explorer_address_link:"",
       transaction_list: [],
       filter_list:[],
-      page: 0,
+      page: 1,
       pageCount:0,
       total:0,
     };
@@ -157,7 +157,7 @@ export default {
       web3Utils.setWebProvider(current_wallet.keystore);
     },
     search(){
-      this.page = 0;
+      this.page = 1;
       this.loadHistory(this.address);
       // this.loadHistory("0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a");
     },
