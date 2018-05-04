@@ -46,7 +46,7 @@ if(locale == 'EN'){
     Vue.use(iView, { en });
 }
 else if(locale == 'CN'){
-    Vue.use(iView, { cn });
+    Vue.use(iView, { zh });
 }
 else if(locale == 'TW'){
     Vue.use(iView, { tw });
