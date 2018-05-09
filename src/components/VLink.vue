@@ -37,20 +37,3 @@
     }
   }
 </script>
-
-<style scoped>
-  .link{
-    font-size:18px;
-  }
-  a:link,
-  a:visited,
-  a:active{
-    color:#ccc;
-  }
-  a:hover{
-    color:#FFF;
-  }
-  a.active {
-    color: #fff;
-  }
-</style>

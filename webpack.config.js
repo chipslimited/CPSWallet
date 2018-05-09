@@ -64,10 +64,12 @@ module.exports = {
     historyApiFallback: true,
     noInfo: true
   },
-  devtool: "#eval-source-map"
+  //devtool: "#eval-source-map"
 };
 
 if (process.env.NODE_ENV === "production") {
+    const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+
   module.exports.devtool = "#source-map";
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
@@ -76,6 +78,38 @@ if (process.env.NODE_ENV === "production") {
         NODE_ENV: '"production"'
       }
     }),
-    new webpack.optimize.OccurrenceOrderPlugin()
+    new webpack.optimize.OccurrenceOrderPlugin(),
+      new UglifyJsPlugin({
+          sourceMap: false,
+          uglifyOptions: {
+              ecma:8,
+              sourceMap: false,
+              compress: {
+                  sequences: true,
+                  dead_code: true,
+                  conditionals: true,
+                  collapse_vars: true,
+                  reduce_vars: true,
+                  booleans: true,
+                  evaluate: true,
+                  unused: true,
+                  unsafe: true,
+                  if_return: true,
+                  join_vars: true,
+                  drop_console: true,
+                  drop_debugger: true,
+                  properties: true,
+                  comparisons: false,
+                  loops: true,
+                  hoist_funs: true,
+                  warnings: false,
+              },
+              output: {
+                  comments: function(node, comment) {
+                      return false;
+                  }
+              }
+          }
+      }),
   ]);
 }

@@ -14,7 +14,8 @@ function createWindow() {
     width: 1200,
     height: 700,
     backgroundColor: "#2e2c29",
-    useContentSize: true
+    useContentSize: true,
+    icon:"./assets/CPSWALLETLOGO.png"
   });
 
   // 然后加载应用的 index.html。
@@ -25,6 +26,8 @@ function createWindow() {
       slashes: true
     })
   );
+
+  win.maximize();
 
   win.webContents.executeJavaScript(`
     var path = require('path');

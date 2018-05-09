@@ -1,54 +1,26 @@
 <template>
   <div>
+      <Modal v-model="modal.show_info" width="600" :closable="false" :mask-closable="false">
+          <div class="wallet_tips_main">
+              <div class="tips_main_title">{{$t('提示')}}</div>
+              <div class="tips_main_tips">{{modal_info}}</div>
+              <div class="tips_form_btn">
+                  <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+              </div>
+          </div>
+      </Modal>
 
-    <div class="filter-wrapper">
-    </div>
-
-    <div class="result-wrapper">
-      <div class="form-item">
-        <div class="form-item">
-          <i-input v-model="target_address" placeholder="请输入已签名的交易数据" class="wallet-target"></i-input>
-      </div>
-      </div>
-
-    <div class="form-item">
-        <div class="form-item">
-            <span>&nbsp;</span>
-        </div>
-    </div>
-
-      <div class="result-wrapper">
-        <div class="form-item">
-          <i-button class="button ready-to-transfer" size="large" @click="transfer">确定</i-button>
-        </div>
-      </div>
-      <div class="content-wrapper">
-          <div class="gap clearfix"></div>
-        <div class="content-wrapper token-amount">
-            <p>（温馨提示：转帐前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊网络的GAS手续费。您可以从任何钱包或交易所直接将ETH转入您的CPS地址，因为您的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币存储。 ）</p>
-        </div>
-      </div>
-
-        <Modal v-model="modal.show_info" width="600" :closable="false" :mask-closable="false">
-            <p slot="header" style="text-align:center">
-                <span>提示</span>
-            </p>
-            <div style="text-align:center"><span>{{modal_info}}</span></div>
-            <div slot="footer" style="text-align:center;">
-                <i-button class="button" @click="closeModal()">关闭</i-button>
-            </div>
-        </Modal>
+    <div class="signed-sent-main">
+        <div><textarea v-model="target_address"  v-bind:placeholder="$t('请输入已签名交易数据')" class="signed-textarea"></textarea></div>
+        <div class="signed-tips">{{$t('温馨提示：转账前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊的GAS手续费。您可以从任何钱包或交易所直接将ETH转入你的CPS地址，因为你的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币储存。')}}</div>
+        <div class="signed-btn"><a href="javascript:;"  v-bind:class="{'js_submit ':!modal_loading,'js_submit ivu-btn-loading':modal_loading}"  @click="transfer">{{$t('确定')}}</a></div>
     </div>
   </div>
 </template>
 
 <script>
-import _ from "lodash";
-import async from "async";
-import BigNumber from "bignumber.js";
-import reportUtils from "../reportUtils";
+
 import web3Utils from "../web3Utils";
-import kjua from "kjua";
 
 export default {
   data() {
@@ -101,8 +73,8 @@ export default {
           _this.$Loading.finish();
           _this.modal_loading = false;
           _this.closeModal();
-          _this.$Message.success(`提交成功：${txhash}`);
-          _this.modal_info = `提交成功：${txhash}`;
+          _this.$Message.success(_this.$root.$i18n.t('提交成功：')+`${txhash}`);
+          _this.modal_info = _this.$root.$i18n.t('提交成功：')+`${txhash}`;
           _this.openModal('show_info');
 
         })
@@ -110,8 +82,8 @@ export default {
           _this.$Loading.error();
           _this.modal_loading = false;
           _this.closeModal();
-          _this.$Message.error("提交失败");
-          _this.modal_info = '提交失败'+err.toString();
+          _this.$Message.error(_this.$root.$i18n.t("提交失败"));
+          _this.modal_info = _this.$root.$i18n.t('提交失败')+err.toString();
            _this.openModal('show_info');
         });
     },

@@ -3,14 +3,43 @@
     <head>
       <meta charset="UTF-8">
       <title>CPS Wallet</title>
+        <link rel="stylesheet"  href="static/css/base.css">
+        <link rel="stylesheet"  href="static/css/index.css">
+        <link rel="stylesheet" href="static/css/jquery-ui.min.css">
+
+        <script src="static/js/jquery-3.0.0.min.js"></script>
+        <script src="static/js/jquery-ui.min.js"></script>
+        <script src="static/js/base.js"></script>
     </head>
-    <body>
-      <div id="app">
+    <body style="background-color: rgb(33,33,33);">
+    <div class="wallet-header clear-fix">
+        <i class="h-logo"></i>
+        <a id="header_create_wallet" href="javascript:openModal('create_wallet');" class="h-button js_newWallet wallet-buttons" style="display:none">创建新钱包</a>
+        <a id="header_restore_wallet" href="javascript:openModal('restore_wallet');" class="h-button js_restoreWallet wallet-buttons" style="display:none">恢复钱包</a>
+        <a id="header_watch_wallet" href="javascript:openModal('watch_wallet');" class="h-button js_readOnlyWallet wallet-buttons" style="display:none">只读钱包</a>
+        <div class="language-list">
+            <a id="current_locale" href="javascript:;">CN</a>
+            <div class="language-change">
+                <div class="language-link">
+                    <a href="javascript:changeLanguage('CN');">CN</a>
+                    <a href="javascript:changeLanguage('TW');">TW</a>
+                    <a href="javascript:changeLanguage('EN');">EN</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="app">
         <main-layout>
           <component :is="currentView" :globalData="globalData">
           </component>
         </main-layout>
-      </div>
+    </div>
       <script src="./dist/build.js"></script>
+    <script>
+        document.getElementById('header_create_wallet').innerText = window.i18n.t('创建新钱包');
+        document.getElementById('header_restore_wallet').innerText = window.i18n.t('恢复钱包');
+        document.getElementById('header_watch_wallet').innerText = window.i18n.t('只读钱包');
+        document.getElementById('current_locale').innerText = window.i18n.locale;
+    </script>
     </body>
   </html>

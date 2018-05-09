@@ -3,7 +3,7 @@ import HookedWeb3Provider from "hooked-web3-provider";
 
 const web3 = new Web3();
 
-let erc20tokens;
+var erc20tokens = [];
 
 const CPS_TEST_ADDR = "0x0E3E4BfD5a2572c1E0475029D43Ac0D274466017";
 const CPS_PROD_ADDR = "0xf239fAb41De78533FA974B74d7605f1E68F8772e";
@@ -37,7 +37,7 @@ function setWebProvider(ks){
 
   web3.setProvider(web3Provider);
 
-  let ERC20Contract = web3.eth.contract(erc20abi);//support for any ERC20-compatible token
+  var ERC20Contract = web3.eth.contract(erc20abi);//support for any ERC20-compatible token
 
   erc20tokens = erc20addrs.map(function (addr) {
     var contract = ERC20Contract.at(addr)

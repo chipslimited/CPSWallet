@@ -1,37 +1,40 @@
+
 <template>
-  <div>
-    <!-- <div class="btn-wrapper">
-      <Button class="button" @click="changeNet('TEST')" v-show="net==='PROD'">切换到测试网</Button>
-      <Button class="button" @click="changeNet('PROD')" v-show="net==='TEST'">切换到正式网</Button>
-    </div> -->
-    <div class="filter-wrapper">
-      <i-input v-model="keyword" class="keyword" placeholder="地址">
-        <i-select v-model="address" slot="append" class="transfer-wallet-selector" placeholder="选择钱包" @on-change="onWalletChange">
-            <Option v-for="item in wallet_list" :value="item.address" :key="item.address">{{ item.address }}</Option>
-        </i-select>
-      </i-input>
-      <Button class="button filter-button" @click="search">搜索</Button>
-      <Button class="button filter-button" @click="filter(keyword)" :disabled="filter_list.length>0?false:true">在结果中搜索</Button>
-      <button class="button filter-button" @click="openExternal(explorer_address_link)" v-if="explorer_address_link.length > 0">浏览器</button>
+  <div class="history-main">
+    <div>
+        <div class="his-lay-search">
+            <div class="his-search-form">
+                <div class="form-item" v-if="0"><input v-model="keyword" type="text" v-bind:placeholder="$t('地址')"></div>
+                <i-select v-model="address" slot="append" class="form-item" v-bind:placeholder="$t('选择钱包')" @on-change="onWalletChange">
+                    <Option v-for="item in wallet_list" :value="item.address" :key="item.address">{{ item.address+(item.alias.length>0?"("+item.alias+")":"") }}</Option>
+                </i-select>
+                </div>
+            </div>
+            <div class="his-search-btn">
+                <a href="javascript:;" class="js_search" @click="search">{{$t('搜索')}}</a><a href="javascript:;" @click="filter(keyword)" v-if="0">{{$t('在结果中搜索')}}</a>
+                <a href="javascript:;" @click="openExternal(explorer_address_link)" v-if="explorer_address_link.length > 0">{{$t('浏览器')}}</a>
+            </div>
+            <div class="his-search-btn" v-if="pageCount > 1">
+                <MultiPage :current="page" :total="total" @on-change="refreshSearch" simple size="small" pageSize="25"></MultiPage>
+            </div>
+        </div>
+        <ul class="his-lay-list">
+            <li class="list-item" v-for="transaction in filter_list" v-bind:key="transaction.hash">
+                <div class="item-hash">
+                    <div>{{transaction.hash}}</div>
+                    <div class="item-hash-flow">
+                        <p @click="openAddress(transaction.from)">{{transaction.from}}</p>
+                        <p class="flow-arrow">=></p>
+                        <p @click="openAddress(transaction.realto)">{{transaction.to?transaction.realto:$t('创建合约')+'('+transaction.contractAddress+')'}}</p>
+                    </div>
+                </div>
+                <div class="item-info">
+                    <div class="item-amount">{{transaction.amount}}&nbsp;{{transaction.symbol}}</div>
+                    <div class="item-time">{{transaction.timeStamp | formatDate}}</div>
+                </div>
+            </li>
+        </ul>
     </div>
-    <div class="content-wrapper">
-      <ul class="transaction-list">
-        <li class="transaction-item" v-for="transaction in filter_list" v-bind:key="transaction.hash">
-          <div class="transaction-wrapper">
-            <h3 class="transaction-title" v-text="transaction.hash" @click="openTransaction(transaction.hash)"></h3>
-            <p class="transaction-sub">
-              <span @click="openAddress(transaction.from)" v-text="transaction.from"></span> => <span @click="openAddress(transaction.realto)" v-text="transaction.to?transaction.realto:'创建合约('+transaction.contractAddress+')'"></span>
-            </p>
-          </div>
-          <div class="transaction-token-wrapper">
-            <span class="token-amount" v-text="transaction.amount"></span>
-            <span class="token">{{transaction.symbol}}</span>
-          </div>
-          <div class="transaction-time-wrapper">{{transaction.timeStamp | formatDate}}</div>
-        </li>
-      </ul>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -39,6 +42,7 @@ import axios from "axios";
 import _ from 'lodash';
 import BigNumber from 'bignumber.js';
 import MainLayout from "../layouts/MainLayout.vue";
+import MultiPage from "../components/MultiPage.vue"
 import web3Utils from "../web3Utils";
 //const {shell} = require('electron');
 
@@ -52,7 +56,10 @@ export default {
       address: "",
       explorer_address_link:"",
       transaction_list: [],
-      filter_list:[]
+      filter_list:[],
+      page: 1,
+      pageCount:0,
+      total:0,
     };
   },
   mounted() {
@@ -62,7 +69,15 @@ export default {
     formatDate: function(timestamp) {
       let newDate = new Date();
       newDate.setTime(timestamp);
-      return newDate.toLocaleString();
+      var locale = window.i18n.locale;
+      if(locale == 'EN'){
+          locale = 'en-US';
+      }else if(locale == 'TW'){
+          locale = 'zh-TW';
+      }else if(locale == 'CN'){
+          locale = 'zh-CN';
+      }
+      return newDate.toLocaleString(locale);
     },
     translateAddressToToken: function(address) {
       if(!address) return 'ETH';
@@ -90,7 +105,7 @@ export default {
         var bodyFormData = new FormData();
         bodyFormData.set('address', address);
         bodyFormData.set('cntPerPage', 25);
-        bodyFormData.set('pageIndex', 0);
+        bodyFormData.set('pageIndex', _this.page);
 
       
       axios({
@@ -101,6 +116,14 @@ export default {
         })
         .then(response => {
           _this.transaction_list = response.data && response.data.data?response.data.data.list:[];
+          if (_this.transaction_list && _this.transaction_list.length > 0){
+            if (_this.transaction_list[0].bcTransferDOList){
+                _this.transaction_list = _this.transaction_list[0].bcTransferDOList;
+                _this.pageCount = response.data.data.pageCount;
+                _this.total = response.data.data.size;
+            }
+          }
+
           if(_this.transaction_list && _this.transaction_list.length > 0){
               _this.transaction_list = _this.transaction_list.map(function (txn) {
                   txn.from = txn.fromAddr;
@@ -120,6 +143,12 @@ export default {
           _this.$Loading.error();
         });
     },
+     refreshSearch(page){
+        var _this = this;
+       _this.page = page;
+       _this.loadHistory(_this.address);
+
+     },
     onWalletChange(address) {
       let _this = this,
         web3 = web3Utils.getWeb3(),
@@ -128,6 +157,7 @@ export default {
       web3Utils.setWebProvider(current_wallet.keystore);
     },
     search(){
+      this.page = 1;
       this.loadHistory(this.address);
       // this.loadHistory("0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a");
     },
@@ -160,65 +190,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.filter-wrapper {
-  display: inline-flex;
-  flex-wrap: nowrap;
-  align-items: center;
-}
-.keyword {
-  width: 620px;
-}
-.transfer-wallet-selector {
-  width: 320px;
-}
-.filter-button {
-  height: 34px;
-  margin-left: 10px;
-}
-.transaction-list {
-  display: flex;
-  flex-direction: column;
-  .transaction-item {
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    height: 70px;
-    margin-bottom: 10px;
-    color: #ccc;
-    border: 1px solid #999;
-    border-left: 5px solid #ccc;
-    background: rgb(90, 84, 110);
-    padding: 0 10px;
-    &:nth-child(2n) {
-      background: rgb(177, 156, 171);
+    .his-search-btn{
+        line-height: 16px;
     }
-    &:hover {
-      border: 1px solid #fff;
-      border-left: 5px solid #fff;
-      color: #fff;
-    }
-    .transaction-wrapper {
-      flex-grow: 1;
-      .transaction-title {
-        display: inline-flex;
-        font-size: 14px;
-      }
-      .transaction-sub {
-        color: #eee;
-        font-size: 12px;
-        margin-top: 10px;
-      }
-    }
-    .transaction-token-wrapper {
-      font-size: 14px;
-      align-content: left;
-    }
-    .transaction-time-wrapper {
-      width: 150px;
-      font-size: 12px;
-      padding: 0 0 0 10px;
-    }
-  }
-}
 </style>
