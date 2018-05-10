@@ -3,10 +3,10 @@
     <div class="lay-left">
         <ul class="menu-list">
             <li><v-link href="/wallet" v-bind:class="{'active': this.$root.currentView == 'wallet','': this.$root.currentView != 'wallet'}"><i class="icon-wallet"></i><span>{{$t('钱包')}}</span></v-link></li>
-            <li><v-link href="/send"  v-bind:class="{'active': this.$root.currentView == 'send','': this.$root.currentView != 'send'}"><i class="icon-send"></i><span>{{$t('发送')}}</span></v-link></li>
-            <li><v-link href="/receive" v-bind:class="{'active': this.$root.currentView == 'receive','': this.$root.currentView != 'receive'}"><i class="icon-receive"></i><span>{{$t('收款')}}</span></v-link></li>
-            <li><v-link href="/history" v-bind:class="{'active': this.$root.currentView == 'history','': this.$root.currentView != 'history'}"><i class="icon-history"></i><span>{{$t('交易历史')}}</span></v-link></li>
-            <li><v-link href="/sendr" v-bind:class="{'active': this.$root.currentView == 'sendr','': this.$root.currentView != 'sendr'}"><i class="icon-sign"></i><span>{{$t('已签名交易发送')}}</span></v-link></li>
+            <li><v-link href="/send"  @click="closeNavMenu()" v-bind:class="{'active': this.$root.currentView == 'send','': this.$root.currentView != 'send'}"><i class="icon-send"></i><span>{{$t('发送')}}</span></v-link></li>
+            <li><v-link href="/receive"  @click="closeNavMenu()" v-bind:class="{'active': this.$root.currentView == 'receive','': this.$root.currentView != 'receive'}"><i class="icon-receive"></i><span>{{$t('收款')}}</span></v-link></li>
+            <li><v-link href="/history" @click="closeNavMenu()" v-bind:class="{'active': this.$root.currentView == 'history','': this.$root.currentView != 'history'}"><i class="icon-history"></i><span>{{$t('交易历史')}}</span></v-link></li>
+            <li><v-link href="/sendr" @click="closeNavMenu()" v-bind:class="{'active': this.$root.currentView == 'sendr','': this.$root.currentView != 'sendr'}"><i class="icon-sign"></i><span>{{$t('已签名交易发送')}}</span></v-link></li>
         </ul>
     </div>
     <div class="lay-right">

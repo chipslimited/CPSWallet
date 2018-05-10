@@ -1,39 +1,53 @@
 
 <template>
-  <div class="history-main">
-    <div>
-        <div class="his-lay-search">
-            <div class="his-search-form">
-                <div class="form-item" v-if="0"><input v-model="keyword" type="text" v-bind:placeholder="$t('地址')"></div>
-                <i-select v-model="address" slot="append" class="form-item" v-bind:placeholder="$t('选择钱包')" @on-change="onWalletChange">
-                    <Option v-for="item in wallet_list" :value="item.address" :key="item.address">{{ item.address+(item.alias.length>0?"("+item.alias+")":"") }}</Option>
-                </i-select>
-                </div>
-            </div>
-            <div class="his-search-btn">
-                <a href="javascript:;" class="js_search" @click="search">{{$t('搜索')}}</a><a href="javascript:;" @click="filter(keyword)" v-if="0">{{$t('在结果中搜索')}}</a>
-                <a href="javascript:;" @click="openExternal(explorer_address_link)" v-if="explorer_address_link.length > 0">{{$t('浏览器')}}</a>
-            </div>
-            <div class="his-search-btn" v-if="pageCount > 1">
-                <MultiPage :current="page" :total="total" @on-change="refreshSearch" simple size="small" pageSize="25"></MultiPage>
-            </div>
-        </div>
-        <ul class="his-lay-list">
-            <li class="list-item" v-for="transaction in filter_list" v-bind:key="transaction.hash">
-                <div class="item-hash">
-                    <div>{{transaction.hash}}</div>
-                    <div class="item-hash-flow">
-                        <p @click="openAddress(transaction.from)">{{transaction.from}}</p>
-                        <p class="flow-arrow">=></p>
-                        <p @click="openAddress(transaction.realto)">{{transaction.to?transaction.realto:$t('创建合约')+'('+transaction.contractAddress+')'}}</p>
-                    </div>
-                </div>
-                <div class="item-info">
-                    <div class="item-amount">{{transaction.amount}}&nbsp;{{transaction.symbol}}</div>
-                    <div class="item-time">{{transaction.timeStamp | formatDate}}</div>
-                </div>
-            </li>
-        </ul>
+  <div>
+      <nav class="nav">
+          <div class="container nav-box">
+              <div class="menu-btn" data-open="false" @click="openMenu">
+                  <span class="menu-btn-bar st"></span>
+                  <span class="menu-btn-bar ed"></span>
+                  <span class="menu-btn-bar th"></span>
+              </div>
+              <a class="cps-logo" href="#"><img src="../../static_m/img/cps-logo.png" alt=""></a>
+              <div class="language-btn">
+                  <div class="language-text" id="current_locale">CN</div>
+                  <ul class="language-list">
+                      <li class="language-item" @click="changeLanguage('CN')">CN</li>
+                      <li class="language-item" @click="changeLanguage('TW')">TW</li>
+                      <li class="language-item" @click="changeLanguage('EN')">EN</li>
+                  </ul>
+              </div>
+          </div>
+      </nav>
+      <section class="wallet-title">
+          <span class="icon"></span>
+          <span class="text">{{$t('交易历史')}}</span>
+      </section>
+      <section class="content container">
+          <div class="wallet-address">
+              <!--<div class="text">当前钱包地址 :</div>-->
+              <i-select id="select-address" v-model="address" slot="append" class="dropdown-box" v-bind:placeholder="$t('选择钱包')" @on-change="onWalletChange">
+                  <Option v-for="item in wallet_list" :value="item.address" :key="item.address">{{ item.address+(item.alias.length>0?"("+item.alias+")":"") }}</Option>
+              </i-select>
+              <div class="btn-group">
+                  <button type="button" @click="search">{{$t('搜索')}}</button>
+                  <button type="button" @click="openExternal(explorer_address_link)" v-if="explorer_address_link.length > 0">{{$t('浏览器')}}</button>
+              </div>
+          </div>
+          <MultiPage :current="page" :total="total" @on-change="refreshSearch" simple size="small" pageSize="25" v-if="filter_list.length > 25"></MultiPage>
+          <div class="transLog-list" v-for="transaction in filter_list" v-bind:key="transaction.hash">
+              <div class="transLog-item">
+                  <div class="hash">{{transaction.hash}}</div>
+                  <div class="hash"><span @click="openAddress(transaction.from)">{{transaction.from}}</span>
+                      <span>=></span>
+                      <span @click="openAddress(transaction.realto)">{{transaction.to?transaction.realto:$t('创建合约')+'('+transaction.contractAddress+')'}}</span></div>
+                  <div class="trans-info">
+                      <span class="eth">{{transaction.amount}}&nbsp;{{transaction.symbol}}</span>
+                      <span class="datatime">{{transaction.timeStamp | formatDate}}</span>
+                  </div>
+              </div>
+          </div>
+      </section>
     </div>
 </template>
 
@@ -64,12 +78,7 @@ export default {
   },
   mounted() {
     this.wallet_list = this.$root.globalData.wallet_list;
-      document.getElementById('current_locale').innerText = window.i18n.locale;
-      debugger
   },
-    updated(){
-        document.getElementById('current_locale').innerText = window.i18n.locale;
-    },
   filters: {
     formatDate: function(timestamp) {
       let newDate = new Date();
@@ -93,6 +102,22 @@ export default {
     }
   },
   methods: {
+      openMenu(){
+          if ($(this).attr('data-open') == "false") {
+              $(this).addClass('menu-btn-close');
+              $('.menu').addClass('open');
+              $('.nav').addClass('open');
+              $(this).attr('data-open','true');
+          } else {
+              $(this).removeClass('menu-btn-close');
+              $('.menu').removeClass('open');
+              $('.nav').removeClass('open');
+              $(this).attr('data-open','false');
+          }
+      },
+      changeLanguage(type){
+          window.changeLanguage(type);
+      },
     changeNet(net){
       var _this = this;
       this.$Loading.start();

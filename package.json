@@ -3,7 +3,7 @@
   "description": "electron",
   "version": "0.0.1",
   "author": "https://www.cpscoin.com",
-  "main": "main.js",
+  "main": "main_m.js",
   "productName": "CPSWallet",
   "scripts": {
     "start": "npm run build && electron .",

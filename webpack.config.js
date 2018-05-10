@@ -2,11 +2,11 @@ var path = require("path");
 var webpack = require("webpack");
 
 module.exports = {
-  entry: "./src/main.js",
+  entry: {"app":"./src/main.js", "app_m":"./src/main_m.js"},
   output: {
     path: path.resolve(__dirname, "./dist"),
     publicPath: "/dist/",
-    filename: "build.js"
+    filename: '[name].js'
   },
   module: {
     rules: [
@@ -97,6 +97,7 @@ if (process.env.NODE_ENV === "production") {
                   if_return: true,
                   join_vars: true,
                   drop_console: true,
+                  toplevel: true,
                   drop_debugger: true,
                   properties: true,
                   comparisons: false,

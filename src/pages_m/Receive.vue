@@ -1,24 +1,49 @@
 <template>
   <div style="height: 100%;">
-      <div class="receive-top">
-          <div class="wallet-wrapper">
-              <div class="title">{{$t('当前钱包地址 :')}}</div>
-              <div class="hash-wrapper">
-                  <i-select v-model="current_wallet.address" class="wallet-source" v-bind:placeholder="$t('选择钱包')" @on-change="changeReceiveWallet">
-                      <Option v-for="item in wallet_list" :value="item.address" :key="item.address">{{ item.address+(item.alias.length>0?"("+item.alias+")":"") }}</Option>
-                  </i-select>
-                  <span class="copy" @click="copyAddress()"></span>
+      <nav class="nav">
+          <div class="container nav-box">
+              <div class="menu-btn" data-open="false" @click="openMenu">
+                  <span class="menu-btn-bar st"></span>
+                  <span class="menu-btn-bar ed"></span>
+                  <span class="menu-btn-bar th"></span>
+              </div>
+              <a class="cps-logo" href="#"><img src="../../static_m/img/cps-logo.png" alt=""></a>
+              <div class="language-btn">
+                  <div class="language-text" id="current_locale">CN</div>
+                  <ul class="language-list">
+                      <li class="language-item" @click="changeLanguage('CN')">CN</li>
+                      <li class="language-item" @click="changeLanguage('TW')">TW</li>
+                      <li class="language-item" @click="changeLanguage('EN')">EN</li>
+                  </ul>
               </div>
           </div>
-      </div>
-      <div class="receive-bottom">
-          <div class="title">{{$t('收款二维码 : ')}}<span id="selected_address">{{current_wallet.address}}</span></div>
-          <div class="img-group" v-bind:style="current_wallet && current_wallet.address && current_wallet.address.length > 0?'':'display:none'">
-              <p class="qrcode" id="qrcode"></p><a id="qrcode_download" href="">
-              <div class="download"></div>
-              <div class="text">{{$t('点击下载')}}</div>
-          </a>
-          </div>
+      </nav>
+      <section class="wallet-title">
+          <span class="icon"></span>
+          <span class="text">{{$t('收款')}}</span>
+      </section>
+      <div class="content container">
+          <section class="cps-address">
+              <div class="text">{{$t('当前钱包地址 :')}}</div>
+              <div class="select-wallet">
+                  <i-select v-model="current_wallet.address" class="dropdown-box" v-bind:placeholder="$t('选择钱包')" @on-change="changeReceiveWallet">
+                      <Option v-for="item in wallet_list" :value="item.address" :key="item.address">{{ item.address+(item.alias.length>0?"("+item.alias+")":"") }}</Option>
+                  </i-select>
+                  <div class="copy" @click="copyAddress()"></div>
+              </div>
+          </section>
+          <section class="receive-qr">
+              <div class="qr-address">
+                  <div class="text">{{$t('收款二维码 : ')}}</div>
+                  <div class="value" id="selected_address">{{current_wallet.address}}</div>
+              </div>
+              <div class="qr-img">
+                  <p class="qrcode" id="qrcode"></p><a  href="" download>{{$t('点击下载')}}</a>
+                  <a id="qrcode_download" class="text" href="" download>
+                  <div class="download"></div>
+                  {{$t('点击下载')}}</a>
+              </div>
+          </section>
       </div>
   </div>
 </template>
@@ -70,12 +95,24 @@ export default {
     if (this.$root.globalData.current_wallet) {
       this.current_wallet = this.$root.globalData.current_wallet;
     }
-      document.getElementById('current_locale').innerText = window.i18n.locale;
   },
-    updated(){
-        document.getElementById('current_locale').innerText = window.i18n.locale;
-    },
   methods: {
+      openMenu(){
+          if ($(this).attr('data-open') == "false") {
+              $(this).addClass('menu-btn-close');
+              $('.menu').addClass('open');
+              $('.nav').addClass('open');
+              $(this).attr('data-open','true');
+          } else {
+              $(this).removeClass('menu-btn-close');
+              $('.menu').removeClass('open');
+              $('.nav').removeClass('open');
+              $(this).attr('data-open','false');
+          }
+      },
+      changeLanguage(type){
+          window.changeLanguage(type);
+      },
     openModal(modalname) {
       this.modal = {};
       this.modal[modalname] = true;
@@ -92,7 +129,7 @@ export default {
 
       _qrcode = document.querySelector("#qrcode");
       _qrcode.innerHTML = "";
-      _qrcode.appendChild(kjua({ text: text, size: 317 }));
+      _qrcode.appendChild(kjua({ text: text, size: 160 }));
 
       var _selectedAddress = document.querySelector('#selected_address');
       _selectedAddress.innerHTML = text;

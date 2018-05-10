@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div class="btn-wrapper">
-      <Modal v-model="modal.create_wallet" width="360" :closable="false" :mask-closable="false">
+      <Modal v-model="modal.create_wallet" width="100%" :closable="false" :mask-closable="false">
           <div class="wallet_tips_main">
               <div class="tips_main_title">{{$t('创建新钱包')}}</div>
               <div class="tips_form has_input">
@@ -13,12 +12,12 @@
                   </div>
 
                   <div class="tips_form_btn btn-flex"><a href="javascript:;" class="js_tips_btn " @click="proceedCreateToPassword">{{$t('创建')}}</a>
-                  <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                      <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                   </div>
               </div>
           </div>
       </Modal>
-      <Modal v-model="modal.password_create" width="360" :closable="false" :mask-closable="false">
+      <Modal v-model="modal.password_create" width="100%" :closable="false" :mask-closable="false">
 
           <div class="wallet_tips_main">
               <div class="tips_lower_tit">{{$t('你的新钱包助记词：')}}</div>
@@ -31,7 +30,7 @@
               </div>
           </div>
       </Modal>
-      <Modal v-model="modal.restore_wallet" width="360" :closable="false" :mask-closable="false">
+      <Modal v-model="modal.restore_wallet" width="100%" :closable="false" :mask-closable="false">
           <div class="wallet_tips_main">
               <div class="tips_main_title">{{$t('恢复钱包')}}</div>
               <div class="tips_form has_input">
@@ -48,34 +47,34 @@
               </div>
           </div>
       </Modal>
-        <Modal v-model="modal.edit_alias" width="360" :closable="false" :mask-closable="false">
-            <div class="wallet_tips_main">
-                <div class="tips_main_title">{{$t('编辑钱包备注')}}</div>
-                <div class="tips_form has_input">
-                    <div class="tips_input">
-                        <input type="text" v-model="wallet_alias" v-bind:placeholder="$t('请输入钱包备注')" value="" maxlength="5">
-                    </div>
-                    <div class="tips_form_btn btn-flex">
-                        <a href="javascript:;" class="js_tips_btn " @click="confirmEditAlias">{{$t('确定')}}</a>
-                        <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
-                    </div>
-                </div>
-            </div>
-        </Modal>
-        <Modal v-model="modal.watch_wallet" width="360" :closable="false" :mask-closable="false">
-            <div class="wallet_tips_main">
-                <div class="tips_main_title">{{$t('只读钱包')}}</div>
-                <div class="tips_form has_input">
-                    <div class="tips_internal">{{$t('您将只能查看余额，而无法向外转账')}}</div>
-                    <div class="tips_input"><input type="text" v-model="readonly_address" v-bind:placeholder="$t('请输入钱包地址')" value="" maxlength=""></div>
-                    <div class="tips_form_btn btn-flex">
-                        <a href="javascript:;" class="js_tips_btn " @click="proceedStoreToAddress">{{$t('确定')}}</a>
-                        <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
-                    </div>
-                </div>
-            </div>
-        </Modal>
-      <Modal v-model="modal.password_restore" width="360" :closable="false" :mask-closable="false">
+      <Modal v-model="modal.edit_alias" width="100%" :closable="false" :mask-closable="false">
+          <div class="wallet_tips_main">
+              <div class="tips_main_title">{{$t('编辑钱包备注')}}</div>
+              <div class="tips_form has_input">
+                  <div class="tips_input">
+                      <input type="text" v-model="wallet_alias" v-bind:placeholder="$t('请输入钱包备注')" value="" maxlength="5">
+                  </div>
+                  <div class="tips_form_btn btn-flex">
+                      <a href="javascript:;" class="js_tips_btn " @click="confirmEditAlias">{{$t('确定')}}</a>
+                      <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                  </div>
+              </div>
+          </div>
+      </Modal>
+      <Modal v-model="modal.watch_wallet" width="100%" :closable="false" :mask-closable="false">
+          <div class="wallet_tips_main">
+              <div class="tips_main_title">{{$t('只读钱包')}}</div>
+              <div class="tips_form has_input">
+                  <div class="tips_internal">{{$t('您将只能查看余额，而无法向外转账')}}</div>
+                  <div class="tips_input"><input type="text" v-model="readonly_address" v-bind:placeholder="$t('请输入钱包地址')" value="" maxlength=""></div>
+                  <div class="tips_form_btn btn-flex">
+                      <a href="javascript:;" class="js_tips_btn " @click="proceedStoreToAddress">{{$t('确定')}}</a>
+                      <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                  </div>
+              </div>
+          </div>
+      </Modal>
+      <Modal v-model="modal.password_restore" width="100%" :closable="false" :mask-closable="false">
           <div class="wallet_tips_main">
               <div class="tips_main_title">{{$t('恢复钱包')}}</div>
               <div class="tips_form has_input">
@@ -86,40 +85,40 @@
               </div>
           </div>
       </Modal>
-        <Modal v-model="modal.delete_wallet" width="460" :closable="false" :mask-closable="false">
+      <Modal v-model="modal.delete_wallet" width="100%" :closable="false" :mask-closable="false">
 
-            <div class="wallet_tips_main">
-                <div class="tips_main_title">{{$t('删除钱包')}}</div>
-                <div style="text-align:center" v-if="!current_wallet || !current_wallet.keystore">
-                    {{$t('您确定要删除这个钱包吗？删除后您将无法在钱包应用内查看对应的地址的余额。')}}
-                </div>
+          <div class="wallet_tips_main">
+              <div class="tips_main_title">{{$t('删除钱包')}}</div>
+              <div style="text-align:center" v-if="!current_wallet || !current_wallet.keystore">
+                  {{$t('您确定要删除这个钱包吗？删除后您将无法在钱包应用内查看对应的地址的余额。')}}
+              </div>
 
-                <div class="tips_main_tips" v-if="seed && seed.length > 0">{{$t('删除钱包之前，请牢记您的助记词，写在纸上并妥善保管')}}</div>
-                <div class="tips_main_mnemonic" v-if="download_key_url && download_key_url.length > 0">
-                    <div class="tips_mnemonic" v-if="seed && seed.length > 0">{{seed}}</div>
-                    <div class="tips_downTips">{{$t('请下载私钥文件，妥善保存。')}}</div>
-                    <div class="tips_downbtn">
-                        <a :href="download_key_url" download="privatekey.txt" class="downbtn">DownLoad</a>
-                    </div>
-                </div>
-                <div class="tips_form has_input">
-                    <div class="tips_internal" v-if="current_wallet && current_wallet.keystore && !(download_key_url && download_key_url.length > 0)">{{$t('验证密码')}}</div>
-                    <div class="tips_input" v-if="current_wallet && current_wallet.keystore && !(download_key_url && download_key_url.length > 0)">
-                        <input type="password" v-model="user_password"  v-bind:placeholder="$t('请输入密码')" value="" id="wallet_input" maxlength="">
-                    </div>
-                    <div class="tips_form_btn btn-flex"><a href="javascript:;" class="js_tips_btn " :loading="modal_loading" @click="confirmDeleteWallet()">{{$t('删除')}}</a>
-                        <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
-                    </div>
-                </div>
-            </div>
-        </Modal>
-      <Modal v-model="modal.seed_export" width="400" :closable="false" :mask-closable="false">
+              <div class="tips_main_tips" v-if="seed && seed.length > 0">{{$t('删除钱包之前，请牢记您的助记词，写在纸上并妥善保管')}}</div>
+              <div class="tips_main_mnemonic" v-if="download_key_url && download_key_url.length > 0">
+                  <div class="tips_mnemonic" v-if="seed && seed.length > 0">{{seed}}</div>
+                  <div class="tips_downTips">{{$t('请下载私钥文件，妥善保存。')}}</div>
+                  <div class="tips_downbtn">
+                      <a :href="download_key_url" download="privatekey.txt" class="downbtn">DownLoad</a>
+                  </div>
+              </div>
+              <div class="tips_form has_input">
+                  <div class="tips_internal" v-if="current_wallet && current_wallet.keystore && !(download_key_url && download_key_url.length > 0)">{{$t('验证密码')}}</div>
+                  <div class="tips_input" v-if="current_wallet && current_wallet.keystore && !(download_key_url && download_key_url.length > 0)">
+                      <input type="password" v-model="user_password"  v-bind:placeholder="$t('请输入密码')" value="" id="wallet_input" maxlength="">
+                  </div>
+                  <div class="tips_form_btn btn-flex"><a href="javascript:;" class="js_tips_btn " :loading="modal_loading" @click="confirmDeleteWallet()">{{$t('删除')}}</a>
+                      <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                  </div>
+              </div>
+          </div>
+      </Modal>
+      <Modal v-model="modal.seed_export" width="100%" :closable="false" :mask-closable="false">
           <div class="wallet_tips_main">
               <div class="tips_main_title" v-if="!export_private_key">{{$t('请牢记您的助记词，写在纸上并妥善保管')}}</div>
               <div class="tips_emphasis_tips" v-if="!export_private_key">{{seed}}</div>
               <div class="tips_main_title" v-if="export_private_key">{{$t('下载导出的私钥')}}</div>
               <div v-bind:class="export_private_key?'tips_form has_input':'tips_form'">
-                <div class="tips_internal" v-if="export_private_key">{{$t('下载私钥文件，妥善保存并确保文件的安全，泄露该文件会造成巨大的财产损失')}}</div>
+                  <div class="tips_internal" v-if="export_private_key">{{$t('下载私钥文件，妥善保存并确保文件的安全，泄露该文件会造成巨大的财产损失')}}</div>
                   <div class="tips_form_btn btn-flex" v-if="export_private_key">
                       <a :href="download_key_url" download="privatekey.txt" class="js_tips_btn hasdownload">DownLoad</a>
                       <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
@@ -130,7 +129,7 @@
               </div>
           </div>
       </Modal>
-      <Modal v-model="modal.password_export" width="360" :closable="false" :mask-closable="false">
+      <Modal v-model="modal.password_export" width="100%" :closable="false" :mask-closable="false">
           <!--
         <p slot="header" class="tips_main_title">
             <span>备份钱包</span>
@@ -152,36 +151,62 @@
               </div>
           </div>
       </Modal>
-      <!-- <i-button class="button">帮助</i-button> -->
-    </div>
+      <nav v-bind:class="nav_class">
+          <div class="container nav-box">
+              <div class="menu-btn" data-open="false" @click="openMenu">
+                  <span class="menu-btn-bar st"></span>
+                  <span class="menu-btn-bar ed"></span>
+                  <span class="menu-btn-bar th"></span>
+              </div>
+              <a class="cps-logo" href="#"><img src="../../static_m/img/cps-logo.png" alt=""></a>
+              <div class="language-btn">
+                  <div class="language-text" id="current_locale">CN</div>
+                  <ul class="language-list">
+                      <li class="language-item" @click="changeLanguage('CN')">CN</li>
+                      <li class="language-item" @click="changeLanguage('TW')">TW</li>
+                      <li class="language-item" @click="changeLanguage('EN')">EN</li>
+                  </ul>
+              </div>
+          </div>
+      </nav>
+      <section class="wallet-title">
+          <span class="icon"></span>
+          <span class="text">{{$t('钱包')}}</span>
+      </section>
+      <section class="set-wallet">
+          <div class="container">
+              <div class="create-wallet set-wallet-item" @click="openModal('create_wallet')">{{$t('创建新钱包')}}<span class="arrow-right"></span></div>
+              <div class="reset-wallet set-wallet-item" @click="openModal('restore_wallet')">{{$t('恢复钱包')}}<span class="arrow-right"></span></div>
+              <div class="readonly-wallet set-wallet-item" @click="openModal('watch_wallet')">{{$t('只读钱包')}}<span class="arrow-right"></span></div>
+          </div>
+      </section>
+      <section class="hash">
+          <div class="container">
+              <div class="hash-group" v-for="wallet in wallet_list" :key="wallet.address">
+                  <div v-bind:class="{'hash-item readable-wallet':wallet && wallet.keystore, 'hash-item readonly-wallet-item':!(wallet && wallet.keystore)}">
+                      <div class="hash-info">
+                          <div class="icon-key"></div>
+                          <div class="hash">{{wallet.address}}</div>
+                          <div class="copy" @click="processTransaction(wallet)"></div>
+                      </div>
+                      <div class="transaction-log">{{$t('交易记录：')}} {{wallet.nonce[0]}}</div>
+                      <div class="alias">
+                          <span class="add-alias" @click="editAlias(wallet)" v-if="wallet.alias.length == 0">{{$t('添加地址別名')}}</span>
+                          <span class="add-alias" @click="editAlias(wallet)" v-if="wallet.alias.length > 0">({{wallet.alias}})</span>
 
-    <div>
-      <ul class="wallet-list">
-        <li v-for="wallet in wallet_list" :key="wallet.address">
-            <div class="list-info">
-                <div class="list-lay-info">
-                    <div class="list-hash"><span>{{wallet.address}}</span></div>
-                    <div class="list-total-transaction">
-                        <i class="icon-copy" title="点击复制" @click="processTransaction(wallet)"></i>
-                        <div class="total-num">{{$t('交易记录：')}} {{wallet.nonce[0]}}</div>
-                    </div>
-                </div>
-                <div class="list-balance">
-                    <a href="javascript:;" class="js_addName" @click="editAlias(wallet)" v-if="wallet.alias.length == 0">{{$t('添加地址別名')}}</a>
-                    <a href="javascript:;" class="js_addName" @click="editAlias(wallet)" v-if="wallet.alias.length > 0"><span v-if="wallet.alias.length > 0">({{wallet.alias}})</span><i class="icon-edit"></i> </a>
-                    <span class="token-wrapper" v-for="(token, index) in wallet.balances" v-bind:key="index">
-                        <span class="b-num">{{token.balance}}</span><span  class="b-unit">{{token.symbol}}</span>
-                    </span>
-                </div>
-            </div>
-            <div class="list-lay-btn">
-                <a href="javascript:;" class="js_btn_mnemonic" v-if="wallet && wallet.keystore && wallet.keystore.encSeed && wallet.keystore.encSeed.encStr" @click="proceedExport(wallet)">{{$t('导出助记词')}}</a>
-                <a href="javascript:;" class="js_btn_key" v-if="wallet && wallet.keystore" @click="proceedExport(wallet, true)">{{$t('导出私钥')}}</a>
-                <a href="javascript:;" class="js_btn_delete" @click="deleteWallet(wallet)">{{$t('删除')}}</a>
-            </div>
-        </li>
-      </ul>
-    </div>
+                          <span class="token-wrapper" v-for="(token, index) in wallet.balances" v-bind:key="index">
+                             <span class="num">{{token.balance}}</span><span  class="b-unit">{{token.symbol}}</span>
+                            </span>
+                      </div>
+                      <div class="btn-group">
+                          <button type="button" class="btn-mnemonic" v-if="wallet && wallet.keystore && wallet.keystore.encSeed && wallet.keystore.encSeed.encStr" @click="proceedExport(wallet)">{{$t('导出助记词')}}</button>
+                          <button type="button" class="btn-key" v-if="wallet && wallet.keystore" @click="proceedExport(wallet, true)">{{$t('导出私钥')}}</button>
+                          <button type="button" class="btn-delete" @click="deleteWallet(wallet)">{{$t('删除')}}</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
   </div>
 </template>
 
@@ -195,6 +220,7 @@ import web3Utils from "../web3Utils";
 export default {
   data() {
     return {
+        "nav_class":"nav",
       modal: {},
       modal_loading: false,
       export_private_key: false,
@@ -219,13 +245,25 @@ export default {
     this.loadWallet();
     setTimeout(this.updateBalances, 15000);
     window.openModal = this.openModal;
-      document.getElementById('current_locale').innerText = window.i18n.locale;
 
   },
-    updated(){
-        document.getElementById('current_locale').innerText = window.i18n.locale;
-    },
   methods: {
+      openMenu(){
+          if ($(this).attr('data-open') == "false") {
+              $(this).addClass('menu-btn-close');
+              $('.menu').addClass('open');
+              $('.nav').addClass('open');
+              $(this).attr('data-open','true');
+          } else {
+              $(this).removeClass('menu-btn-close');
+              $('.menu').removeClass('open');
+              $('.nav').removeClass('open');
+              $(this).attr('data-open','false');
+          }
+      },
+      changeLanguage(type){
+        window.changeLanguage(type);
+      },
     openModal(modalname) {
       this.modal = {};
       this.modal[modalname] = true;

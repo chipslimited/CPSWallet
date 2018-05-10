@@ -3,18 +3,45 @@
       <Modal v-model="modal.show_info" width="600" :closable="false" :mask-closable="false">
           <div class="wallet_tips_main">
               <div class="tips_main_title">{{$t('提示')}}</div>
-              <div class="tips_main_tips">{{modal_info}}</div>
+              <div class="tips_emphasis_tips">{{modal_info}}</div>
+              <div class="tips_from">
               <div class="tips_form_btn">
                   <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
               </div>
+              </div>
           </div>
       </Modal>
-
-    <div class="signed-sent-main">
-        <div><textarea v-model="target_address"  v-bind:placeholder="$t('请输入已签名交易数据')" class="signed-textarea"></textarea></div>
-        <div class="signed-tips">{{$t('温馨提示：转账前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊的GAS手续费。您可以从任何钱包或交易所直接将ETH转入你的CPS地址，因为你的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币储存。')}}</div>
-        <div class="signed-btn"><a href="javascript:;"  v-bind:class="{'js_submit ':!modal_loading,'js_submit ivu-btn-loading':modal_loading}"  @click="transfer">{{$t('确定')}}</a></div>
-    </div>
+      <nav class="nav">
+          <div class="container nav-box">
+              <div class="menu-btn" data-open="false" @click="openMenu">
+                  <span class="menu-btn-bar st"></span>
+                  <span class="menu-btn-bar ed"></span>
+                  <span class="menu-btn-bar th"></span>
+              </div>
+              <a class="cps-logo" href="#"><img src="../../static_m/img/cps-logo.png" alt=""></a>
+              <div class="language-btn">
+                  <div class="language-text" id="current_locale">CN</div>
+                  <ul class="language-list">
+                      <li class="language-item" @click="changeLanguage('CN')">CN</li>
+                      <li class="language-item" @click="changeLanguage('TW')">TW</li>
+                      <li class="language-item" @click="changeLanguage('EN')">EN</li>
+                  </ul>
+              </div>
+          </div>
+      </nav>
+      <section class="wallet-title">
+          <span class="icon"></span>
+          <span class="text">{{$t('已签名交易发送')}}</span>
+      </section>
+      <section class="content container">
+          <div class="textarea">
+              <textarea v-model="target_address" v-bind:placeholder="$t('请输入已签名交易数据')"></textarea>
+          </div>
+          <div class="prompt">{{$t('温馨提示：转账前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊的GAS手续费。您可以从任何钱包或交易所直接将ETH转入你的CPS地址，因为你的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币储存。')}}</div>
+          <div class="btn-group">
+              <button type="button" v-bind:class="{'right ':!modal_loading,'right ivu-btn-loading':modal_loading}"  @click="transfer">{{$t('确定')}}</button>
+          </div>
+      </section>
   </div>
 </template>
 
@@ -48,12 +75,25 @@ export default {
 
   },
   mounted() {
-      document.getElementById('current_locale').innerText = window.i18n.locale;
+
   },
-    updated(){
-        document.getElementById('current_locale').innerText = window.i18n.locale;
-    },
   methods: {
+      openMenu(){
+          if ($(this).attr('data-open') == "false") {
+              $(this).addClass('menu-btn-close');
+              $('.menu').addClass('open');
+              $('.nav').addClass('open');
+              $(this).attr('data-open','true');
+          } else {
+              $(this).removeClass('menu-btn-close');
+              $('.menu').removeClass('open');
+              $('.nav').removeClass('open');
+              $(this).attr('data-open','false');
+          }
+      },
+      changeLanguage(type){
+          window.changeLanguage(type);
+      },
     openModal(modalname) {
       this.modal = {};
       this.modal[modalname] = true;

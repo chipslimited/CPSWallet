@@ -16,11 +16,10 @@ import oss2
 #   http://oss-cn-hangzhou.aliyuncs.com
 #   https://oss-cn-hangzhou.aliyuncs.com
 # 分别以HTTP、HTTPS协议访问。
-access_key_id = os.getenv('OSS_TEST_ACCESS_KEY_ID', '<你的AccessKeyId>')
-access_key_secret = os.getenv('OSS_TEST_ACCESS_KEY_SECRET', '<你的AccessKeySecret>')
-bucket_name = os.getenv('OSS_TEST_BUCKET', '<你的Bucket>')
-endpoint = os.getenv('OSS_TEST_ENDPOINT', '<你的访问域名>')
-
+access_key_id = "LTAIM5AzH0bAaTbR"#os.getenv('OSS_TEST_ACCESS_KEY_ID', '<你的AccessKeyId>')
+access_key_secret = "RboxQdx0bRHPosd43eW4t4sRQge8U2"#os.getenv('OSS_TEST_ACCESS_KEY_SECRET', '<你的AccessKeySecret>')
+bucket_name = "citest"#os.getenv('OSS_TEST_BUCKET', '<你的Bucket>')
+endpoint = "oss-cn-beijing.aliyuncs.com"#os.getenv('OSS_TEST_ENDPOINT', '<你的访问域名>')
 
 # 确认上面的参数都填写正确了
 for param in (access_key_id, access_key_secret, bucket_name, endpoint):

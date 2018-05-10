@@ -1,58 +1,90 @@
 <template>
   <div style="height: 100%;">
-      <div class="send-top" v-bind:style="{'display':modal.show_offline_txn?'none':''}">
-          <div class="input-item from">
-              <div class="text">{{$t('从')}}</div>
-              <i-select v-model="current_wallet.address" class="dropdown-box" v-bind:placeholder="$t('选择钱包')" @on-change="changeTransferWallet">
-                  <Option v-for="item in wallet_list.filter(function(x){return x.keystore})" :value="item.address" :key="item.address">{{ item.address+(item.alias.length>0?"("+item.alias+")":"") }}</Option>
-              </i-select>
-          </div>
-          <div class="input-item to">
-              <div class="text">{{$t('付给')}}</div>
-              <div class="dropdown-box" ><input class="num-input" type="text" v-model="target_address" v-bind:placeholder="$t('转入地址')"></div>
-          </div>
-          <div class="input-item cps-num mb-10">
-              <div class="text">{{$t('数量')}}</div>
-              <div class="input-box">
-                  <i-input v-model="transfer_token" class="num-input"  @on-change="transferTokenChange" :disabled="!token_address || token_address.length == 0">
-                  </i-input>
-                  <i-select v-model="token_address" slot="append" class="type-dropdown" v-bind:placeholder="$t('币种')" @on-change="onTokenChange">
-                      <Option v-for="item in current_wallet.balances" :value="item.address" :key="item.address">{{ item.symbol }}</Option>
-                  </i-select>
+      <nav class="nav">
+          <div class="container nav-box">
+              <div class="menu-btn" data-open="false" @click="openMenu">
+                  <span class="menu-btn-bar st"></span>
+                  <span class="menu-btn-bar ed"></span>
+                  <span class="menu-btn-bar th"></span>
               </div>
-              <div class="balance" v-if="bal">{{$t('持有:')}}<span class="num">{{bal}}</span> {{token}}</div>
+              <a class="cps-logo" href="#"><img src="../../static_m/img/cps-logo.png" alt=""></a>
+              <div class="language-btn">
+                  <div class="language-text" id="current_locale">CN</div>
+                  <ul class="language-list">
+                      <li class="language-item" @click="changeLanguage('CN')">CN</li>
+                      <li class="language-item" @click="changeLanguage('TW')">TW</li>
+                      <li class="language-item" @click="changeLanguage('EN')">EN</li>
+                  </ul>
+              </div>
           </div>
-          <div class="slider-item">
-              <div class="text">{{$t('燃料上限')}}</div>
-              <Slider v-model="gas" :step="1" show-input :min="21000" :max="1000000" class="slider"/>
-          </div>
-          <div class="slider-item">
-              <div class="text">{{$t('燃料价格(Gwei)')}}</div>
-              <Slider v-model="gasPrice" :step="1" show-input :min="1" :max="100" class="slider"></Slider>
-          </div>
-          <div class="input-item">
-              <div class="text">{{$t('矿工费用')}}</div>
-              <div class="value">{{parseFloat(gas)*parseFloat(gasPrice)/1e9}} ether
-                  <div class="prompt">
-                      <span class="prompt-img"></span>
-                      <div class="prompt-content">
-                          <div class="prompt-text">{{$t('“燃料上限” -> 燃料数量上限')}}</div>
-                          <div class="prompt-text mb-25">{{$t('“燃料价格” -> 燃料单价上限')}}</div>
-                          <div class="prompt-text">{{$t('矿工费用＝实际燃料数量*实际燃料单价。实际燃料数 量和单价不会高于用户指定的上述两个上限，多余的会 退回。较低的燃料单价和数量可以节省矿工费用，但是\n    也会降低交易到账的速度。在联网设备发送时，会自动 获取燃料上限，在离线设备发送时，需手动设定燃料上 限。如果矿工费用不足以完成打包，或者当前交易的燃 料数量超过了区块的限制，这笔交易将失败。')}}
+      </nav>
+      <section class="wallet-title">
+          <span class="icon"></span>
+          <span class="text">发送</span>
+      </section>
+      <section class="main-content" v-bind:style="{'display':modal.show_offline_txn?'none':''}">
+          <section class="send-form">
+              <div class="container">
+                  <div class="input-group">
+                      <div class="text">{{$t('从')}}</div>
+                      <i-select v-model="current_wallet.address" class="dropdown-box" v-bind:placeholder="$t('选择钱包')" @on-change="changeTransferWallet">
+                          <Option v-for="item in wallet_list.filter(function(x){return x.keystore})" :value="item.address" :key="item.address">{{ item.address+(item.alias.length>0?"("+item.alias+")":"") }}</Option>
+                      </i-select>
+                  </div>
+                  <div class="input-group">
+                      <div class="text">{{$t('付给')}}</div>
+                      <input class="num-input" type="text" v-model="target_address" v-bind:placeholder="$t('转入地址')">
+                  </div>
+                  <div class="input-group">
+                      <div class="text">{{$t('数量')}}</div>
+                      <input v-model="transfer_token"  @on-change="transferTokenChange" :disabled="!token_address || token_address.length == 0">
+                      <div class="dropdown-box type">
+                      <i-select v-model="token_address" slot="append" class="type-dropdown" v-bind:placeholder="$t('币种')" @on-change="onTokenChange">
+                          <Option v-for="item in current_wallet.balances" :value="item.address" :key="item.address">{{ item.symbol }}</Option>
+                      </i-select>
+                      </div>
+                  </div>
+                  <div class="balance" v-if="bal">{{$t('持有:')}}<span class="num">{{bal}}</span> {{token}}</div>
+                  <div class="slider-group">
+                      <div class="text">{{$t('燃料上限')}}</div>
+                      <div id="fuel"></div>
+                      <input type="text" class="value fuel-value" value="8000">
+                  </div>
+                  <div class="slider-group">
+                      <div class="text">{{$t('燃料价格(Gwei)')}}</div>
+                      <div id="fuel-price"></div>
+                      <input type="text" class="value fuel-price-value" value="21">
+                  </div>
+                  <div class="miner-cost">
+                      <div class="text">{{$t('矿工费用')}}</div>
+                      <div class="val">{{parseFloat(gas)*parseFloat(gasPrice)/1e9}}  ether
+                          <div class="prompt">
+                              <span class="prompt-img"></span>
+                              <div class="prompt-content">
+                                  <div class="prompt-text">{{$t('“燃料上限” -> 燃料数量上限')}}</div>
+                                  <div class="prompt-text mb-25">{{$t('“燃料价格” -> 燃料单价上限')}}</div>
+                                  <div class="prompt-text">{{$t('矿工费用＝实际燃料数量*实际燃料单价。实际燃料数 量和单价不会高于用户指定的上述两个上限，多余的会 退回。较低的燃料单价和数量可以节省矿工费用，但是\n    也会降低交易到账的速度。在联网设备发送时，会自动 获取燃料上限，在离线设备发送时，需手动设定燃料上 限。如果矿工费用不足以完成打包，或者当前交易的燃 料数量超过了区块的限制，这笔交易将失败。')}}
+                                  </div>
+                              </div>
                           </div>
                       </div>
                   </div>
               </div>
-          </div>
-      </div>
-      <div class="send-bottom" v-bind:style="{'display':modal.show_offline_txn?'none':''}">
-          <div class="total">{{$t('共计：')}}<span class="total-num">{{transfer_token}}</span>{{token}}</div>
-          <div class="prompt">{{$t('（温馨提示：转帐前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊网络的GAS手续费。您可以从任何钱包或交易所直接将\nETH转入您的CPS地址，因为您的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币存储。）')}}
-          </div>
-          <div class="btn"><a href="javascript:;" class="js_submit" @click="proceedTranfer">{{$t('确定')}}</a></div>
-      </div>
+          </section>
+          <section class="send-total">
+              <div class="container">
+                  <div class="send-total-box">
+                      <div class="total-num">{{$t('共计：')}}<span class="total-num">{{transfer_token}}</span>{{token}}</div>
+                      <div class="msg">{{$t('（温馨提示：转帐前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊网络的GAS手续费。您可以从任何钱包或交易所直接将\nETH转入您的CPS地址，因为您的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币存储。）')}}</div>
+                      <div class="btn-group">
+                          <button type="button" class="sure" @click="proceedTranfer">{{$t('确定')}}</button>
+                      </div>
+                  </div>
+              </div>
+          </section>
+      </section>
 
-      <Modal v-model="modal.password_transaction" width="360" :closable="false" :mask-closable="false">
+      <Modal v-model="modal.password_transaction" width="100%" :closable="false" :mask-closable="false">
           <div class="wallet_tips_main">
               <div class="tips_main_title">{{$t('身份验证')}}</div>
               <div class="tips_form has_input">
@@ -66,48 +98,47 @@
               </div>
           </div>
       </Modal>
-        <Modal v-model="modal.input_nonce" width="360" :closable="false" :mask-closable="false">
-            <div class="wallet_tips_main">
-                <div class="tips_main_title">{{$t('请输入nonce')}}</div>
-                <div class="tips_main_tips">{{$t('nonce应该等于转出地址的累计交易数，如果你已联网，应用将自动获取nonce')}}</div>
-                <div class="tips_form has_input">
-                    <div class="tips_input"><input type="text" v-model="current_wallet.custom_nonce"  v-bind:placeholder="$t('请输入nonce')" value="0" id="wallet_input" maxlength=""></div>
-                    <div class="tips_form_btn btn-flex">
-                        <a href="javascript:;" class="js_tips_btn " @click="transferOffline2">{{$t('确定')}}</a>
-                        <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
-                    </div>
-                </div>
-            </div>
-        </Modal>
-        <Modal v-model="modal.show_info" width="600" :closable="false" :mask-closable="false">
-            <div class="wallet_tips_main">
-                <div class="tips_main_title">{{$t('提示')}}</div>
-                <div class="tips_main_tips">{{modal_info}}</div>
-                <div class="tips_form_btn">
-                    <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
-                </div>
-            </div>
-        </Modal>
-
-          <div class="mask" v-bind:style="{'display':modal.show_offline_txn?'':'none'}">
-              <div class="wallet_tips_main">
-              <div class="title">{{$t('交易数据')}}</div>
-              <div class="hash">
-                  {{qrcode}}
-              </div>
-              <div class="msg">{{$t('请保留上面的签名，在互联网的设备下，粘贴至已签名交易发送功能处，即可完成一笔交易。')}}</div>
-              <div class="dotted"></div>
-              <div class="transData-wrapper">
-                  <div class="transData-title">{{$t('交易数据')}}</div>
-                  <p class="qrcode" id="qrcode"></p>
-              </div>
-              <div class="dotted"></div>
-                  <br/>
-                  <div class="tips_form_btn">
-                      <a href="javascript:;" class="js_tips_btn " @click="closeModal('show_offline_txn')">{{$t('关闭')}}</a>
+      <Modal v-model="modal.input_nonce" width="100%" :closable="false" :mask-closable="false">
+          <div class="wallet_tips_main">
+              <div class="tips_main_title">{{$t('请输入nonce')}}</div>
+              <div class="tips_main_tips">{{$t('nonce应该等于转出地址的累计交易数，如果你已联网，应用将自动获取nonce')}}</div>
+              <div class="tips_form has_input">
+                  <div class="tips_input"><input type="text" v-model="current_wallet.custom_nonce"  v-bind:placeholder="$t('请输入nonce')" value="0" id="wallet_input" maxlength=""></div>
+                  <div class="tips_form_btn btn-flex">
+                      <a href="javascript:;" class="js_tips_btn " @click="transferOffline2">{{$t('确定')}}</a>
+                      <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                   </div>
               </div>
           </div>
+      </Modal>
+      <Modal v-model="modal.show_info" width="100%" :closable="false" :mask-closable="false">
+          <div class="wallet_tips_main">
+              <div class="tips_main_title">{{$t('提示')}}</div>
+              <div class="tips_main_tips">{{modal_info}}</div>
+              <div class="tips_form_btn">
+                  <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+              </div>
+          </div>
+      </Modal>
+
+      <section class="transData" v-bind:style="{'display':modal.show_offline_txn?'block':'none'}">
+          <div class="container">
+              <div class="title">{{$t('交易数据')}}</div>
+              <div class="text">{{qrcode}}</div>
+              <div class="prompt">{{$t('请保留上面的签名，在互联网的设备下，粘贴至已签名交易发送功能处，即可完成一笔交易。')}}</div>
+              <div class="qr-transData">
+                  <div class="line"></div>
+                  <div class="title">{{$t('交易数据')}}</div>
+                  <div class="img-group">
+                      <p class="qrcode" id="qrcode"></p>
+                  </div>
+                  <div class="line"></div>
+              </div>
+              <div class="btn-group">
+                  <button class="close-transData" @click="closeModal('show_offline_txn')">{{$t('关闭')}}</button>
+              </div>
+          </div>
+      </section>
   </div>
 </template>
 
@@ -173,13 +204,27 @@ export default {
     if (this.$root.globalData.current_wallet) {
       this.current_wallet = this.$root.globalData.current_wallet;
     }
-      document.getElementById('current_locale').innerText = window.i18n.locale;
   },
     updated(){
         this.modal.show_offline_txn = false;
-        document.getElementById('current_locale').innerText = window.i18n.locale;
     },
   methods: {
+      openMenu(){
+          if ($(this).attr('data-open') == "false") {
+              $(this).addClass('menu-btn-close');
+              $('.menu').addClass('open');
+              $('.nav').addClass('open');
+              $(this).attr('data-open','true');
+          } else {
+              $(this).removeClass('menu-btn-close');
+              $('.menu').removeClass('open');
+              $('.nav').removeClass('open');
+              $(this).attr('data-open','false');
+          }
+      },
+      changeLanguage(type){
+          window.changeLanguage(type);
+      },
     openModal(modalname) {
       this.modal = {};
       this.modal[modalname] = true;
