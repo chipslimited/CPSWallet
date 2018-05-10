@@ -29,12 +29,16 @@ import zh from 'iview/dist/locale/zh-CN';
 import en from 'iview/dist/locale/en-US';
 import tw from 'iview/dist/locale/zh-TW';
 
+import {default as cn_a} from './assets/common/lang/cn.js';
+import {default as tw_a} from './assets/common/lang/tw.js';
+import {default as en_a} from './assets/common/lang/en.js';
+
 const i18n = new VueI18n({
     locale: locale,    // 语言标识
     messages: {
-        'CN': Object.assign(require('./assets/common/lang/cn.js'), zh),   // 中文语言包
-        'TW': Object.assign(require('./assets/common/lang/tw.js') , tw),   // 中文语言包
-        'EN': Object.assign(require('./assets/common/lang/en.js'), en)    // 英文语言包
+        'CN': Object.assign(cn_a, zh),   // 中文语言包
+        'TW': Object.assign(tw_a , tw),   // 中文语言包
+        'EN': Object.assign(en_a, en)    // 英文语言包
     },
 })
 

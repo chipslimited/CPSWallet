@@ -9,6 +9,7 @@
     "start": "npm run build && electron .",
     "dev": "webpack-dev-server --inline --hot --target=web",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --define process.env.NODE_ENV='production' --target=web",
+    "rollup": "cross-env NODE_ENV=production rollup --config",
     "predeploy": "npm run build",
     "deploy": "surge --project . --domain vue-2-simple-routing-example.surge.sh",
     "pack": "electron-packager . CPSWallet --platform=win32  --overwrite --out=./dist/  --no-prune",
@@ -72,7 +73,6 @@
     "webpack-dev-server": "^2.4.5"
   },
   "devDependencies": {
-    "electron-installer-windows": "^1.0.2",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack-bundle-analyzer": "^2.11.1",
     "webpack-cli": "^2.1.3"
