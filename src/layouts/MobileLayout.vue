@@ -1,24 +1,28 @@
 <template>
+    <div style="width: 100%;height:100%; margin: 0px; padding: 0px;">
     <div v-bind:class="wrapper">
         <slot></slot>
+    </div>
     <div id="nav_menu" v-bind:class="nav_menu">
-        <div class="header-logo">
-            <img src="../../static_m/img/menu-logo.png" alt="">
-        </div>
-        <div v-bind:class="{'link-item active': this.$root.currentView == 'wallet','link-item': this.$root.currentView != 'wallet'}">
-            <a v-on:click="closeNavMenu" href="/wallet" class="text"><span class="wallet-icon"></span>{{$t('钱包')}}</a>
-        </div>
-        <div v-bind:class="{'link-item active': this.$root.currentView == 'send','link-item': this.$root.currentView != 'send'}">
-            <a v-on:click="closeNavMenu" href="/send" class="text"><span class="send-icon"></span>{{$t('发送')}}</a >
-        </div>
-        <div v-bind:class="{'link-item active': this.$root.currentView == 'receive','link-item': this.$root.currentView != 'receive'}">
-            <a v-on:click="closeNavMenu" href="/receive" class="text"><span class="receive-icon"></span>{{$t('收款')}}</a>
-        </div>
-        <div v-bind:class="{'link-item active': this.$root.currentView == 'history','link-item': this.$root.currentView != 'history'}">
-            <a v-on:click="closeNavMenu" href="/history" class="text"><span class="transLog-icon"></span>{{$t('交易历史')}}</a>
-        </div>
-        <div v-bind:class="{'link-item active': this.$root.currentView == 'sendr','link-item': this.$root.currentView != 'sendr'}">
-            <a v-on:click="closeNavMenu" href="/sendr" class="text"><span class="transSend-icon"    ></span>{{$t('已签名交易发送')}}</a>
+        <div class="menu-content">
+            <div class="header-logo">
+                <img src="../../static_m/img/menu-logo.png" alt="">
+            </div>
+            <div v-bind:class="{'link-item active': this.$root.currentView == 'wallet','link-item': this.$root.currentView != 'wallet'}">
+                <a v-on:click="closeNavMenu" href="/wallet" class="text"><span class="wallet-icon"></span>{{$t('钱包')}}</a>
+            </div>
+            <div v-bind:class="{'link-item active': this.$root.currentView == 'send','link-item': this.$root.currentView != 'send'}">
+                <a v-on:click="closeNavMenu" href="/send" class="text"><span class="send-icon"></span>{{$t('发送')}}</a >
+            </div>
+            <div v-bind:class="{'link-item active': this.$root.currentView == 'receive','link-item': this.$root.currentView != 'receive'}">
+                <a v-on:click="closeNavMenu" href="/receive" class="text"><span class="receive-icon"></span>{{$t('收款')}}</a>
+            </div>
+            <div v-bind:class="{'link-item active': this.$root.currentView == 'history','link-item': this.$root.currentView != 'history'}">
+                <a v-on:click="closeNavMenu" href="/history" class="text"><span class="transLog-icon"></span>{{$t('交易历史')}}</a>
+            </div>
+            <div v-bind:class="{'link-item active': this.$root.currentView == 'sendr','link-item': this.$root.currentView != 'sendr'}">
+                <a v-on:click="closeNavMenu" href="/sendr" class="text"><span class="transSend-icon"    ></span>{{$t('已签名交易发送')}}</a>
+            </div>
         </div>
     </div>
     </div>
@@ -60,7 +64,7 @@
 
                 $('.menu-btn').removeClass('menu-btn-close');
                 $('.menu').removeClass('open');
-                $('.nav').removeClass('open');
+                $('.wallet-wrapper').removeClass('open');
                 $('.menu-btn').attr('data-open','false');
 
                 console.log("nav_menu closeNavMenu");
@@ -72,6 +76,9 @@
 <style lang="less">
     @import url(../../node_modules/iview/dist/styles/iview.css);
 
+    * {
+        box-sizing: content-box;
+    }
     body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-serif";line-height:1;font-weight: bold; background-color:#272727;}
 
     .ivu-modal-content{
@@ -92,25 +99,25 @@
     }
 
     .ivu-select{
-        font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:20px;font-weight: bold;
+        font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:36px;font-weight: bold;
         font-size: 12px;
         border-color: #212121;
     }
     .ivu-select-single .ivu-select-selection{
-        height: 24px;
+        height: 36px;
     }
     .ivu-select-selection:hover{border-color:#333333;}
     .ivu-select-selection{
         background-color: #dcdcdc;
         border-radius: 4px;
         border:none;
-        height: 24px;
+        height: 36px;
         font-size: 12px;
         font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:20px;font-weight: bold;
     }
     .ivu-select-visible .ivu-select-selection {
         border-color:#333333;
-        height: 24px;
+        height: 36px;
         font-size: 12px;
         font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:20px;font-weight: bold;
     }
@@ -122,7 +129,7 @@
 
     .ivu-select-dropdown .ivu-select-dropdown-list .ivu-select-item {
         width: 100%;
-        height: 24px;
+        height: 35px;
         line-height: 24px;
         padding: 0 14px;
         box-sizing: border-box;
@@ -155,13 +162,17 @@
         transition: all 0.3s ease-in-out;
         -webkit-transition: all 0.3s ease-in-out;
         -moz-transition: all 0.3s ease-in-out;
+        font-size: 7px;
+        transform: scale(0.5);
+        -webkit-transform: scale(0.5);
+        -moz-transform: scale(0.5);
     }
 
     .ivu-select-visible .ivu-select-arrow:nth-of-type(2){
-        margin-top: -15px;
-        transform: rotate(180deg);
-        -webkit-transform: rotate(180deg);
-        -moz-transform: rotate(180deg);
+        margin-top: -7.5px;
+        transform: scale(0.5)rotate(-180deg);
+        -webkit-transform: scale(0.5)rotate(-180deg);
+        -moz-transform: scale(0.5)rotate(-180deg);
     }
 
     .ivu-icon-arrow-down-b:before {
@@ -169,9 +180,9 @@
     }
 
     .ivu-select-single .ivu-select-selection .ivu-select-placeholder, .ivu-select-single .ivu-select-selection .ivu-select-selected-value{
-        height: 24px;
+        height: 36px;
         font-size: 12px;
-        font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:20px;font-weight: bold;
+        font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:36px;font-weight: bold;
 
         position: relative;
         width:100%;
@@ -187,6 +198,23 @@
 
     .ivu-btn-loading {
         pointer-events: none;
+    }
+
+    .slider-group .ivu-input-number {
+        height:24px;
+    }
+
+    .slider-group .ivu-input-number-input {
+        height:24px;
+        font-size: 10px;
+    }
+
+    .slider-group .ivu-input-number-handler-wrap {
+        height:24px;
+    }
+
+    .slider-group .ivu-input-number-input-wrap {
+        height:24px;
     }
 
     .num-input .ivu-input-number-input-wrap{
@@ -234,16 +262,20 @@
         background-color: transparent;
     }
 
+    .send-wrapper .main-content .send-form .slider-group .slider {
+        background-color: #00000000;
+    }
+
     .ivu-slider-bar{
         background-color: #e9eaec;
     }
 
     .ivu-slider-button{
         top: 50%;
-        transform: translateY(-25%);
-        width: 30px;
-        height: 30px;
-        margin-left: -15px;
+        transform: translateY(-0%);
+        width: 15px;
+        height: 15px;
+        margin-left: -7px;
         border: none;
         border-radius: 50%;
         background-color: #aaaaaa;
@@ -253,7 +285,7 @@
             outline: none;
         }
         &:hover{
-            transform: translateY(-25%);
+            transform: translateY(-0%);
         }
     }
 
@@ -293,6 +325,41 @@
     }
 
     #app{
-        height:calc(100% - 88px);
+        height:100%;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    div {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .ivu-modal-content .ivu-modal-body .model {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 262px;
+        height:300px;
+        border-radius: size(10);
+        background-color: #dedede;
+        z-index: 100;
+        .text {
+            margin: 0;
+            line-height: 1.6;
+            font-size: size(35);
+            color: #333b46;
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 16px;
+            height: 16px;
+            background: url("../../static_m/img/close.png") no-repeat;
+            background-size: 100%;
+        }
     }
 </style>

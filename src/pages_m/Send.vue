@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%;">
+  <div style="width: 100%; height: 100%; margin: 0px; padding: 0px;">
       <nav class="nav">
           <div class="container nav-box">
               <div class="menu-btn" data-open="false" @click="openMenu">
@@ -47,34 +47,24 @@
                   <div class="balance" v-if="bal">{{$t('持有:')}}<span class="num">{{bal}}</span> {{token}}</div>
                   <div class="slider-group">
                       <div class="text">{{$t('燃料上限')}}</div>
-                      <div id="fuel"></div>
-                      <input type="text" class="value fuel-value" value="8000">
+                      <Slider v-model="gas" :step="1" show-input :min="21000" :max="1000000" class="slider"></Slider>
                   </div>
                   <div class="slider-group">
                       <div class="text">{{$t('燃料价格(Gwei)')}}</div>
-                      <div id="fuel-price"></div>
-                      <input type="text" class="value fuel-price-value" value="21">
+                      <Slider v-model="gasPrice" :step="1" show-input :min="1" :max="100" class="slider"></Slider>
                   </div>
                   <div class="miner-cost">
                       <div class="text">{{$t('矿工费用')}}</div>
                       <div class="val">{{parseFloat(gas)*parseFloat(gasPrice)/1e9}}  ether
-                          <div class="prompt">
-                              <span class="prompt-img"></span>
-                              <div class="prompt-content">
-                                  <div class="prompt-text">{{$t('“燃料上限” -> 燃料数量上限')}}</div>
-                                  <div class="prompt-text mb-25">{{$t('“燃料价格” -> 燃料单价上限')}}</div>
-                                  <div class="prompt-text">{{$t('矿工费用＝实际燃料数量*实际燃料单价。实际燃料数 量和单价不会高于用户指定的上述两个上限，多余的会 退回。较低的燃料单价和数量可以节省矿工费用，但是\n    也会降低交易到账的速度。在联网设备发送时，会自动 获取燃料上限，在离线设备发送时，需手动设定燃料上 限。如果矿工费用不足以完成打包，或者当前交易的燃 料数量超过了区块的限制，这笔交易将失败。')}}
-                                  </div>
-                              </div>
-                          </div>
                       </div>
+                      <div class="prompt-btn" @click="showMinerFeeTip"></div>
                   </div>
               </div>
           </section>
           <section class="send-total">
               <div class="container">
                   <div class="send-total-box">
-                      <div class="total-num">{{$t('共计：')}}<span class="total-num">{{transfer_token}}</span>{{token}}</div>
+                      <div class="total-num">{{$t('共计：')}}<span class="va">{{transfer_token}}</span>{{token}}</div>
                       <div class="msg">{{$t('（温馨提示：转帐前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊网络的GAS手续费。您可以从任何钱包或交易所直接将\nETH转入您的CPS地址，因为您的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币存储。）')}}</div>
                       <div class="btn-group">
                           <button type="button" class="sure" @click="proceedTranfer">{{$t('确定')}}</button>
@@ -139,6 +129,15 @@
               </div>
           </div>
       </section>
+      <div class="model">
+          <div class="close" @click="hideMinerFeeTip()"></div>
+          <p class="text">
+              <span>{{$t('“燃料上限” -> 燃料数量上限')}}</span><br/>
+              <span>{{$t('“燃料价格” -> 燃料单价上限')}}</span><br/>
+              <span>{{$t('矿工费用＝实际燃料数量*实际燃料单价。实际燃料数 量和单价不会高于用户指定的上述两个上限，多余的会 退回。较低的燃料单价和数量可以节省矿工费用，但是\n    也会降低交易到账的速度。在联网设备发送时，会自动 获取燃料上限，在离线设备发送时，需手动设定燃料上 限。如果矿工费用不足以完成打包，或者当前交易的燃 料数量超过了区块的限制，这笔交易将失败。')}}
+              </span><br/><br/>
+          </p>
+      </div>
   </div>
 </template>
 
@@ -168,6 +167,7 @@ export default {
         password_transaction:false,
         show_info: false,
         show_offline_txn: false,
+          prompt_minerfee: false,
       },
       modal_info:""
     };
@@ -210,24 +210,43 @@ export default {
     },
   methods: {
       openMenu(){
-          if ($(this).attr('data-open') == "false") {
-              $(this).addClass('menu-btn-close');
+          if ($('.menu-btn').attr('data-open') == "false") {
+              $('.menu-btn').attr('data-open','true');
+              $('.menu-btn').addClass('menu-btn-close');
               $('.menu').addClass('open');
-              $('.nav').addClass('open');
-              $(this).attr('data-open','true');
+              $('.wallet-wrapper').addClass('open');
           } else {
-              $(this).removeClass('menu-btn-close');
+              $('.menu-btn').removeClass('menu-btn-close');
               $('.menu').removeClass('open');
-              $('.nav').removeClass('open');
-              $(this).attr('data-open','false');
+              $('.wallet-wrapper').removeClass('open');
+              $('.menu-btn').attr('data-open','false');
           }
       },
       changeLanguage(type){
           window.changeLanguage(type);
       },
     openModal(modalname) {
+          debugger
       this.modal = {};
       this.modal[modalname] = true;
+    },
+    showMinerFeeTip(e){
+        if ($('.prompt-btn').attr('data-open') == "false") {
+            e.stopPropagation();
+            $('.model').fadeIn();
+            $('.prompt-btn').attr('data-open', 'true');
+            $("body").on('click', function () {
+                $('.model').fadeOut();
+                $('.prompt-btn').attr('data-open', 'false');
+            });
+        } else {
+            $('.model').fadeOut();
+            $('.prompt-btn').attr('data-open', 'false');
+        }
+    },
+    hideMinerFeeTip(){
+        $('.model').fadeOut();
+        $('.prompt-btn').attr('data-open', 'false');
     },
     closeModal(modalname) {
       let modal_map = JSON.parse(JSON.stringify(this.modal));
@@ -628,6 +647,8 @@ export default {
     }
   }
 };
+
+
 </script>
 
 <style lang="less" scoped>

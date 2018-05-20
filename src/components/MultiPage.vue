@@ -50,31 +50,23 @@
             @click="next">
             <a><i class="ivu-icon ivu-icon-ios-arrow-right"></i></a>
         </li>
-        <Options
-            :show-sizer="showSizer"
-            :page-size="currentPageSize"
-            :page-size-opts="pageSizeOpts"
-            :placement="placement"
-            :transfer="transfer"
-            :show-elevator="showElevator"
-            :_current.once="currentPage"
-            :current="currentPage"
-            :all-pages="allPages"
-            :is-small="isSmall"
-            @on-size="onSize"
-            @on-page="onPage">
-        </Options>
     </ul>
 </template>
 <script>
-    import { oneOf } from 'iview/src/utils/assist';
-    import Options from 'iview/src/components/page/options.vue';
-    import Locale from 'iview/src/mixins/locale';
+    function oneOf (value, validList) {
+        for (let i = 0; i < validList.length; i++) {
+            if (value === validList[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     const prefixCls = 'ivu-page';
     export default {
         name: 'MultiPage',
-        mixins: [ Locale ],
-        components: { Options },
+        mixins: [  ],
+        components: {  },
         props: {
             current: {
                 type: Number,

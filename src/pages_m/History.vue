@@ -1,6 +1,6 @@
 
 <template>
-  <div>
+  <div style="width: 100%; height: 100%; margin: 0px; padding: 0px;">
       <nav class="nav">
           <div class="container nav-box">
               <div class="menu-btn" data-open="false" @click="openMenu">
@@ -103,16 +103,16 @@ export default {
   },
   methods: {
       openMenu(){
-          if ($(this).attr('data-open') == "false") {
-              $(this).addClass('menu-btn-close');
+          if ($('.menu-btn').attr('data-open') == "false") {
+              $('.menu-btn').attr('data-open','true');
+              $('.menu-btn').addClass('menu-btn-close');
               $('.menu').addClass('open');
-              $('.nav').addClass('open');
-              $(this).attr('data-open','true');
+              $('.wallet-wrapper').addClass('open');
           } else {
-              $(this).removeClass('menu-btn-close');
+              $('.menu-btn').removeClass('menu-btn-close');
               $('.menu').removeClass('open');
-              $('.nav').removeClass('open');
-              $(this).attr('data-open','false');
+              $('.wallet-wrapper').removeClass('open');
+              $('.menu-btn').attr('data-open','false');
           }
       },
       changeLanguage(type){

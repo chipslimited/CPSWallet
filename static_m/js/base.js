@@ -4,12 +4,12 @@ $(function () {
     if ($(this).attr('data-open') == "false") {
       $(this).addClass('menu-btn-close');
       $('.menu').addClass('open');
-      $('.nav').addClass('open');
+      $('.wallet-wrapper').addClass('open');
       $(this).attr('data-open','true');
     } else {
       $(this).removeClass('menu-btn-close');
       $('.menu').removeClass('open');
-      $('.nav').removeClass('open');
+      $('.wallet-wrapper').removeClass('open');
       $(this).attr('data-open','false');
     }
   });

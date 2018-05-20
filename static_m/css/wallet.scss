@@ -1,3 +1,4 @@
+@charset "utf-8";
 //文字颜色
 $text-color: #bebebe;
 
@@ -9,8 +10,10 @@ $text-color: #bebebe;
 button, textarea, input, a {
   border: none;
   outline: none;
-  font-family: "sans-serif";
+  font-family: "Helvetica", "sans-serif";
 }
+
+
 
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
   color: #C9C9C9;
@@ -36,12 +39,13 @@ a {
     top: 0;
     left: 0;
     width: 100%;
-    height: size(139);
+    height: 60px;
     background-color: #040404;
-    transition: left 0.3s ease-in-out;
-    &.open {
-      left: 80%;
-    }
+    //transition: left 0.3s ease-in-out;
+    z-index: 9999;
+    //&.open {
+    //  left: 80%;
+    //}
     .nav-box {
       height: 100%;
       display: flex;
@@ -49,15 +53,15 @@ a {
       justify-content: space-between;
       align-items: center;
       .menu-btn {
-        width: size(85);
-        //height: size(54);
+        width: 32px;
+        height: 25px;
         display: flex;
         flex-flow: column nowrap;
         justify-content: center;
         align-items: center;
         .menu-btn-bar {
           display: block;
-          width: size(85);
+          width: 32px;
           height: 2px;
           background: $text-color;
           margin-bottom: 4px;
@@ -112,13 +116,13 @@ a {
       .cps-logo {
         display: inline-block;
         img {
-          width: size(251);
-          height: size(82);
+          width: 118px;
+          height: 40px;
         }
       }
       .language-btn {
         position: relative;
-        font-size: size(45);
+        font-size: 18px;
         color: $text-color;
         z-index: 50;
         &:hover .language-list {
@@ -134,7 +138,9 @@ a {
           left: 0;
           margin: 0;
           padding: 0;
+          background-color: #040404;
           list-style-type: none;
+          z-index: 999;
           .language-item {
             padding: 2px 5px;
           }
@@ -163,107 +169,123 @@ a {
     display: block;
     position: fixed;
     top: 0;
-    left: -80%;
-    width: 80%;
+    width: 100%;
     height: 100%;
-    font-size: 0;
-    background-color: #ffffff;
-    z-index: 30;
-    overflow-x: hidden;
-    transition: left 0.3s ease-in-out;
+    margin-top: 60px;
+    background-color: transparent;
+    transform: translate3d(-100%, 0, 0);
+    -ms-transform: translate3d(-100%, 0, 0); 	/* IE 9 */
+    -moz-transform: translate3d(-100%, 0, 0); 	/* Firefox */
+    -webkit-transform: translate3d(-100%, 0, 0); /* Safari 和 Chrome */
+    -o-transform: translate3d(-100%, 0, 0); 	/* Opera */
+    transition: transform 0.3s ease-in-out;
+    z-index: 999;
     &.open {
-      left: 0;
+      transform: translate3d(0, 0, 0);
+      -ms-transform: translate3d(0, 0, 0); 	/* IE 9 */
+      -moz-transform: translate3d(0, 0, 0); 	/* Firefox */
+      -webkit-transform: translate3d(0, 0, 0); /* Safari 和 Chrome */
+      -o-transform: translate3d(0, 0, 0); 	/* Opera */
     }
-    .header-logo {
-      width: 100%;
-      height: size(139);
-      line-height: size(139);
-      text-align: center;
-      border-bottom: 1px solid #dcdddd;
-      box-sizing: border-box;
-      img {
-        width: size(251);
-        height: size(82);
-        vertical-align: middle;
-      }
-    }
-    .link-item {
-      width: 100%;
-      height: 48px;
-      padding-left: 15px;
-      border-bottom: 1px solid #dcdddd;
-      box-sizing: border-box;
-      transition: all 0.4s linear;
-      .text {
-        position: relative;
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: flex-start;
-        align-items: center;
+    .menu-content {
+      width: 80%;
+      height: 100%;
+      margin-top: -60px;
+      font-size: 0;
+      background-color: #ffffff;
+      z-index: 30;
+      overflow-x: hidden;
+      .header-logo {
         width: 100%;
-        height: 100%;
-        line-height: 48px;
-        padding-right: 30px;
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        border-bottom: 1px solid #dcdddd;
         box-sizing: border-box;
-        font-size: 16px;
-        color: #707070;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        &:after {
-          position: absolute;
-          top: 50%;
-          right: 10px;
-          transform: translateY(-50%);
-          content: '';
-          width: 24px;
-          height: 24px;
-          background: url("../img/menu-arrow-right.png") no-repeat center center;
-          background-size: contain;
-        }
-        .wallet-icon {
-          @include menu-icon('../img/menu-wallet.png', size(97), size(87));
-          margin-right: 10px;
-        }
-        .send-icon {
-          @include menu-icon('../img/menu-send.png', size(94), size(89));
-          margin-right: 10px;
-        }
-        .receive-icon {
-          @include menu-icon('../img/menu-receive.png', size(94), size(86));
-          margin-right: 10px;
-        }
-        .transLog-icon {
-          @include menu-icon('../img/menu-transLog.png', size(89), size(89));
-          margin-right: 10px;
-        }
-        .transSend-icon {
-          @include menu-icon('../img/menu-transSend.png', size(84), size(85));
-          margin-right: 10px;
+        img {
+          width: 118px;
+          height: 40px;
+          vertical-align: middle;
         }
       }
-      &:hover, &.active {
-        background-color: #000000;
+      .link-item {
+        width: 100%;
+        height: 48px;
+        padding-left: 15px;
+        border-bottom: 1px solid #dcdddd;
+        box-sizing: border-box;
+        transition: all 0.4s linear;
         .text {
-          color: #ffffff;
+          position: relative;
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: flex-start;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          line-height: 48px;
+          padding-right: 30px;
+          box-sizing: border-box;
+          font-size: 16px;
+          color: #707070;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
           &:after {
-            background: url("../img/menu-arrow-right-selected.png") no-repeat center center;
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            content: '';
+            width: 24px;
+            height: 24px;
+            background: url("../img/menu-arrow-right.png") no-repeat center center;
             background-size: contain;
           }
           .wallet-icon {
-            @include menu-icon('../img/menu-wallet-selected.png', size(97), size(87));
+            @include menu-icon('../img/menu-wallet.png', size(97), size(87));
+            margin-right: 10px;
           }
           .send-icon {
-            @include menu-icon('../img/menu-send-selected.png', size(94), size(89));
+            @include menu-icon('../img/menu-send.png', size(94), size(89));
+            margin-right: 10px;
           }
           .receive-icon {
-            @include menu-icon('../img/menu-receive-selected.png', size(94), size(86));
+            @include menu-icon('../img/menu-receive.png', size(94), size(86));
+            margin-right: 10px;
           }
           .transLog-icon {
-            @include menu-icon('../img/menu-transLog-selected.png', size(89), size(89));
+            @include menu-icon('../img/menu-transLog.png', size(89), size(89));
+            margin-right: 10px;
           }
           .transSend-icon {
-            @include menu-icon('../img/menu-transSend-selected.png', size(84), size(85));
+            @include menu-icon('../img/menu-transSend.png', size(84), size(85));
+            margin-right: 10px;
+          }
+        }
+        &:hover, &.active {
+          background-color: #000000;
+          .text {
+            color: #ffffff;
+            &:after {
+              background: url("../img/menu-arrow-right-selected.png") no-repeat center center;
+              background-size: contain;
+            }
+            .wallet-icon {
+              @include menu-icon('../img/menu-wallet-selected.png', size(97), size(87));
+            }
+            .send-icon {
+              @include menu-icon('../img/menu-send-selected.png', size(94), size(89));
+            }
+            .receive-icon {
+              @include menu-icon('../img/menu-receive-selected.png', size(94), size(86));
+            }
+            .transLog-icon {
+              @include menu-icon('../img/menu-transLog-selected.png', size(89), size(89));
+            }
+            .transSend-icon {
+              @include menu-icon('../img/menu-transSend-selected.png', size(84), size(85));
+            }
           }
         }
       }
@@ -271,11 +293,17 @@ a {
   }
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   width: 100vw;
   min-height: 100vh;
   background-color: #272727;
   overflow-x: hidden;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   @include menu;
 }
 
@@ -307,10 +335,22 @@ body {
 
 .wallet-wrapper {
   position: relative;
-  left: 0;
-  padding: size(139) 0 size(49);
-  font-family: "sans-serif";
-  transition: left 0.3s ease-in-out;
+  transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0); 	/* IE 9 */
+  -moz-transform: translate3d(0, 0, 0); 	/* Firefox */
+  -webkit-transform: translate3d(0, 0, 0); /* Safari 和 Chrome */
+  -o-transform: translate3d(0, 0, 0); 	/* Opera */
+  padding: 60px 0 size(49);
+  font-family: "Helvetica", "sans-serif";
+  transition: transform 0.3s ease-in-out;
+  overflow-x: hidden;
+  &.open {
+    transform: translate3d(80%, 0, 0);
+    -ms-transform: translate3d(80%, 0, 0); 	/* IE 9 */
+    -moz-transform: translate3d(80%, 0, 0); 	/* Firefox */
+    -webkit-transform: translate3d(80%, 0, 0); /* Safari 和 Chrome */
+    -o-transform: translate3d(80%, 0, 0); 	/* Opera */
+  }
   @include nav;
 }
 
@@ -417,6 +457,7 @@ body {
           font-size: size(40);
           color: #ffffff;
           word-break: break-all;
+          cursor: pointer;
           .num {
             padding: 0 5px 0 10px;
           }
@@ -478,7 +519,7 @@ body {
         }
         .dropdown-box {
           flex: 1;
-          height: size(70);
+          height: 36px;
           border-radius: 3px;
           background-color: #ffffff;
           &.type {
@@ -490,10 +531,10 @@ body {
         input {
           flex: 1;
           width: 0;
-          height: size(70);
+          height: 36px;
           padding: 0 10px;
           border-radius: 4px;
-          font-size: 12px;
+          font-size: 14px;
           color: #212121;
           background-color: #ffffff;
         }
@@ -501,7 +542,7 @@ body {
       .balance {
         margin-bottom: 15px;
         text-align: right;
-        font-size: size(40);
+        font-size: 14px;
         color: #ffffff;
       }
       .slider-group {
@@ -514,7 +555,7 @@ body {
           flex: 0 0 70px;
           width: 70px;
           text-align: left;
-          font-size: size(40);
+          font-size: 14px;
           color: #ffffff;
           padding-right: 10px;
         }
@@ -544,14 +585,15 @@ body {
           }
         }
         .value {
-          flex: 0 0 size(150);
-          width: size(150);
-          height: size(50);
-          line-height: size(50);
-          margin-left: 10px;
+          flex: 0 0 55px;
+          width: 55px;
+          height: 25px;
+          line-height: 25px;
+          margin-left: 15px;
           padding: 0 5px;
+          border-radius: 2px;
           box-sizing: border-box;
-          font-size: size(21);
+          font-size: 10px;
           color: #333b46;
           background-color: #fff;
         }
@@ -561,7 +603,7 @@ body {
         flex-flow: row nowrap;
         justify-content: flex-start;
         align-items: center;
-        font-size: size(40);
+        font-size: 14px;
         color: #ffffff;
         .text {
           flex:  0 0 70px;
@@ -606,6 +648,7 @@ body {
             line-height: size(107);
             padding: 0;
             border-radius: size(5);
+            text-align: center;
             font-size: 22px;
             color: #131313;
             background-color: #ffffff;
@@ -627,7 +670,7 @@ body {
     .text {
       line-height: 1.5;
       margin: 12px 0;
-      font-size: 12px;
+      font-size: 14px;
       word-break: break-all;
     }
     .prompt {
@@ -657,6 +700,7 @@ body {
         width: 100%;
         height: 40px;
         border-radius: 4px;
+        text-align: center;
         font-size: 18px;
         color: #ffffff;
         background-color: #000000;
@@ -698,7 +742,7 @@ body {
     padding: size(32) 0 size(42);
     .text {
       margin-bottom: 8px;
-      font-size: size(40);
+      font-size: 14px;
       color: #ffffff;
     }
     .select-wallet {
@@ -708,14 +752,14 @@ body {
       align-items: center;
       .dropdown-box {
         flex: 1;
-        height: size(70);
+        height: 36px;
         border-radius: 3px;
         background-color: #ffffff;
       }
       .copy {
-        flex: 0 0 size(70);
-        width: size(70);
-        height: size(68);
+        flex: 0 0 30px;
+        width: 30px;
+        height: 30px;
         margin-left: 10px;
         background: url("../img/copy.png") no-repeat;
         background-size: 100%;
@@ -723,7 +767,7 @@ body {
     }
   }
   .receive-qr {
-    padding: size(26) size(50) size(300);
+    padding: size(26) size(50) 60px;
     border-radius: size(10);
     background-color: #484848;
     .qr-address {
@@ -733,7 +777,7 @@ body {
       align-items: flex-start;
       margin-bottom: size(64);
       line-height: 1.6;
-      font-size: size(40);
+      font-size: 14px;
       color: #ffffff;
       .text {
         flex:  0 0 90px;
@@ -745,22 +789,23 @@ body {
       }
     }
     .qr-img {
-      width: size(445);
+      width: 250px;
       margin: 0 auto;
       text-align: center;
       font-size: 0;
       img {
         width: 100%;
-        height: size(445);
+        height: 250px;
       }
       .download {
         width: 100%;
-        height: size(70);
+        height: 30px;
         margin-bottom: size(24);
         background: #a5a5a5 url("../img/download.png") no-repeat center center;
-        background-size: 16px 16px;
+        background-size: 20px 20px;
         &:active {
           background: #b2b2b2 url("../img/download.png") no-repeat center center;
+          background-size: 20px 20px;
         }
         a {
           display: inline-block;
@@ -770,7 +815,7 @@ body {
       }
       .text {
         text-align: center;
-        font-size: size(40);
+        font-size: 14px;
         color: #ffffff;
       }
     }
@@ -783,7 +828,7 @@ body {
     padding: size(33) 0 size(31);
     .text {
       margin-bottom: 8px;
-      font-size: size(40);
+      font-size: 14px;
       color: #ffffff;
     }
     .input-group {
@@ -796,14 +841,14 @@ body {
         padding: 0 10px;
         border-radius: 4px;
         box-sizing: border-box;
-        font-size: 12px;
+        font-size: 14px;
         color: #000000;
         background-color: #ffffff;
       }
     }
     .dropdown-box {
       flex: 1;
-      height: size(70);
+      height: 36px;
       margin-bottom: 8px;
       border-radius: 3px;
       background-color: #ffffff;
@@ -813,16 +858,15 @@ body {
       flex-flow: row nowrap;
       justify-content: flex-start;
       align-items: center;
-      margin-bottom: size(37);
       button {
         //flex: 2;
-        height: size(138);
-        line-height: size(138);
+        height: 34px;
+        line-height: 34px;
         padding: 0 10px;
         margin-right: 8px;
-        border-radius: size(5);
+        border-radius: 7px;
         text-align: center;
-        font-size: size(56);
+        font-size: 14px;
         color: #131313;
         background-color: #bfbfbf;
         //&:first-child {
@@ -864,7 +908,7 @@ body {
         }
       }
       .trans-info {
-        font-family: "sans-serif";
+        font-family: "Helvetica", "sans-serif";
         font-size: size(35);
         color: #ffffff;
         .eth {
@@ -887,7 +931,7 @@ body {
       border-radius: size(10);
       box-sizing: border-box;
       resize: none;
-      font-size: size(40);
+      font-size: 14px;
       color: #000000;
       background-color: #ffffff;
       word-break: break-all;
@@ -896,7 +940,7 @@ body {
   .prompt {
     line-height: 1.5;
     margin-bottom: size(40);
-    font-size: size(35);
+    font-size: 12px;
     color: #ffffff;
   }
   .btn-group {

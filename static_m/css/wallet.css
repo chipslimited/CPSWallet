@@ -1,7 +1,8 @@
+@charset "UTF-8";
 button, textarea, input, a {
   border: none;
   outline: none;
-  font-family: "sans-serif"; }
+  font-family: "Helvetica", "sans-serif"; }
 
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
   color: #C9C9C9; }
@@ -18,148 +19,193 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 a {
   text-decoration: none; }
 
+html {
+  overflow-x: hidden; }
+
 body {
   width: 100vw;
   min-height: 100vh;
   background-color: #272727;
-  overflow-x: hidden; }
+  overflow-x: hidden;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent; }
   body .menu {
     display: block;
     position: fixed;
     top: 0;
-    left: -80%;
-    width: 80%;
+    width: 100%;
     height: 100%;
-    font-size: 0;
-    background-color: #ffffff;
-    z-index: 30;
-    overflow-x: hidden;
-    transition: left 0.3s ease-in-out; }
+    margin-top: 60px;
+    background-color: transparent;
+    transform: translate3d(-100%, 0, 0);
+    -ms-transform: translate3d(-100%, 0, 0);
+    /* IE 9 */
+    -moz-transform: translate3d(-100%, 0, 0);
+    /* Firefox */
+    -webkit-transform: translate3d(-100%, 0, 0);
+    /* Safari 和 Chrome */
+    -o-transform: translate3d(-100%, 0, 0);
+    /* Opera */
+    transition: transform 0.3s ease-in-out;
+    z-index: 999; }
     body .menu.open {
-      left: 0; }
-    body .menu .header-logo {
-      width: 100%;
-      height: 48px;
-      line-height: 48px;
-      text-align: center;
-      border-bottom: 1px solid #dcdddd;
-      box-sizing: border-box; }
-      body .menu .header-logo img {
-        width: 87px;
-        height: 28px;
-        vertical-align: middle; }
-    body .menu .link-item {
-      width: 100%;
-      height: 48px;
-      padding-left: 15px;
-      border-bottom: 1px solid #dcdddd;
-      box-sizing: border-box;
-      transition: all 0.4s linear; }
-      body .menu .link-item .text {
-        position: relative;
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: flex-start;
-        align-items: center;
+      transform: translate3d(0, 0, 0);
+      -ms-transform: translate3d(0, 0, 0);
+      /* IE 9 */
+      -moz-transform: translate3d(0, 0, 0);
+      /* Firefox */
+      -webkit-transform: translate3d(0, 0, 0);
+      /* Safari 和 Chrome */
+      -o-transform: translate3d(0, 0, 0);
+      /* Opera */ }
+    body .menu .menu-content {
+      width: 80%;
+      height: 100%;
+      margin-top: -60px;
+      font-size: 0;
+      background-color: #ffffff;
+      z-index: 30;
+      overflow-x: hidden; }
+      body .menu .menu-content .header-logo {
         width: 100%;
-        height: 100%;
-        line-height: 48px;
-        padding-right: 30px;
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        border-bottom: 1px solid #dcdddd;
+        box-sizing: border-box; }
+        body .menu .menu-content .header-logo img {
+          width: 118px;
+          height: 40px;
+          vertical-align: middle; }
+      body .menu .menu-content .link-item {
+        width: 100%;
+        height: 48px;
+        padding-left: 15px;
+        border-bottom: 1px solid #dcdddd;
         box-sizing: border-box;
-        font-size: 16px;
-        color: #707070;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden; }
-        body .menu .link-item .text:after {
-          position: absolute;
-          top: 50%;
-          right: 10px;
-          transform: translateY(-50%);
-          content: '';
-          width: 24px;
-          height: 24px;
-          background: url("../img/menu-arrow-right.png") no-repeat center center;
-          background-size: contain; }
-        body .menu .link-item .text .wallet-icon {
-          width: 34px;
-          height: 30px;
-          background: url("../img/menu-wallet.png") no-repeat center center;
-          background-size: contain;
-          margin-right: 10px; }
-        body .menu .link-item .text .send-icon {
-          width: 33px;
-          height: 31px;
-          background: url("../img/menu-send.png") no-repeat center center;
-          background-size: contain;
-          margin-right: 10px; }
-        body .menu .link-item .text .receive-icon {
-          width: 33px;
-          height: 30px;
-          background: url("../img/menu-receive.png") no-repeat center center;
-          background-size: contain;
-          margin-right: 10px; }
-        body .menu .link-item .text .transLog-icon {
-          width: 31px;
-          height: 31px;
-          background: url("../img/menu-transLog.png") no-repeat center center;
-          background-size: contain;
-          margin-right: 10px; }
-        body .menu .link-item .text .transSend-icon {
-          width: 29px;
-          height: 29px;
-          background: url("../img/menu-transSend.png") no-repeat center center;
-          background-size: contain;
-          margin-right: 10px; }
-      body .menu .link-item:hover, body .menu .link-item.active {
-        background-color: #000000; }
-        body .menu .link-item:hover .text, body .menu .link-item.active .text {
-          color: #ffffff; }
-          body .menu .link-item:hover .text:after, body .menu .link-item.active .text:after {
-            background: url("../img/menu-arrow-right-selected.png") no-repeat center center;
+        transition: all 0.4s linear; }
+        body .menu .menu-content .link-item .text {
+          position: relative;
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: flex-start;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          line-height: 48px;
+          padding-right: 30px;
+          box-sizing: border-box;
+          font-size: 16px;
+          color: #707070;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden; }
+          body .menu .menu-content .link-item .text:after {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            content: '';
+            width: 24px;
+            height: 24px;
+            background: url("../img/menu-arrow-right.png") no-repeat center center;
             background-size: contain; }
-          body .menu .link-item:hover .text .wallet-icon, body .menu .link-item.active .text .wallet-icon {
+          body .menu .menu-content .link-item .text .wallet-icon {
             width: 34px;
             height: 30px;
-            background: url("../img/menu-wallet-selected.png") no-repeat center center;
-            background-size: contain; }
-          body .menu .link-item:hover .text .send-icon, body .menu .link-item.active .text .send-icon {
+            background: url("../img/menu-wallet.png") no-repeat center center;
+            background-size: contain;
+            margin-right: 10px; }
+          body .menu .menu-content .link-item .text .send-icon {
             width: 33px;
             height: 31px;
-            background: url("../img/menu-send-selected.png") no-repeat center center;
-            background-size: contain; }
-          body .menu .link-item:hover .text .receive-icon, body .menu .link-item.active .text .receive-icon {
+            background: url("../img/menu-send.png") no-repeat center center;
+            background-size: contain;
+            margin-right: 10px; }
+          body .menu .menu-content .link-item .text .receive-icon {
             width: 33px;
             height: 30px;
-            background: url("../img/menu-receive-selected.png") no-repeat center center;
-            background-size: contain; }
-          body .menu .link-item:hover .text .transLog-icon, body .menu .link-item.active .text .transLog-icon {
+            background: url("../img/menu-receive.png") no-repeat center center;
+            background-size: contain;
+            margin-right: 10px; }
+          body .menu .menu-content .link-item .text .transLog-icon {
             width: 31px;
             height: 31px;
-            background: url("../img/menu-transLog-selected.png") no-repeat center center;
-            background-size: contain; }
-          body .menu .link-item:hover .text .transSend-icon, body .menu .link-item.active .text .transSend-icon {
+            background: url("../img/menu-transLog.png") no-repeat center center;
+            background-size: contain;
+            margin-right: 10px; }
+          body .menu .menu-content .link-item .text .transSend-icon {
             width: 29px;
             height: 29px;
-            background: url("../img/menu-transSend-selected.png") no-repeat center center;
-            background-size: contain; }
+            background: url("../img/menu-transSend.png") no-repeat center center;
+            background-size: contain;
+            margin-right: 10px; }
+        body .menu .menu-content .link-item:hover, body .menu .menu-content .link-item.active {
+          background-color: #000000; }
+          body .menu .menu-content .link-item:hover .text, body .menu .menu-content .link-item.active .text {
+            color: #ffffff; }
+            body .menu .menu-content .link-item:hover .text:after, body .menu .menu-content .link-item.active .text:after {
+              background: url("../img/menu-arrow-right-selected.png") no-repeat center center;
+              background-size: contain; }
+            body .menu .menu-content .link-item:hover .text .wallet-icon, body .menu .menu-content .link-item.active .text .wallet-icon {
+              width: 34px;
+              height: 30px;
+              background: url("../img/menu-wallet-selected.png") no-repeat center center;
+              background-size: contain; }
+            body .menu .menu-content .link-item:hover .text .send-icon, body .menu .menu-content .link-item.active .text .send-icon {
+              width: 33px;
+              height: 31px;
+              background: url("../img/menu-send-selected.png") no-repeat center center;
+              background-size: contain; }
+            body .menu .menu-content .link-item:hover .text .receive-icon, body .menu .menu-content .link-item.active .text .receive-icon {
+              width: 33px;
+              height: 30px;
+              background: url("../img/menu-receive-selected.png") no-repeat center center;
+              background-size: contain; }
+            body .menu .menu-content .link-item:hover .text .transLog-icon, body .menu .menu-content .link-item.active .text .transLog-icon {
+              width: 31px;
+              height: 31px;
+              background: url("../img/menu-transLog-selected.png") no-repeat center center;
+              background-size: contain; }
+            body .menu .menu-content .link-item:hover .text .transSend-icon, body .menu .menu-content .link-item.active .text .transSend-icon {
+              width: 29px;
+              height: 29px;
+              background: url("../img/menu-transSend-selected.png") no-repeat center center;
+              background-size: contain; }
 
 .wallet-wrapper {
   position: relative;
-  left: 0;
-  padding: 48px 0 17px;
-  font-family: "sans-serif";
-  transition: left 0.3s ease-in-out; }
+  transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  /* IE 9 */
+  -moz-transform: translate3d(0, 0, 0);
+  /* Firefox */
+  -webkit-transform: translate3d(0, 0, 0);
+  /* Safari 和 Chrome */
+  -o-transform: translate3d(0, 0, 0);
+  /* Opera */
+  padding: 60px 0 17px;
+  font-family: "Helvetica", "sans-serif";
+  transition: transform 0.3s ease-in-out;
+  overflow-x: hidden; }
+  .wallet-wrapper.open {
+    transform: translate3d(80%, 0, 0);
+    -ms-transform: translate3d(80%, 0, 0);
+    /* IE 9 */
+    -moz-transform: translate3d(80%, 0, 0);
+    /* Firefox */
+    -webkit-transform: translate3d(80%, 0, 0);
+    /* Safari 和 Chrome */
+    -o-transform: translate3d(80%, 0, 0);
+    /* Opera */ }
   .wallet-wrapper .nav {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 48px;
+    height: 60px;
     background-color: #040404;
-    transition: left 0.3s ease-in-out; }
-    .wallet-wrapper .nav.open {
-      left: 80%; }
+    z-index: 9999; }
     .wallet-wrapper .nav .nav-box {
       height: 100%;
       display: flex;
@@ -167,14 +213,15 @@ body {
       justify-content: space-between;
       align-items: center; }
       .wallet-wrapper .nav .nav-box .menu-btn {
-        width: 29px;
+        width: 32px;
+        height: 25px;
         display: flex;
         flex-flow: column nowrap;
         justify-content: center;
         align-items: center; }
         .wallet-wrapper .nav .nav-box .menu-btn .menu-btn-bar {
           display: block;
-          width: 29px;
+          width: 32px;
           height: 2px;
           background: #bebebe;
           margin-bottom: 4px; }
@@ -217,11 +264,11 @@ body {
       .wallet-wrapper .nav .nav-box .cps-logo {
         display: inline-block; }
         .wallet-wrapper .nav .nav-box .cps-logo img {
-          width: 87px;
-          height: 28px; }
+          width: 118px;
+          height: 40px; }
       .wallet-wrapper .nav .nav-box .language-btn {
         position: relative;
-        font-size: 16px;
+        font-size: 18px;
         color: #bebebe;
         z-index: 50; }
         .wallet-wrapper .nav .nav-box .language-btn:hover .language-list {
@@ -235,7 +282,9 @@ body {
           left: 0;
           margin: 0;
           padding: 0;
-          list-style-type: none; }
+          background-color: #040404;
+          list-style-type: none;
+          z-index: 999; }
           .wallet-wrapper .nav .nav-box .language-btn .language-list .language-item {
             padding: 2px 5px; }
           .wallet-wrapper .nav .nav-box .language-btn .language-list .language-item:first-child {
@@ -349,7 +398,8 @@ body {
       margin-bottom: 8px;
       font-size: 14px;
       color: #ffffff;
-      word-break: break-all; }
+      word-break: break-all;
+      cursor: pointer; }
       .index-wrapper .hash .hash-group .hash-item .alias .num {
         padding: 0 5px 0 10px; }
       .index-wrapper .hash .hash-group .hash-item .alias .icon-edit {
@@ -416,7 +466,7 @@ body {
       color: #ffffff; }
     .send-wrapper .main-content .send-form .input-group .dropdown-box {
       flex: 1;
-      height: 24px;
+      height: 36px;
       border-radius: 3px;
       background-color: #ffffff; }
       .send-wrapper .main-content .send-form .input-group .dropdown-box.type {
@@ -426,10 +476,10 @@ body {
     .send-wrapper .main-content .send-form .input-group input {
       flex: 1;
       width: 0;
-      height: 24px;
+      height: 36px;
       padding: 0 10px;
       border-radius: 4px;
-      font-size: 12px;
+      font-size: 14px;
       color: #212121;
       background-color: #ffffff; }
   .send-wrapper .main-content .send-form .balance {
@@ -473,14 +523,15 @@ body {
           border: none;
           outline: none; }
     .send-wrapper .main-content .send-form .slider-group .value {
-      flex: 0 0 52px;
-      width: 52px;
-      height: 17px;
-      line-height: 17px;
-      margin-left: 10px;
+      flex: 0 0 55px;
+      width: 55px;
+      height: 25px;
+      line-height: 25px;
+      margin-left: 15px;
       padding: 0 5px;
+      border-radius: 2px;
       box-sizing: border-box;
-      font-size: 7px;
+      font-size: 10px;
       color: #333b46;
       background-color: #fff; }
   .send-wrapper .main-content .send-form .miner-cost {
@@ -524,6 +575,7 @@ body {
     line-height: 37px;
     padding: 0;
     border-radius: 2px;
+    text-align: center;
     font-size: 22px;
     color: #131313;
     background-color: #ffffff; }
@@ -539,7 +591,7 @@ body {
   .send-wrapper .transData .text {
     line-height: 1.5;
     margin: 12px 0;
-    font-size: 12px;
+    font-size: 14px;
     word-break: break-all; }
   .send-wrapper .transData .prompt {
     font-size: 14px; }
@@ -561,6 +613,7 @@ body {
     width: 100%;
     height: 40px;
     border-radius: 4px;
+    text-align: center;
     font-size: 18px;
     color: #ffffff;
     background-color: #000000; }
@@ -621,18 +674,18 @@ body {
     align-items: center; }
     .receive-wrapper .cps-address .select-wallet .dropdown-box {
       flex: 1;
-      height: 24px;
+      height: 36px;
       border-radius: 3px;
       background-color: #ffffff; }
     .receive-wrapper .cps-address .select-wallet .copy {
-      flex: 0 0 24px;
-      width: 24px;
-      height: 24px;
+      flex: 0 0 30px;
+      width: 30px;
+      height: 30px;
       margin-left: 10px;
       background: url("../img/copy.png") no-repeat;
       background-size: 100%; }
 .receive-wrapper .receive-qr {
-  padding: 9px 17px 104px;
+  padding: 9px 17px 60px;
   border-radius: 3px;
   background-color: #484848; }
   .receive-wrapper .receive-qr .qr-address {
@@ -651,21 +704,22 @@ body {
       flex: 1;
       word-break: break-all; }
   .receive-wrapper .receive-qr .qr-img {
-    width: 154px;
+    width: 250px;
     margin: 0 auto;
     text-align: center;
     font-size: 0; }
     .receive-wrapper .receive-qr .qr-img img {
       width: 100%;
-      height: 154px; }
+      height: 250px; }
     .receive-wrapper .receive-qr .qr-img .download {
       width: 100%;
-      height: 24px;
+      height: 30px;
       margin-bottom: 8px;
       background: #a5a5a5 url("../img/download.png") no-repeat center center;
-      background-size: 16px 16px; }
+      background-size: 20px 20px; }
       .receive-wrapper .receive-qr .qr-img .download:active {
-        background: #b2b2b2 url("../img/download.png") no-repeat center center; }
+        background: #b2b2b2 url("../img/download.png") no-repeat center center;
+        background-size: 20px 20px; }
       .receive-wrapper .receive-qr .qr-img .download a {
         display: inline-block;
         width: 100%;
@@ -710,12 +764,12 @@ body {
       padding: 0 10px;
       border-radius: 4px;
       box-sizing: border-box;
-      font-size: 12px;
+      font-size: 14px;
       color: #000000;
       background-color: #ffffff; }
   .transLog-wrapper .wallet-address .dropdown-box {
     flex: 1;
-    height: 24px;
+    height: 36px;
     margin-bottom: 8px;
     border-radius: 3px;
     background-color: #ffffff; }
@@ -723,16 +777,15 @@ body {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
-    align-items: center;
-    margin-bottom: 13px; }
+    align-items: center; }
     .transLog-wrapper .wallet-address .btn-group button {
-      height: 48px;
-      line-height: 48px;
+      height: 34px;
+      line-height: 34px;
       padding: 0 10px;
       margin-right: 8px;
-      border-radius: 2px;
+      border-radius: 7px;
       text-align: center;
-      font-size: 19px;
+      font-size: 14px;
       color: #131313;
       background-color: #bfbfbf; }
       .transLog-wrapper .wallet-address .btn-group button:last-child {
@@ -762,7 +815,7 @@ body {
       .transLog-wrapper .transLog-list .transLog-item .hash span {
         padding: 0 5px; }
     .transLog-wrapper .transLog-list .transLog-item .trans-info {
-      font-family: "sans-serif";
+      font-family: "Helvetica", "sans-serif";
       font-size: 12px;
       color: #ffffff; }
       .transLog-wrapper .transLog-list .transLog-item .trans-info .eth {

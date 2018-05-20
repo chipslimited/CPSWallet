@@ -1,3 +1,6 @@
+body {
+  font-family: "Helvetica", "sans-serif"; }
+
 button:active {
   background-color: gainsboro !important; }
 
@@ -89,7 +92,6 @@ button:active {
     padding: 0 14px 14px;
     border-radius: 4px; }
     .wallet_tips_main .tips_form .dropdown-box {
-      padding: 7px 0;
       box-sizing: border-box;
       background-color: #DCDCDC;
       border-radius: 4px; }
@@ -105,7 +107,7 @@ button:active {
           line-height: 1.5;
           padding: 5px 16px;
           box-sizing: border-box;
-          font-size: 12px;
+          font-size: 14px;
           color: #212121;
           cursor: pointer;
           word-break: break-all;
@@ -202,8 +204,8 @@ button:active {
 .wallet_select {
   position: relative;
   width: 100%;
-  height: 24px;
-  line-height: 24px;
+  height: 36px;
+  line-height: 36px;
   border-radius: 4px;
   background-color: #fff;
   color: #C9C9C9; }
@@ -215,7 +217,7 @@ button:active {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 12px;
+    font-size: 14px;
     cursor: pointer; }
     .wallet_select .now_select.no_arrow:after {
       display: none; }
@@ -233,7 +235,7 @@ button:active {
   .wallet_select .wallet_menu {
     list-style-type: none;
     position: absolute;
-    top: 24px;
+    top: 36px;
     left: 0;
     width: 100%;
     height: 0;
@@ -249,9 +251,9 @@ button:active {
       width: 100%;
       height: 35px;
       line-height: 35px;
-      padding: 0 14px;
+      padding: 0 14px 0 10px;
       box-sizing: border-box;
-      font-size: 12px;
+      font-size: 14px;
       color: #212121;
       cursor: pointer;
       white-space: nowrap;
