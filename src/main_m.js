@@ -122,6 +122,11 @@ const app = new Vue({
     },
   methods: {
       changeLanguage(type){
+          if(type instanceof Event){
+            type.stopPropagation();
+            $('.language-list').css('display','block');
+            return;
+          }
           i18n.locale = type;
           localStorage.setItem("cps-wallet-locale", type);
 
@@ -136,7 +141,7 @@ const app = new Vue({
           else if(type == 'TW'){
               Vue.use(iView, { tw });
           }
-
+          $('.language-list').css('display','none');
       }
   }
 });

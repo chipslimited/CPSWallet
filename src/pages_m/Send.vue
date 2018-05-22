@@ -9,7 +9,7 @@
               </div>
               <a class="cps-logo" href="#"><img src="../../static_m/img/cps-logo.png" alt=""></a>
               <div class="language-btn">
-                  <div class="language-text" id="current_locale">CN</div>
+                  <div class="language-text" id="current_locale"  @click="changeLanguage">CN</div>
                   <ul class="language-list">
                       <li class="language-item" @click="changeLanguage('CN')">CN</li>
                       <li class="language-item" @click="changeLanguage('TW')">TW</li>
@@ -20,7 +20,7 @@
       </nav>
       <section class="wallet-title">
           <span class="icon"></span>
-          <span class="text">发送</span>
+          <span class="text">{{$t('发送')}}</span>
       </section>
       <section class="main-content" v-bind:style="{'display':modal.show_offline_txn?'none':''}">
           <section class="send-form">
@@ -36,7 +36,7 @@
                       <input class="num-input" type="text" v-model="target_address" v-bind:placeholder="$t('转入地址')">
                   </div>
                   <div class="input-group">
-                      <div class="text">{{$t('数量')}}</div>
+                      <div class="text">{{$t('数量M')}}</div>
                       <input v-model="transfer_token"  @on-change="transferTokenChange" :disabled="!token_address || token_address.length == 0">
                       <div class="dropdown-box type">
                       <i-select v-model="token_address" slot="append" class="type-dropdown" v-bind:placeholder="$t('币种')" @on-change="onTokenChange">
@@ -44,7 +44,8 @@
                       </i-select>
                       </div>
                   </div>
-                  <div class="balance" v-if="bal">{{$t('持有:')}}<span class="num">{{bal}}</span> {{token}}</div>
+                  <div class="balance">{{$t('持有:')}}<span class="num" v-if="bal">{{bal}}</span> <span class="num" v-if="!bal">({{$t('选择钱包')+"&nbsp;"+$t('币种')}})</span> {{token}}</div>
+                  <br/>
                   <div class="slider-group">
                       <div class="text">{{$t('燃料上限')}}</div>
                       <Slider v-model="gas" :step="1" show-input :min="21000" :max="1000000" class="slider"></Slider>
@@ -55,7 +56,7 @@
                   </div>
                   <div class="miner-cost">
                       <div class="text">{{$t('矿工费用')}}</div>
-                      <div class="val">{{parseFloat(gas)*parseFloat(gasPrice)/1e9}}  ether
+                      <div class="val">{{parseFloat(gas)*parseFloat(gasPrice)/1e9}}  ETH
                       </div>
                       <div class="prompt-btn" @click="showMinerFeeTip"></div>
                   </div>
@@ -64,7 +65,7 @@
           <section class="send-total">
               <div class="container">
                   <div class="send-total-box">
-                      <div class="total-num">{{$t('共计：')}}<span class="va">{{transfer_token}}</span>{{token}}</div>
+                      <div class="total-num">{{$t('共计：')}}<span class="va">{{transfer_token}}</span>&nbsp;{{token}}</div>
                       <div class="msg">{{$t('（温馨提示：转帐前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊网络的GAS手续费。您可以从任何钱包或交易所直接将\nETH转入您的CPS地址，因为您的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币存储。）')}}</div>
                       <div class="btn-group">
                           <button type="button" class="sure" @click="proceedTranfer">{{$t('确定')}}</button>
@@ -226,7 +227,6 @@ export default {
           window.changeLanguage(type);
       },
     openModal(modalname) {
-          debugger
       this.modal = {};
       this.modal[modalname] = true;
     },
@@ -234,11 +234,10 @@ export default {
         if ($('.prompt-btn').attr('data-open') == "false") {
             e.stopPropagation();
             $('.model').fadeIn();
-            $('.prompt-btn').attr('data-open', 'true');
-            $("body").on('click', function () {
-                $('.model').fadeOut();
-                $('.prompt-btn').attr('data-open', 'false');
+            $('.model').click(function(e){
+              e.stopPropagation();
             });
+            $('.prompt-btn').attr('data-open', 'true');
         } else {
             $('.model').fadeOut();
             $('.prompt-btn').attr('data-open', 'false');
@@ -312,7 +311,7 @@ export default {
           decimals: token.decimals,
         };
         _wallet.balances.push(_token);
-      });    
+      });
       _this.current_wallet = _.defaults(wallet, _wallet);
       _this.wallet_list[
         _.findIndex(_this.wallet_list, { address: wallet.address })

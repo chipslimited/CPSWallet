@@ -3,7 +3,7 @@
       <Modal v-model="modal.show_info" width="600" :closable="false" :mask-closable="false">
           <div class="wallet_tips_main">
               <div class="tips_main_title">{{$t('提示')}}</div>
-              <div class="tips_emphasis_tips">{{modal_info}}</div>
+              <div class="tips_main_tips">{{modal_info}}</div>
               <div class="tips_from">
               <div class="tips_form_btn">
                   <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
@@ -20,7 +20,7 @@
               </div>
               <a class="cps-logo" href="#"><img src="../../static_m/img/cps-logo.png" alt=""></a>
               <div class="language-btn">
-                  <div class="language-text" id="current_locale">CN</div>
+                  <div class="language-text" id="current_locale" @click="changeLanguage">CN</div>
                   <ul class="language-list">
                       <li class="language-item" @click="changeLanguage('CN')">CN</li>
                       <li class="language-item" @click="changeLanguage('TW')">TW</li>

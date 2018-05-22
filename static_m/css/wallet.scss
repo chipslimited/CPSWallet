@@ -147,6 +147,9 @@ a {
           .language-item:first-child {
             background-color: #1d1d1d;
           }
+          .language-item:nth-child(2) {
+            background-color: #202020;
+          }
           .language-item:last-child {
             background-color: #272727;
           }

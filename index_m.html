@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CHIPS - Web Wallet</title>
+    <title>Web Wallet CHIPS - Digital Kingdom</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,maximum-scale=1.0,user-scalable=no">
     <link rel="shortcut icon" href="static_m/img/chips-favicon.ico" >
     <link rel="stylesheet" href="static_m/css/normalize.css">
     <link rel="stylesheet" href="static_m/js/layer/theme/default/layer.css">
     <link rel="stylesheet" href="static_m/css/base.css">
     <link rel="stylesheet" href="static_m/css/wallet.css">
+    <link rel="shortcut icon" href="https://chipsstatic.oss-cn-hangzhou.aliyuncs.com/live/chips/frontend/images/chips-digital-kingdom.ico">
 </head>
 <body>
 <div id="app" style="width: 100%; height: 100%; margin: 0px;">
@@ -20,7 +21,6 @@
 <script src="static_m/js/jquery-3.3.1.min.js"></script>
 <script src="static_m/js/layer/layer.js"></script>
 <script src="static_m/js/model.js"></script>
-
 <script src="./dist/app_m.js"></script>
 <script>
 
@@ -32,6 +32,23 @@
     syncLocalee();
 
     setTimeout(syncLocalee, 500);
+
+    $("body").on('click', function () {
+        $('.model').fadeOut();
+        $('.prompt-btn').attr('data-open', 'false');
+        $('.language-list').css('display','none');
+    });
+
+</script>
+<script type="text/javascript">
+    window.$crisp=[];
+    window.CRISP_WEBSITE_ID="b34734eb-b868-47ff-a7b0-6a0879e68018";
+    (function(){
+        var d=document;var s=d.createElement("script");
+        s.src="https://client.crisp.chat/l.js";
+        s.async=1;
+        d.getElementsByTagName("head")[0].appendChild(s);
+    })();
 </script>
 </body>
 </html>

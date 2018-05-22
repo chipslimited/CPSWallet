@@ -28,53 +28,72 @@
     </div>
 </template>
 <script>
+  import routes from '../routes_m'
 
-    import routes from '../routes_m'
-    export default {
-        components: {
-        },
-        data() {
-            return {nav_menu:'menu', wrapper:this.$root.currentView == 'wallet'?'index-wrapper wallet-wrapper':
-            (this.$root.currentView == 'send'?'send-wrapper wallet-wrapper':
-                (this.$root.currentView == 'receive'?'receive-wrapper wallet-wrapper':
-                        (this.$root.currentView == 'history'?'transLog-wrapper wallet-wrapper':
-                                (this.$root.currentView == 'sendr'?'transSend-wrapper wallet-wrapper':'')
+  export default {
+      components: {
+      },
+      data() {
+          return {nav_menu:'menu', wrapper:this.$root.currentView == 'wallet'?'index-wrapper wallet-wrapper':
+          (this.$root.currentView == 'send'?'send-wrapper wallet-wrapper':
+              (this.$root.currentView == 'receive'?'receive-wrapper wallet-wrapper':
+                      (this.$root.currentView == 'history'?'transLog-wrapper wallet-wrapper':
+                              (this.$root.currentView == 'sendr'?'transSend-wrapper wallet-wrapper':'')
+                      )
+              ))}
+      },
+      updated(){
+        var _this = this;
+        _this.nav_menu = 'menu';
+        _this.wrapper = _this.$root.currentView == 'wallet' ? 'index-wrapper wallet-wrapper' :
+            (_this.$root.currentView == 'send' ? 'send-wrapper wallet-wrapper' :
+                (_this.$root.currentView == 'receive' ? 'receive-wrapper wallet-wrapper' :
+                        (_this.$root.currentView == 'history' ? 'transLog-wrapper wallet-wrapper' :
+                                (_this.$root.currentView == 'sendr' ? 'transSend-wrapper wallet-wrapper' : '')
                         )
-                ))}
-        },
-        methods: {
-            closeNavMenu(event) {
-                event.preventDefault();
-                var view = event.target.href.substring(event.target.href.lastIndexOf("/")+1);
-                this.$root.currentView = view;
-                window.history.pushState(
-                    null,
-                    routes[event.target.href],
-                    `#${view}`
-                )
-                var _this = this;
-                _this.nav_menu = 'menu';
-                _this.wrapper = _this.$root.currentView == 'wallet' ? 'index-wrapper wallet-wrapper' :
-                    (_this.$root.currentView == 'send' ? 'send-wrapper wallet-wrapper' :
-                        (_this.$root.currentView == 'receive' ? 'receive-wrapper wallet-wrapper' :
-                                (_this.$root.currentView == 'history' ? 'transLog-wrapper wallet-wrapper' :
-                                        (_this.$root.currentView == 'sendr' ? 'transSend-wrapper wallet-wrapper' : '')
-                                )
-                        ));
+                ));
+      },
+      methods: {
+          closeNavMenu(event) {
+              event.preventDefault();
+              var view = event.target.href.substring(event.target.href.lastIndexOf("/")+1);
+              this.$root.currentView = view;
+              window.history.pushState(
+                  null,
+                  routes["/"+view],
+                  `#${view}`
+              )
+              var _this = this;
+              _this.nav_menu = 'menu';
+              _this.wrapper = _this.$root.currentView == 'wallet' ? 'index-wrapper wallet-wrapper' :
+                  (_this.$root.currentView == 'send' ? 'send-wrapper wallet-wrapper' :
+                      (_this.$root.currentView == 'receive' ? 'receive-wrapper wallet-wrapper' :
+                              (_this.$root.currentView == 'history' ? 'transLog-wrapper wallet-wrapper' :
+                                      (_this.$root.currentView == 'sendr' ? 'transSend-wrapper wallet-wrapper' : '')
+                              )
+                      ));
 
-                $('.menu-btn').removeClass('menu-btn-close');
-                $('.menu').removeClass('open');
-                $('.wallet-wrapper').removeClass('open');
-                $('.menu-btn').attr('data-open','false');
+              $('.menu-btn').removeClass('menu-btn-close');
+              $('.menu').removeClass('open');
+              $('.wallet-wrapper').removeClass('open');
+              $('.menu-btn').attr('data-open','false');
 
-                console.log("nav_menu closeNavMenu");
-            }
-        }
-    };
+              console.log("nav_menu closeNavMenu");
+          }
+      }
+  };
 </script>
 
 <style lang="less">
     @import url(../../node_modules/iview/dist/styles/iview.css);
+
+    html, body{
+      height:100%;
+    }
+
+    .wallet-wrapper {
+      min-height: calc(100% - 112px);
+    }
 
     * {
         box-sizing: content-box;
@@ -130,7 +149,7 @@
     .ivu-select-dropdown .ivu-select-dropdown-list .ivu-select-item {
         width: 100%;
         height: 35px;
-        line-height: 24px;
+        line-height: 35px;
         padding: 0 14px;
         box-sizing: border-box;
         font-size: 15px;
@@ -169,7 +188,7 @@
     }
 
     .ivu-select-visible .ivu-select-arrow:nth-of-type(2){
-        margin-top: -7.5px;
+        margin-top: -10px;
         transform: scale(0.5)rotate(-180deg);
         -webkit-transform: scale(0.5)rotate(-180deg);
         -moz-transform: scale(0.5)rotate(-180deg);
@@ -183,7 +202,7 @@
         height: 36px;
         font-size: 12px;
         font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:36px;font-weight: bold;
-
+        display:inline-block;
         position: relative;
         width:100%;
         padding:0 36px 0 14px;
@@ -201,7 +220,7 @@
     }
 
     .slider-group .ivu-input-number {
-        height:24px;
+        height:28px;
     }
 
     .slider-group .ivu-input-number-input {
@@ -217,9 +236,15 @@
         height:24px;
     }
 
+    .slider-group .ivu-input-number-input{
+      line-height: 24px;
+      width: calc(100% - 14px);
+    }
+
     .num-input .ivu-input-number-input-wrap{
         height: 24px;
     }
+
     .num-input .ivu-input-number-input{
         width: 100%;
         height: 24px;

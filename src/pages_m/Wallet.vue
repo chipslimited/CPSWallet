@@ -7,7 +7,7 @@
                   <div class="tips_input">
                       <input type="text" v-bind:placeholder="$t('请输入一串随机的字符串，以随机生成助记词')" value="" v-model="user_entropy" maxlength=""/>
                       <i-select v-model="hdpath" slot="append" v-bind:placeholder="$t('创建选项')">
-                          <Option v-for="item in hdpaths" :value="item.value" :key="item.label">{{ $t(item.label) }}</Option>
+                          <Option v-for="item in hdpaths" :value="item.value" :key="$t(item.label)">{{ $t(item.label) }}</Option>
                       </i-select>
                   </div>
 
@@ -35,7 +35,7 @@
               <div class="tips_main_title">{{$t('恢复钱包')}}</div>
               <div class="tips_form has_input">
                   <div class="tips_input">
-                      <input type="text" v-model="seed" v-bind:placeholder="$t('请输入助记词或私钥')" value="" maxlength=""></div>
+                      <input type="text" v-model="seed" v-bind:placeholder="$t('请输入助记词或私钥M')" value="" maxlength=""></div>
                   <div>
                       <i-select v-model="hdpath" slot="append" class="now_select" placeholder="恢复选项">
                           <Option v-for="item in hdpaths" :value="item.value" :key="item.label">{{ $t(item.label) }}</Option>
@@ -159,8 +159,9 @@
                   <span class="menu-btn-bar th"></span>
               </div>
               <a class="cps-logo" href="#"><img src="../../static_m/img/cps-logo.png" alt=""></a>
+
               <div class="language-btn">
-                  <div class="language-text" id="current_locale">CN</div>
+                  <div class="language-text" id="current_locale" @click="changeLanguage">CN</div>
                   <ul class="language-list">
                       <li class="language-item" @click="changeLanguage('CN')">CN</li>
                       <li class="language-item" @click="changeLanguage('TW')">TW</li>
@@ -192,7 +193,7 @@
                       <div class="transaction-log">{{$t('交易记录：')}} {{wallet.nonce[0]}}</div>
                       <div class="alias">
                           <span class="add-alias" @click="editAlias(wallet)" v-if="wallet.alias.length == 0">{{$t('添加地址別名')}}</span>
-                          <span class="add-alias" @click="editAlias(wallet)" v-if="wallet.alias.length > 0">({{wallet.alias}})</span>
+                          <span class="add-alias" @click="editAlias(wallet)" v-if="wallet.alias.length > 0">({{wallet.alias}}) <i class="icon-edit"></i></span>
 
                           <span class="token-wrapper" v-for="(token, index) in wallet.balances" v-bind:key="index">
                              <span class="num">{{token.balance}}</span><span  class="b-unit">{{token.symbol}}</span>
@@ -724,7 +725,7 @@ export default {
 
         var evt = e || event
 
-        tooltip.style.left = evt.pageX - 10 + 'px'
+        tooltip.style.left = evt.pageX - 30 + 'px'
         tooltip.style.top = evt.pageY + 15 + 'px'
         tooltip.style.opacity = 1
         setTimeout(function(){
@@ -757,3 +758,20 @@ export default {
 };
 </script>
 
+<style lang="less" scoped>
+.index-wrapper .hash .hash-group .hash-item .alias{
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: row wrap;
+}
+
+.index-wrapper .hash .hash-group .hash-item  .add-alias {
+  white-space:nowrap;
+  word-break: keep-all;
+}
+
+.token-wrapper {
+  white-space:nowrap;
+  word-break: keep-all;
+}
+</style>

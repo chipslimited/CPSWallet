@@ -9,7 +9,7 @@
               </div>
               <a class="cps-logo" href="#"><img src="../../static_m/img/cps-logo.png" alt=""></a>
               <div class="language-btn">
-                  <div class="language-text" id="current_locale">CN</div>
+                  <div class="language-text" id="current_locale"  @click="changeLanguage">CN</div>
                   <ul class="language-list">
                       <li class="language-item" @click="changeLanguage('CN')">CN</li>
                       <li class="language-item" @click="changeLanguage('TW')">TW</li>
@@ -38,8 +38,8 @@
                   <div class="value" id="selected_address">{{current_wallet.address}}</div>
               </div>
               <div class="qr-img">
-                  <p class="qrcode" id="qrcode"></p><a  href="" download>{{$t('点击下载')}}</a>
-                  <a id="qrcode_download" class="text" href="" download>
+                  <p class="qrcode" id="qrcode"></p><a  href="" download v-if="current_wallet.address">{{$t('点击下载')}}</a>
+                  <a id="qrcode_download" class="text" href="" download v-if="current_wallet.address">
                   <div class="download"></div>
                   {{$t('点击下载')}}</a>
               </div>
@@ -129,7 +129,7 @@ export default {
 
       _qrcode = document.querySelector("#qrcode");
       _qrcode.innerHTML = "";
-      _qrcode.appendChild(kjua({ text: text, size: 160 }));
+      _qrcode.appendChild(kjua({ text: text, size: 260 }));
 
       var _selectedAddress = document.querySelector('#selected_address');
       _selectedAddress.innerHTML = text;
@@ -179,7 +179,7 @@ export default {
           ))
         };
         _wallet.balances.push(_token);
-      });    
+      });
       _this.current_wallet = _.defaults(wallet, _wallet);
       _this.wallet_list[
         _.findIndex(_this.wallet_list, { address: wallet.address })
@@ -202,7 +202,7 @@ export default {
 
           var evt = e || event
 
-          tooltip.style.left = evt.pageX - 10 + 'px'
+          tooltip.style.left = evt.pageX - 50 + 'px'
           tooltip.style.top = evt.pageY + 15 + 'px'
           tooltip.style.opacity = 1
           setTimeout(function(){

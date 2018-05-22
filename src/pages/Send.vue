@@ -32,7 +32,7 @@
           </div>
           <div class="input-item">
               <div class="text">{{$t('矿工费用')}}</div>
-              <div class="value">{{parseFloat(gas)*parseFloat(gasPrice)/1e9}} ether
+              <div class="value">{{parseFloat(gas)*parseFloat(gasPrice)/1e9}} ETH
                   <div class="prompt">
                       <span class="prompt-img"></span>
                       <div class="prompt-content">
@@ -46,7 +46,7 @@
           </div>
       </div>
       <div class="send-bottom" v-bind:style="{'display':modal.show_offline_txn?'none':''}">
-          <div class="total">{{$t('共计：')}}<span class="total-num">{{transfer_token}}</span>{{token}}</div>
+          <div class="total">{{$t('共计：')}}<span class="total-num">{{transfer_token}}</span>&nbsp;{{token}}</div>
           <div class="prompt">{{$t('（温馨提示：转帐前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊网络的GAS手续费。您可以从任何钱包或交易所直接将\nETH转入您的CPS地址，因为您的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币存储。）')}}
           </div>
           <div class="btn"><a href="javascript:;" class="js_submit" @click="proceedTranfer">{{$t('确定')}}</a></div>
@@ -248,7 +248,7 @@ export default {
           decimals: token.decimals,
         };
         _wallet.balances.push(_token);
-      });    
+      });
       _this.current_wallet = _.defaults(wallet, _wallet);
       _this.wallet_list[
         _.findIndex(_this.wallet_list, { address: wallet.address })

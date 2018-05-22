@@ -719,3 +719,9 @@ export default {
 };
 </script>
 
+<style lang="less" scoped>
+.token-wrapper {
+  white-space:nowrap;
+  word-break: keep-all;
+}
+</style>

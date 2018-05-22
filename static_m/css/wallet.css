@@ -270,6 +270,7 @@ body {
         position: relative;
         font-size: 18px;
         color: #bebebe;
+        width: 38px;
         z-index: 50; }
         .wallet-wrapper .nav .nav-box .language-btn:hover .language-list {
           display: block; }
@@ -289,6 +290,8 @@ body {
             padding: 2px 5px; }
           .wallet-wrapper .nav .nav-box .language-btn .language-list .language-item:first-child {
             background-color: #1d1d1d; }
+          .wallet-wrapper .nav .nav-box .language-btn .language-list .language-item:nth-child(2) {
+            background-color: #202020; }
           .wallet-wrapper .nav .nav-box .language-btn .language-list .language-item:last-child {
             background-color: #272727; }
 
@@ -398,7 +401,7 @@ body {
       margin-bottom: 8px;
       font-size: 14px;
       color: #ffffff;
-      word-break: break-all;
+      word-break: break-word;
       cursor: pointer; }
       .index-wrapper .hash .hash-group .hash-item .alias .num {
         padding: 0 5px 0 10px; }
@@ -413,14 +416,16 @@ body {
         vertical-align: middle; }
     .index-wrapper .hash .hash-group .hash-item .btn-group {
       display: flex;
-      flex-flow: row nowrap;
-      justify-content: flex-end;
+      flex-wrap: wrap;
+      flex-flow: row wrap;
+      justify-content: flex-start;
       align-items: center; }
       .index-wrapper .hash .hash-group .hash-item .btn-group button {
         padding: 0 8px;
         height: 34px;
         line-height: 34px;
-        margin-left: 10px;
+        margin-top: 2px;
+        margin-right: 10px;
         border-radius: 7px;
         text-align: center;
         font-size: 14px;
@@ -467,6 +472,7 @@ body {
     .send-wrapper .main-content .send-form .input-group .dropdown-box {
       flex: 1;
       height: 36px;
+      max-width: calc(100% - 36px);
       border-radius: 3px;
       background-color: #ffffff; }
       .send-wrapper .main-content .send-form .input-group .dropdown-box.type {
@@ -676,6 +682,7 @@ body {
       flex: 1;
       height: 36px;
       border-radius: 3px;
+      max-width: calc(100% - 40px);
       background-color: #ffffff; }
     .receive-wrapper .cps-address .select-wallet .copy {
       flex: 0 0 30px;

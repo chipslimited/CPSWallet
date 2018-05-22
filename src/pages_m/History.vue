@@ -1,6 +1,6 @@
 
 <template>
-  <div style="width: 100%; height: 100%; margin: 0px; padding: 0px;">
+  <div style="width: 100%; height: calc(100% - 60px); margin: 0px; padding: 0px;">
       <nav class="nav">
           <div class="container nav-box">
               <div class="menu-btn" data-open="false" @click="openMenu">
@@ -10,7 +10,7 @@
               </div>
               <a class="cps-logo" href="#"><img src="../../static_m/img/cps-logo.png" alt=""></a>
               <div class="language-btn">
-                  <div class="language-text" id="current_locale">CN</div>
+                  <div class="language-text" id="current_locale" @click="changeLanguage">CN</div>
                   <ul class="language-list">
                       <li class="language-item" @click="changeLanguage('CN')">CN</li>
                       <li class="language-item" @click="changeLanguage('TW')">TW</li>
@@ -34,7 +34,8 @@
                   <button type="button" @click="openExternal(explorer_address_link)" v-if="explorer_address_link.length > 0">{{$t('浏览器')}}</button>
               </div>
           </div>
-          <MultiPage :current="page" :total="total" @on-change="refreshSearch" simple size="small" pageSize="25" v-if="filter_list.length > 25"></MultiPage>
+          <MultiPage :current="page" :total="total" @on-change="refreshSearch" simple size="small" pageSize="25" v-if="pageCount > 1"></MultiPage>
+          <br v-if="pageCount > 1"/>
           <div class="transLog-list" v-for="transaction in filter_list" v-bind:key="transaction.hash">
               <div class="transLog-item">
                   <div class="hash">{{transaction.hash}}</div>
@@ -47,6 +48,9 @@
                   </div>
               </div>
           </div>
+          <br v-if="pageCount > 1"/>
+          <MultiPage :current="page" :total="total" @on-change="refreshSearch" simple size="small" pageSize="25" v-if="pageCount > 1"></MultiPage>
+          <br v-if="pageCount > 1"/>
       </section>
     </div>
 </template>
@@ -137,7 +141,7 @@ export default {
         bodyFormData.set('cntPerPage', 25);
         bodyFormData.set('pageIndex', _this.page);
 
-      
+
       axios({
             method: 'post',
                 url: requestUrl,
