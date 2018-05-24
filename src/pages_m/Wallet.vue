@@ -89,9 +89,11 @@
 
           <div class="wallet_tips_main">
               <div class="tips_main_title">{{$t('删除钱包')}}</div>
-              <div style="text-align:center" v-if="!current_wallet || !current_wallet.keystore">
+              <div class="tips_main_mnemonic" v-if="!current_wallet || !current_wallet.keystore">
+              <div class="tips_mnemonic">
                   {{$t('您确定要删除这个钱包吗？删除后您将无法在钱包应用内查看对应的地址的余额。')}}
               </div>
+             </div>
 
               <div class="tips_main_tips" v-if="seed && seed.length > 0">{{$t('删除钱包之前，请牢记您的助记词，写在纸上并妥善保管')}}</div>
               <div class="tips_main_mnemonic" v-if="download_key_url && download_key_url.length > 0">
@@ -101,11 +103,13 @@
                       <a :href="download_key_url" download="privatekey.txt" class="downbtn">DownLoad</a>
                   </div>
               </div>
-              <div class="tips_form has_input">
+              <div class="tips_form has_input" v-if="current_wallet && current_wallet.keystore && !(download_key_url && download_key_url.length > 0)">
                   <div class="tips_internal" v-if="current_wallet && current_wallet.keystore && !(download_key_url && download_key_url.length > 0)">{{$t('验证密码')}}</div>
                   <div class="tips_input" v-if="current_wallet && current_wallet.keystore && !(download_key_url && download_key_url.length > 0)">
                       <input type="password" v-model="user_password"  v-bind:placeholder="$t('请输入密码')" value="" id="wallet_input" maxlength="">
                   </div>
+              </div>
+              <div class="tips_form">
                   <div class="tips_form_btn btn-flex"><a href="javascript:;" class="js_tips_btn " :loading="modal_loading" @click="confirmDeleteWallet()">{{$t('删除')}}</a>
                       <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                   </div>
@@ -176,9 +180,9 @@
       </section>
       <section class="set-wallet">
           <div class="container">
-              <div class="create-wallet set-wallet-item" @click="openModal('create_wallet')">{{$t('创建新钱包')}}<span class="arrow-right"></span></div>
-              <div class="reset-wallet set-wallet-item" @click="openModal('restore_wallet')">{{$t('恢复钱包')}}<span class="arrow-right"></span></div>
-              <div class="readonly-wallet set-wallet-item" @click="openModal('watch_wallet')">{{$t('只读钱包')}}<span class="arrow-right"></span></div>
+              <div class="create-wallet create_wallet set-wallet-item" @click="openWalletModal('create_wallet')">{{$t('创建新钱包')}}<span class="arrow-right"></span></div>
+              <div class="reset-wallet restore_wallet set-wallet-item" @click="openWalletModal('restore_wallet')">{{$t('恢复钱包')}}<span class="arrow-right"></span></div>
+              <div class="readonly-wallet watch_wallet set-wallet-item" @click="openWalletModal('watch_wallet')">{{$t('只读钱包')}}<span class="arrow-right"></span></div>
           </div>
       </section>
       <section class="hash">
@@ -280,8 +284,12 @@ export default {
       this.user_entropy = "";
       this.user_password = "";
       this.seed = "";
+      $('.set-wallet-item').removeClass('selected')
     },
-
+    openWalletModal(modal){
+        $("."+modal).addClass('selected').siblings().removeClass('selected');
+        openModal(modal);
+    },
     newAddresses(password, keystore) {
       let _this = this,
         address;
@@ -746,7 +754,7 @@ export default {
             selection.addRange(range) // add range to Selection object to select it
         }
 
-        selectElementText(event.target.parentElement.parentElement.children[0]);
+        selectElementText(event.target.parentElement.children[1]);
         document.execCommand("copy");
 
         this.showtooltip(_this.$root.$i18n.t("复制成功!"))

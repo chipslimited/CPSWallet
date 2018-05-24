@@ -21,11 +21,14 @@
 <script src="static_m/js/jquery-3.3.1.min.js"></script>
 <script src="static_m/js/layer/layer.js"></script>
 <script src="static_m/js/model.js"></script>
-<script src="./dist/app_m.js"></script>
+
+<script src="./dist/manifest.b5c1d866dbdc795385e0.js"></script>
+<script src="./dist/vendor.33a59861075df368b910.js"></script>
+<script src="./dist/app_m.c82fc522238419af57ab.js"></script>
 <script>
 
     function syncLocalee() {
-        document.getElementById('current_locale').innerText = window.i18n.locale;
+        if(document.getElementById('current_locale'))document.getElementById('current_locale').innerText = window.i18n.locale;
         setTimeout(syncLocalee, 500);
     }
 

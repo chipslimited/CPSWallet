@@ -36,8 +36,8 @@
           </div>
           <MultiPage :current="page" :total="total" @on-change="refreshSearch" simple size="small" pageSize="25" v-if="pageCount > 1"></MultiPage>
           <br v-if="pageCount > 1"/>
-          <div class="transLog-list" v-for="transaction in filter_list" v-bind:key="transaction.hash">
-              <div class="transLog-item">
+          <div class="transLog-list">
+              <div class="transLog-item" v-for="transaction in filter_list" v-bind:key="transaction.hash">
                   <div class="hash">{{transaction.hash}}</div>
                   <div class="hash"><span @click="openAddress(transaction.from)">{{transaction.from}}</span>
                       <span>=></span>

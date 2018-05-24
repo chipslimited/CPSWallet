@@ -52,6 +52,7 @@ module.exports = {
     '持有:': 'Holding:',
     '燃料上限': 'Gas limits',
     '燃料价格(Gwei)': 'GasPrice (Gwei)',
+    '燃料价格(Gwei)M': 'Gas Price (Gwei)',
     '矿工费用': 'Miner\'s fee',
     '“燃料上限” -> 燃料数量上限': '“Gas limits” -> The maximum gas you are willing to pay',
     '“燃料价格” -> 燃料单价上限': '“Gas price” -> The maximum price of gas',
@@ -61,6 +62,8 @@ module.exports = {
     '身份验证': 'Verify identity',
     '离线交易': 'Offline TXN',
     '现在发送': 'Send now',
+    '离线交易M': 'Offline',
+    '现在发送M': 'Send',
     '请输入nonce': 'Type in the nonce',
     'nonce应该等于转出地址的累计交易数，如果你已联网，应用将自动获取nonce': 'Nonce should be the same as the total tx-out of the address. If you are online, this app will automatically obtain it.',
     '提示': 'Hint',
@@ -73,7 +76,7 @@ module.exports = {
     '未选择币种': 'Please select the type of token',
     '错误：': 'Error: ',
     '提交成功：': 'Sent successfully.',
-    '提交失败': 'Fail to send',
+    '提交失败': 'Fail to send: ',
     '获取余额失败': 'Unable to access the balance',
     '错误的地址': 'Invalid address',
     '恢复失败': 'Unable to restore',
@@ -101,4 +104,10 @@ module.exports = {
 
     '上一页': 'Prev',
     '下一页': 'Next',
+
+    '内容为空':'Input is empty',
+    '输入内容非法':'Input incorrect',
+    '输入内容非法或密码错误':'Input incorrect or invalid password',
+    '余额不足':'Insufficient fund',
+    '密码错误':'Invalid passord',
 }

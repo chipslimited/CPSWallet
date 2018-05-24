@@ -9,7 +9,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "./dist"),
     publicPath: "/dist/",
-    filename: '[name].js'
+    filename: '[name].[chunkhash].js'
   },
   module: {
     rules: [
@@ -102,9 +102,9 @@ if (process.env.NODE_ENV === "production") {
         NODE_ENV: '"production"'
       }
     }),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //     names: ['vendor', 'manifest']
-    // }),
+    new webpack.optimize.CommonsChunkPlugin({
+        names: ['vendor', 'manifest']
+    }),
       new UglifyJsPlugin({
           sourceMap: false,
           uglifyOptions: {

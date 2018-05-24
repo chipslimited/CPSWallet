@@ -98,7 +98,7 @@
     * {
         box-sizing: content-box;
     }
-    body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-serif";line-height:1;font-weight: bold; background-color:#272727;}
+    body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-serif";line-height:1; background-color:#272727;}
 
     .ivu-modal-content{
         background-color: transparent;
@@ -148,14 +148,15 @@
 
     .ivu-select-dropdown .ivu-select-dropdown-list .ivu-select-item {
         width: 100%;
-        height: 35px;
-        line-height: 35px;
-        padding: 0 14px;
+        height: auto;
+        line-height: 1.5;
+        padding: 5px 16px;
         box-sizing: border-box;
         font-size: 15px;
         color: #212121;
         cursor: pointer;
-        white-space: nowrap;
+        white-space: initial;
+        word-break: break-all;
         overflow: hidden;
         text-overflow: ellipsis;
         &:nth-child(odd) {
@@ -359,6 +360,14 @@
     div {
         padding: 0px;
         margin: 0px;
+    }
+
+    .ivu-modal {
+        margin: 0px;
+    }
+    .ivu-modal-content .ivu-modal-body {
+        padding-left: 0px;
+        padding-right: 0px;
     }
 
     .ivu-modal-content .ivu-modal-body .model {

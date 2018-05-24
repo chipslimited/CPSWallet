@@ -141,12 +141,13 @@
                 }
             },
             current (val) {
+                if(val+"" == 'NaN')return;
                 this.currentPage = val;
                 this.currentPageStr = val + "";
                 this.currentPageStrLen = (val+"").length;
             },
             pageSize (val) {
-                this.currentPageSize = val;
+                this.currentPageSize = parseInt(val);
             }
         },
         computed: {
@@ -269,12 +270,14 @@
             valueChange(e){
 
                 const val = parseInt(e.target.value);
+                if(val+"" == 'NaN')return;
                 this.currentPageStrLen = (val+"").length;
 
             },
             keyUp (e) {
                 const key = e.keyCode;
                 const val = parseInt(e.target.value);
+                if(val+"" == 'NaN')return;
 
                 this.currentPageStrLen = (val+"").length;
                 this.currentPageStr = val+"";

@@ -37,7 +37,7 @@
                   </div>
                   <div class="input-group">
                       <div class="text">{{$t('数量M')}}</div>
-                      <input v-model="transfer_token"  @on-change="transferTokenChange" :disabled="!token_address || token_address.length == 0">
+                      <input v-model="transfer_token"  v-on:change="transferTokenChange" v-on:keyup="transferTokenChange" :disabled="!token_address || token_address.length == 0">
                       <div class="dropdown-box type">
                       <i-select v-model="token_address" slot="append" class="type-dropdown" v-bind:placeholder="$t('币种')" @on-change="onTokenChange">
                           <Option v-for="item in current_wallet.balances" :value="item.address" :key="item.address">{{ item.symbol }}</Option>
@@ -51,7 +51,7 @@
                       <Slider v-model="gas" :step="1" show-input :min="21000" :max="1000000" class="slider"></Slider>
                   </div>
                   <div class="slider-group">
-                      <div class="text">{{$t('燃料价格(Gwei)')}}</div>
+                      <div class="text">{{$t('燃料价格(Gwei)M')}}</div>
                       <Slider v-model="gasPrice" :step="1" show-input :min="1" :max="100" class="slider"></Slider>
                   </div>
                   <div class="miner-cost">
@@ -82,8 +82,8 @@
                   <div class="tips_input">
                       <input type="password" v-bind:placeholder="$t('请输入密码')" value="" v-model="user_password"  maxlength=""></div>
                   <div class="tips_form_btn btn-flex more_btn">
-                      <a href="javascript:;" class="js_tips_btn " @click="transferOffline" :loading="modal_loading">{{$t('离线交易')}}</a>
-                      <a href="javascript:;" v-bind:class="{'js_tips_btn ':!modal_loading,'js_tips_btn ivu-btn-loading':modal_loading}" @click="transfer" :loading="modal_loading">{{$t('现在发送')}}</a>
+                      <a href="javascript:;" class="js_tips_btn " @click="transferOffline" :loading="modal_loading">{{$t('离线交易M')}}</a>
+                      <a href="javascript:;" v-bind:class="{'js_tips_btn ':!modal_loading,'js_tips_btn ivu-btn-loading':modal_loading}" @click="transfer" :loading="modal_loading">{{$t('现在发送M')}}</a>
                       <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                   </div>
               </div>
@@ -134,7 +134,7 @@
           <div class="close" @click="hideMinerFeeTip()"></div>
           <p class="text">
               <span>{{$t('“燃料上限” -> 燃料数量上限')}}</span><br/>
-              <span>{{$t('“燃料价格” -> 燃料单价上限')}}</span><br/>
+              <span>{{$t('“燃料价格” -> 燃料单价上限')}}</span><br/><br/>
               <span>{{$t('矿工费用＝实际燃料数量*实际燃料单价。实际燃料数 量和单价不会高于用户指定的上述两个上限，多余的会 退回。较低的燃料单价和数量可以节省矿工费用，但是\n    也会降低交易到账的速度。在联网设备发送时，会自动 获取燃料上限，在离线设备发送时，需手动设定燃料上 限。如果矿工费用不足以完成打包，或者当前交易的燃 料数量超过了区块的限制，这笔交易将失败。')}}
               </span><br/><br/>
           </p>
@@ -147,6 +147,7 @@ import _ from "lodash";
 import BigNumber from "bignumber.js";
 import web3Utils from "../web3Utils";
 import kjua from "kjua";
+import translateError from '../translate_error'
 
 export default {
   data() {
@@ -366,7 +367,7 @@ export default {
           _this.$Loading.finish();
           _this.modal_loading = false;
           _this.closeModal();
-          _this.$Message.success(_this.$root.$i18n.t('提交成功：')+`${txhash}`);
+          //_this.$Message.success(_this.$root.$i18n.t('提交成功：')+`${txhash}`);
           _this.modal_info = _this.$root.$i18n.t('提交成功：')+`${txhash}`;
           _this.openModal('show_info');
           _this.getBalance(this.current_wallet);
@@ -376,8 +377,8 @@ export default {
           _this.$Loading.error();
           _this.modal_loading = false;
           _this.closeModal();
-          _this.$Message.error(_this.$root.$i18n.t("提交失败"));
-          _this.modal_info = _this.$root.$i18n.t('提交失败')+err.toString();
+          //_this.$Message.error(_this.$root.$i18n.t("提交失败"));
+          _this.modal_info = _this.$root.$i18n.t('提交失败')+" "+translateError.translate(err.toString());
            _this.openModal('show_info');
         });
     },
@@ -607,6 +608,10 @@ export default {
       try{
           var amountValid = /[0-9]+\.*[0-9]*/g.exec(amount)[0];
           while(amountValid.startsWith("00")){
+              amountValid = amountValid.substring(1);
+          }
+
+          if(amountValid.startsWith("0") && !amountValid.startsWith("0.") && amountValid.length > 1){
               amountValid = amountValid.substring(1);
           }
 

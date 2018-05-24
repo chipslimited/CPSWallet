@@ -113,8 +113,9 @@ button:active {
           word-break: break-all;
           white-space: initial; }
     .wallet_tips_main .tips_form.has_input {
-      background-color: #777;
-      padding: 25px 30px; }
+        background-color: #777;
+        padding: 25px 30px;
+    }
       .wallet_tips_main .tips_form.has_input .tips_form_btn a {
         margin-top: 20px; }
   .wallet_tips_main .tips_main_mnemonic {

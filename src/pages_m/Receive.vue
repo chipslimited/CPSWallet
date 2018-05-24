@@ -38,7 +38,7 @@
                   <div class="value" id="selected_address">{{current_wallet.address}}</div>
               </div>
               <div class="qr-img">
-                  <p class="qrcode" id="qrcode"></p><a  href="" download v-if="current_wallet.address">{{$t('点击下载')}}</a>
+                  <p class="qrcode" id="qrcode"></p>
                   <a id="qrcode_download" class="text" href="" download v-if="current_wallet.address">
                   <div class="download"></div>
                   {{$t('点击下载')}}</a>
@@ -129,7 +129,7 @@ export default {
 
       _qrcode = document.querySelector("#qrcode");
       _qrcode.innerHTML = "";
-      _qrcode.appendChild(kjua({ text: text, size: 260 }));
+      _qrcode.appendChild(kjua({ text: text, size: 250 }));
 
       var _selectedAddress = document.querySelector('#selected_address');
       _selectedAddress.innerHTML = text;
