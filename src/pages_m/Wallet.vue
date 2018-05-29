@@ -204,8 +204,8 @@
                             </span>
                       </div>
                       <div class="btn-group">
-                          <button type="button" class="btn-mnemonic" v-if="wallet && wallet.keystore && wallet.keystore.encSeed && wallet.keystore.encSeed.encStr" @click="proceedExport(wallet)">{{$t('导出助记词')}}</button>
-                          <button type="button" class="btn-key" v-if="wallet && wallet.keystore" @click="proceedExport(wallet, true)">{{$t('导出私钥')}}</button>
+                          <button type="button" class="btn-mnemonic" v-if="wallet && wallet.keystore && wallet.keystore.encSeed && wallet.keystore.encSeed.encStr" @click="proceedExport(wallet)">{{$t('导出助记词M')}}</button>
+                          <button type="button" class="btn-key" v-if="wallet && wallet.keystore" @click="proceedExport(wallet, true)">{{$t('导出私钥M')}}</button>
                           <button type="button" class="btn-delete" @click="deleteWallet(wallet)">{{$t('删除')}}</button>
                       </div>
                   </div>
@@ -501,7 +501,7 @@ export default {
     },
     proceedStoreToPassword() {
       if (!this.seed) {
-        this.$Message.error("输入seed");
+        this.$Message.error(this.$root.$i18n.t("输入seed"));
       } else {
         this.openModal("password_restore");
       }

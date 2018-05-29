@@ -21,6 +21,7 @@
 <script>
 
 import web3Utils from "../web3Utils";
+import translateError from '../translate_error'
 
 export default {
   data() {
@@ -86,7 +87,7 @@ export default {
           _this.modal_loading = false;
           _this.closeModal();
           _this.$Message.error(_this.$root.$i18n.t("提交失败"));
-          _this.modal_info = _this.$root.$i18n.t('提交失败')+err.toString();
+          _this.modal_info = _this.$root.$i18n.t('提交失败')+" "+translateError.translate(err.toString());
            _this.openModal('show_info');
         });
     },

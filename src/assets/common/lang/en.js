@@ -40,7 +40,10 @@ module.exports = {
     '修改別名': 'Edit address alias',
     '导出助记词': 'Export mnemonics',
     '导出私钥': 'Export private key',
+    '导出助记词M': 'Mnemonics',
+    '导出私钥M': 'Private key',
     '地址已经存在': 'Address already in wallet.',
+    '输入字符先':'Please type first',
 
     '从': 'From',
     '付给': 'To',
@@ -52,7 +55,7 @@ module.exports = {
     '持有:': 'Holding:',
     '燃料上限': 'Gas limits',
     '燃料价格(Gwei)': 'GasPrice (Gwei)',
-    '燃料价格(Gwei)M': 'Gas Price (Gwei)',
+    '燃料价格(Gwei)M': 'Gas Price',
     '矿工费用': 'Miner\'s fee',
     '“燃料上限” -> 燃料数量上限': '“Gas limits” -> The maximum gas you are willing to pay',
     '“燃料价格” -> 燃料单价上限': '“Gas price” -> The maximum price of gas',
@@ -98,6 +101,8 @@ module.exports = {
     '创建合约': 'Contract Creation',
     '浏览器': 'Explorer',
     '地址': 'Address',
+
+    '网络不可用':'Network unavailable',
 
     '请输入已签名交易数据': 'Please enter the signed transaction data',
     '温馨提示：转账前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊的GAS手续费。您可以从任何钱包或交易所直接将ETH转入你的CPS地址，因为你的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币储存。': 'Please note: Before transfering out, please make sure you have a certain amount of Ethereum in your wallet. Such ETH will be used to pay the miner`s fee for the transaction. Since your CPS adddress and ETH address are the same, you can either withdraw such ETH from an exchange or an existing walllet to the CPS address you are using.',

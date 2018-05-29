@@ -454,7 +454,7 @@ export default {
     },
     proceedStoreToPassword() {
       if (!this.seed) {
-        this.$Message.error("输入seed");
+        this.$Message.error(this.$root.$i18n.t("输入seed"));
       } else {
         this.openModal("password_restore");
       }

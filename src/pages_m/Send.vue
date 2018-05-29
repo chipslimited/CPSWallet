@@ -400,6 +400,20 @@ export default {
 
         try {
           if (this.token_address === "ETH") {
+
+              let
+                  //_token = _.find(this.current_wallet.balances, { value: _this.token_address });
+                  _token = _this.current_wallet && _this.current_wallet.balances?_this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined
+              var bal = _token && _token.balance ? _token.balance : null;
+              if(bal != null && typeof(bal) != 'undefined'){
+                  if(parseFloat(bal) < parseFloat(valueEth)){
+                      //余额不足
+                      _this.$Message.error(_this.$root.$i18n.t('余额不足'));
+                      _this.closeModal();
+                      return;
+                  }
+              }
+
             value = new BigNumber(valueEth + "e+" + "18");
             gasPrice = parseFloat(_this.gasPrice)*1e9;
             gas = _this.gas;
@@ -436,6 +450,19 @@ export default {
               }),
               contract = erc20token.contract,
               decimals = erc20token.decimals;
+
+              let
+                  //_token = _.find(this.current_wallet.balances, { value: _this.token_address });
+                  _token = _this.current_wallet && _this.current_wallet.balances?_this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined
+              var bal = _token && _token.balance ? _token.balance : null;
+              if(bal != null && typeof(bal) != 'undefined'){
+                  if(parseFloat(bal) < parseFloat(valueEth)){
+                      //余额不足
+                      _this.$Message.error(_this.$root.$i18n.t('余额不足'));
+                      _this.closeModal();
+                      return;
+                  }
+              }
 
             value = new BigNumber(valueEth + "e+" + decimals);
             gasPrice = parseFloat(this.gasPrice)*1e9;
@@ -503,7 +530,7 @@ export default {
               _this.$Loading.error();
               _this.modal_loading = false;
               _this.closeModal();
-              _this.$Message.error(_this.$root.$i18n.t("提交失败")+err.toString());
+              _this.$Message.error(_this.$root.$i18n.t("提交失败")+ translateError.translate(err.toString()));
               console.error(err)
           });
       },

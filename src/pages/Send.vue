@@ -440,7 +440,7 @@ export default {
               _this.$Loading.error();
               _this.modal_loading = false;
               _this.closeModal();
-              _this.$Message.error(_this.$root.$i18n.t("提交失败")+err.toString());
+              _this.$Message.error(_this.$root.$i18n.t("提交失败")+translateError.translate(err.toString()));
               console.error(err)
           });
       },
