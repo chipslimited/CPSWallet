@@ -512,7 +512,7 @@ body {
       height: 3px;
       border: none;
       border-radius: 2px;
-      background-color: #ffffff; }
+    }
       .send-wrapper .main-content .send-form .slider-group .slider .ui-slider-handle {
         position: absolute;
         display: inline-block;

@@ -20,6 +20,10 @@ var translateError = {
             return window.i18n.t('输入内容非法');
         }
 
+        if(err.toString().indexOf("rlp: value size") > 0){
+            return window.i18n.t('输入内容非法');
+        }
+
         if(err.toString().indexOf("gas too low") > 0){
             return window.i18n.t('输入内容非法');
         }
@@ -29,6 +33,10 @@ var translateError = {
         }
 
         if(err.toString().indexOf("connect to node") > 0){
+            return window.i18n.t('网络不可用');
+        }
+
+        if(err.toString().indexOf("Network Error") > 0){
             return window.i18n.t('网络不可用');
         }
 

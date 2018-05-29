@@ -98,6 +98,11 @@ export default {
         let web3 = web3Utils.getWeb3(),
           rawTxData = this.target_address;
 
+          if(rawTxData == null || typeof(rawTxData) == 'undefined' || rawTxData.trim().length == 0){
+              reject && reject("Error: EOF");
+              return;
+          }
+
         try {
             web3.eth.sendRawTransaction(
               rawTxData,

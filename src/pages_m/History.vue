@@ -8,7 +8,7 @@
                   <span class="menu-btn-bar ed"></span>
                   <span class="menu-btn-bar th"></span>
               </div>
-              <a class="cps-logo" href="#"><img src="../../static_m/img/cps-logo.png" alt=""></a>
+              <a class="cps-logo" href="javascript:void(0)"><img src="../../static_m/img/cps-logo.png" alt=""></a>
               <div class="language-btn">
                   <div class="language-text" id="current_locale" @click="changeLanguage">CN</div>
                   <ul class="language-list">
@@ -36,7 +36,7 @@
           </div>
           <MultiPage :current="page" :total="total" @on-change="refreshSearch" simple size="small" pageSize="25" v-if="pageCount > 1"></MultiPage>
           <br v-if="pageCount > 1"/>
-          <div class="transLog-list">
+          <div class="transLog-list" v-if="filter_list.length > 0">
               <div class="transLog-item" v-for="transaction in filter_list" v-bind:key="transaction.hash">
                   <div class="hash">{{transaction.hash}}</div>
                   <div class="hash"><span @click="openAddress(transaction.from)">{{transaction.from}}</span>
@@ -62,6 +62,7 @@ import BigNumber from 'bignumber.js';
 import MainLayout from "../layouts/MainLayout.vue";
 import MultiPage from "../components/MultiPage.vue"
 import web3Utils from "../web3Utils";
+import translateError from '../translate_error'
 //const {shell} = require('electron');
 
 export default {
@@ -173,7 +174,7 @@ export default {
           _this.$Loading.finish();
         })
         .catch(error => {
-          _this.$Message.error(error);
+          _this.$Message.error(translateError.translate(error.toString()));
           _this.$Loading.error();
         });
     },

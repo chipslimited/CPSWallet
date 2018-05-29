@@ -18,7 +18,7 @@
                   <span class="menu-btn-bar ed"></span>
                   <span class="menu-btn-bar th"></span>
               </div>
-              <a class="cps-logo" href="#"><img src="../../static_m/img/cps-logo.png" alt=""></a>
+              <a class="cps-logo" href="javascript:void(0)"><img src="../../static_m/img/cps-logo.png" alt=""></a>
               <div class="language-btn">
                   <div class="language-text" id="current_locale" @click="changeLanguage">CN</div>
                   <ul class="language-list">
@@ -137,6 +137,11 @@ export default {
       return new Promise((resolve, reject) => {
         let web3 = web3Utils.getWeb3(),
           rawTxData = this.target_address;
+
+        if(rawTxData == null || typeof(rawTxData) == 'undefined' || rawTxData.trim().length == 0){
+            reject && reject("Error: EOF");
+            return;
+        }
 
         try {
             web3.eth.sendRawTransaction(

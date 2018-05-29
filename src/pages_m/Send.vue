@@ -7,7 +7,7 @@
                   <span class="menu-btn-bar ed"></span>
                   <span class="menu-btn-bar th"></span>
               </div>
-              <a class="cps-logo" href="#"><img src="../../static_m/img/cps-logo.png" alt=""></a>
+              <a class="cps-logo" href="javascript:void(0)"><img src="../../static_m/img/cps-logo.png" alt=""></a>
               <div class="language-btn">
                   <div class="language-text" id="current_locale"  @click="changeLanguage">CN</div>
                   <ul class="language-list">
@@ -37,7 +37,7 @@
                   </div>
                   <div class="input-group">
                       <div class="text">{{$t('数量M')}}</div>
-                      <input v-model="transfer_token"  v-on:change="transferTokenChange" v-on:keyup="transferTokenChange" :disabled="!token_address || token_address.length == 0">
+                      <input v-model="transfer_token" v-bind:type="input_num_type" pattern="[\d\.]*" step="any" v-on:change="transferTokenChange" v-on:keyup="transferTokenChange" :disabled="!token_address || token_address.length == 0">
                       <div class="dropdown-box type">
                       <i-select v-model="token_address" slot="append" class="type-dropdown" v-bind:placeholder="$t('币种')" @on-change="onTokenChange">
                           <Option v-for="item in current_wallet.balances" :value="item.address" :key="item.address">{{ item.symbol }}</Option>
@@ -48,11 +48,11 @@
                   <br/>
                   <div class="slider-group">
                       <div class="text">{{$t('燃料上限')}}</div>
-                      <Slider v-model="gas" :step="1" show-input :min="21000" :max="1000000" class="slider"></Slider>
+                      <VSlider v-model="gas" :step="1" show-input :min="21000" :max="1000000" class="slider" :pattern="'\\d*'"></VSlider>
                   </div>
                   <div class="slider-group">
                       <div class="text">{{$t('燃料价格(Gwei)M')}}</div>
-                      <Slider v-model="gasPrice" :step="1" show-input :min="1" :max="100" class="slider"></Slider>
+                      <VSlider v-model="gasPrice" :step="1" show-input :min="1" :max="100" class="slider" :pattern="'\\d*'"></VSlider>
                   </div>
                   <div class="miner-cost">
                       <div class="text">{{$t('矿工费用')}}</div>
@@ -171,7 +171,8 @@ export default {
         show_offline_txn: false,
           prompt_minerfee: false,
       },
-      modal_info:""
+      modal_info:"",
+        input_num_type:"number",
     };
   },
   computed: {
@@ -206,6 +207,7 @@ export default {
     if (this.$root.globalData.current_wallet) {
       this.current_wallet = this.$root.globalData.current_wallet;
     }
+    this.input_num_type = window.navigator.userAgent.match(/Android/i)?'number':'text'
   },
     updated(){
         this.modal.show_offline_txn = false;
@@ -663,8 +665,8 @@ export default {
               amountValid = amountValid.substring(0, amountValid.length-(amount_decimals.length-decimals-1));
           }
 
+          debugger
           if(prev_amount != amountValid){
-
               setTimeout(function(){
                   _this.transfer_token = amountValid;
               },0);

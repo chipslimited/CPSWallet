@@ -8,6 +8,7 @@ import iView from "iview";
 import routes from "./routes_m";
 import MobileLayout from "./layouts/MobileLayout.vue";
 import MultiPage from "./components/MultiPage.vue"
+import VSlider from "./components/slider.vue"
 import dbUtils from "./dbUtils";
 
 
@@ -54,6 +55,7 @@ else if(locale == 'TW'){
 }
 
 Vue.component('MultiPage', MultiPage);
+Vue.component('VSlider', VSlider);
 
 const app = new Vue({
   el: "#app",

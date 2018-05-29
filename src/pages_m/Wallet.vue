@@ -162,7 +162,7 @@
                   <span class="menu-btn-bar ed"></span>
                   <span class="menu-btn-bar th"></span>
               </div>
-              <a class="cps-logo" href="#"><img src="../../static_m/img/cps-logo.png" alt=""></a>
+              <a class="cps-logo" href="javascript:void(0)"><img src="../../static_m/img/cps-logo.png" alt=""></a>
 
               <div class="language-btn">
                   <div class="language-text" id="current_locale" @click="changeLanguage">CN</div>

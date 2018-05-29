@@ -44,6 +44,7 @@ import BigNumber from 'bignumber.js';
 import MainLayout from "../layouts/MainLayout.vue";
 import MultiPage from "../components/MultiPage.vue"
 import web3Utils from "../web3Utils";
+import translateError from '../translate_error'
 //const {shell} = require('electron');
 
 export default {
@@ -144,7 +145,7 @@ export default {
           _this.$Loading.finish();
         })
         .catch(error => {
-          _this.$Message.error(error);
+          _this.$Message.error(translateError.translate(error.toString()));
           _this.$Loading.error();
         });
     },
