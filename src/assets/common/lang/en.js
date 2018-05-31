@@ -44,6 +44,7 @@ module.exports = {
     '导出私钥M': 'Private key',
     '地址已经存在': 'Address already in wallet.',
     '输入字符先':'Please type first',
+    '输入字符先':'Please type first',
 
     '从': 'From',
     '付给': 'To',
@@ -114,5 +115,5 @@ module.exports = {
     '输入内容非法':'Input incorrect',
     '输入内容非法或密码错误':'Input incorrect or invalid password',
     '余额不足':'Insufficient fund',
-    '密码错误':'Invalid passord',
+    '密码错误':'Invalid password',
 }
