@@ -43,7 +43,7 @@ It may take a while. When it is done, you will see executables in ./outapp/ dire
 
 Install prerequisite
 ```bash
-yarn add --dev 
+yarn install 
 ```
 
 Package webpage distribution
