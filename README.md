@@ -35,42 +35,21 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 sudo apt-get update && sudo apt-get install yarn
 ```
 
-# Install dependencies
-``` bash
-npm install -g electron-packager
-yarn add --dev electron-installer-windows electron-packager
-```
-# Serve with hot reload at localhost:8080
-``` bash
-yarn dev
-```
-# Launch electron with dev mode
-``` bash
-yarn start
-```
-# Package application
-``` bash
-yarn build && yarn predeploy &&  electron-packager . CPSWallet --asar=true  --platform=win32,darwin,linux --arch=x64  --overwrite --out=./outapp/ --no-prune  --icon CPSWALLETLOGO
 
-```
 
 It may take a while. When it is done, you will see executables in ./outapp/ directory.
 
-# Package and upload to Aliyun OSS
+# Package and distribution
 
 Install prerequisite
 ```bash
 yarn add --dev 
 ```
 
-Build package and upload
-
-```bash
-pip install oss2
-```
+Package webpage distribution
 
 ```bash
 ./ci.sh
 ```
+then modify index.html and index_m.html to reflect the newly generated hash file names.
 
-ci.sh call upload.py to upload files to OSS, you need to change OSS configuration in upload.py so that packaged executables are upload to OSS of your own.
