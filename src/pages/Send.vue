@@ -16,7 +16,7 @@
               <div class="input-box">
                   <i-input v-model="transfer_token" class="num-input"  @on-change="transferTokenChange" :disabled="!token_address || token_address.length == 0">
                   </i-input>
-                  <i-select v-model="token_address" slot="append" class="type-dropdown" v-bind:placeholder="$t('币种')" @on-change="onTokenChange">
+                  <i-select v-model="token_address" :not-found-text="$t('无匹配数据')" slot="append" class="type-dropdown" v-bind:placeholder="$t('币种')" @on-change="onTokenChange">
                       <Option v-for="item in current_wallet.balances" :value="item.address" :key="item.address">{{ item.symbol }}</Option>
                   </i-select>
               </div>

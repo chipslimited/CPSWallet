@@ -90,6 +90,7 @@ module.exports = {
     "m/44'/60'/0'/0 (兼容MetaMask/imToken)": "m/44'/60'/0'/0 (MetaMask/imToken)",
     "m/0'/0'/0' (定制)": "m/0'/0'/0' (Custom)",
     "m/44'/60'/1'/0/0 (imToken自定义)": "m/44'/60'/1'/0/0 (imToken)",
+    '无匹配数据':'No data',
 
     '当前钱包地址 :': 'Current wallet address',
     '收款二维码 : ': 'Recipient QRCode: ',
