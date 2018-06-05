@@ -155,21 +155,21 @@ export default {
       showtooltip(tip, e){
 
         var _this = this;
-          var tooltip = document.createElement('div')
+          var tooltip = document.createElement('div');
           tooltip.style.cssText =
               'position:absolute; background:black; color:white; padding:4px;z-index:10000;'
               + 'border-radius:2px; font-size:12px;box-shadow:3px 3px 3px rgba(0,0,0,.4);'
-              + 'opacity:0;transition:opacity 0.3s'
-          tooltip.innerHTML = tip || _this.$root.$i18n.t('已复制!')
-          document.body.appendChild(tooltip)
+              + 'opacity:0;transition:opacity 0.3s';
+          tooltip.innerHTML = tip || _this.$root.$i18n.t('已复制!');
+          document.body.appendChild(tooltip);
 
-          var evt = e || event
+          var evt = e || event;
 
-          tooltip.style.left = evt.pageX - 10 + 'px'
-          tooltip.style.top = evt.pageY + 15 + 'px'
-          tooltip.style.opacity = 1
+          tooltip.style.left = evt.pageX - 10 + 'px';
+          tooltip.style.top = evt.pageY + 15 + 'px';
+          tooltip.style.opacity = 1;
           setTimeout(function(){
-              tooltip.style.opacity = 0
+              tooltip.style.opacity = 0;
               document.body.removeChild(tooltip)
           }, 500)
       },
@@ -179,10 +179,10 @@ export default {
 
           var _this = this;
           function selectElementText(el){
-              var range = document.createRange() // create new range object
-              range.selectNodeContents(el) // set range to encompass desired element text
-              var selection = window.getSelection() // get Selection object from currently user selected text
-              selection.removeAllRanges() // unselect any user selected text (if any)
+              var range = document.createRange(); // create new range object
+              range.selectNodeContents(el); // set range to encompass desired element text
+              var selection = window.getSelection(); // get Selection object from currently user selected text
+              selection.removeAllRanges(); // unselect any user selected text (if any)
               selection.addRange(range) // add range to Selection object to select it
           }
 

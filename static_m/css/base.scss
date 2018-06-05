@@ -67,7 +67,7 @@ button:active {
     font-size:20px;
   }
   .tips_emphasis_tips{margin-top:12px;padding:10px;line-height:20px;background-color:#777;color:#fff;border-radius:4px;font-size:14px;  word-break: break-all;}
-  .tips_main_tips{margin-top:12px;padding:0 10px;color:#787878;font-size:14px;line-height:20px;word-break: break-all;}
+  .tips_main_tips{margin-top:12px;padding:0 10px;color:#787878;font-size:14px;line-height:20px;word-break: break-all;margin-bottom: 10px;}
   .tips_form{margin-top:10px;padding:0 14px 14px;border-radius:4px;
     .dropdown-box{box-sizing: border-box;background-color: #DCDCDC;border-radius: 4px;
       .wallet_select {background-color: #DCDCDC;
@@ -99,8 +99,14 @@ button:active {
     .tips_mnemonic{color:#fff;font-size:14px;}
     .tips_downTips{margin-top:12px;padding:8px 20px;background-color:#fff;font-size:14px;border-radius:4px;}
     .tips_downbtn{margin-top:12px;
-      .downbtn{display:inline-block;width:50%;height:44px;line-height:44px;box-sizing:border-box;color:#fff;font-size:14px;border-radius:4px;border:1px solid #fff;background:#898989 url("../img/menu-download.png") no-repeat 5px center;background-size:22px 22px;padding-left: 15px;
+      .downbtn{
+        display:inline-block;width:50%;height:44px;line-height:44px;box-sizing:border-box;color:#fff;font-size:14px;border-radius:4px;border:1px solid #fff;background:#898989 url("../img/menu-download.png") no-repeat 5px center;background-size:22px 22px;padding-left: 15px;
         text-align: center;
+        @media screen and (max-width: 321px) {
+          padding: 0 5px;
+          text-align: center;
+          background:#898989;
+        }
         &:hover{background-color:#494949;border:1px solid #494949; }
         &:active{background-color:#5c5c5c;border:1px solid #5c5c5c; }
       }

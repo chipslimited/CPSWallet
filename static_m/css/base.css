@@ -86,7 +86,8 @@ button:active {
     color: #787878;
     font-size: 14px;
     line-height: 20px;
-    word-break: break-all; }
+    word-break: break-all;
+    margin-bottom: 10px; }
   .wallet_tips_main .tips_form {
     margin-top: 10px;
     padding: 0 14px 14px;
@@ -113,9 +114,8 @@ button:active {
           word-break: break-all;
           white-space: initial; }
     .wallet_tips_main .tips_form.has_input {
-        background-color: #777;
-        padding: 25px 30px;
-    }
+      background-color: #777;
+      padding: 25px 30px; }
       .wallet_tips_main .tips_form.has_input .tips_form_btn a {
         margin-top: 20px; }
   .wallet_tips_main .tips_main_mnemonic {
@@ -149,6 +149,11 @@ button:active {
         background-size: 22px 22px;
         padding-left: 15px;
         text-align: center; }
+        @media screen and (max-width: 321px) {
+          .wallet_tips_main .tips_main_mnemonic .tips_downbtn .downbtn {
+            padding: 0 5px;
+            text-align: center;
+            background: #898989; } }
         .wallet_tips_main .tips_main_mnemonic .tips_downbtn .downbtn:hover {
           background-color: #494949;
           border: 1px solid #494949; }

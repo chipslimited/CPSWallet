@@ -207,6 +207,7 @@ body {
     background-color: #040404;
     z-index: 9999; }
     .wallet-wrapper .nav .nav-box {
+      position: relative;
       height: 100%;
       display: flex;
       flex-flow: row nowrap;
@@ -262,7 +263,10 @@ body {
           -webkit-transition: .5s;
           transition: .5s; }
       .wallet-wrapper .nav .nav-box .cps-logo {
-        display: inline-block; }
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); }
         .wallet-wrapper .nav .nav-box .cps-logo img {
           width: 118px;
           height: 40px; }
@@ -270,7 +274,6 @@ body {
         position: relative;
         font-size: 18px;
         color: #bebebe;
-        width: 38px;
         z-index: 50; }
         .wallet-wrapper .nav .nav-box .language-btn:hover .language-list {
           display: block; }
@@ -287,12 +290,7 @@ body {
           list-style-type: none;
           z-index: 999; }
           .wallet-wrapper .nav .nav-box .language-btn .language-list .language-item {
-            padding: 2px 5px; }
-          .wallet-wrapper .nav .nav-box .language-btn .language-list .language-item:first-child {
-            background-color: #1d1d1d; }
-          .wallet-wrapper .nav .nav-box .language-btn .language-list .language-item:nth-child(2) {
-            background-color: #202020; }
-          .wallet-wrapper .nav .nav-box .language-btn .language-list .language-item:last-child {
+            padding: 2px 5px;
             background-color: #272727; }
 
 .container {
@@ -398,10 +396,9 @@ body {
       color: #ffffff; }
     .index-wrapper .hash .hash-group .hash-item .alias {
       line-height: 1.5;
-      margin-bottom: 8px;
       font-size: 14px;
       color: #ffffff;
-      word-break: break-word;
+      word-break: break-all;
       cursor: pointer; }
       .index-wrapper .hash .hash-group .hash-item .alias .num {
         padding: 0 5px 0 10px; }
@@ -416,7 +413,6 @@ body {
         vertical-align: middle; }
     .index-wrapper .hash .hash-group .hash-item .btn-group {
       display: flex;
-      flex-wrap: wrap;
       flex-flow: row wrap;
       justify-content: flex-start;
       align-items: center; }
@@ -424,9 +420,7 @@ body {
         padding: 0 8px;
         height: 34px;
         line-height: 34px;
-        margin-top: 2px;
-        margin-right: 10px;
-        margin-bottom: 5px;
+        margin: 8px 10px 0 0;
         border-radius: 7px;
         text-align: center;
         font-size: 14px;
@@ -473,8 +467,8 @@ body {
     .send-wrapper .main-content .send-form .input-group .dropdown-box {
       flex: 1;
       height: 36px;
-      max-width: calc(100% - 36px);
       border-radius: 3px;
+      max-width: calc(100% - 36px);
       background-color: #ffffff; }
       .send-wrapper .main-content .send-form .input-group .dropdown-box.type {
         flex: 0 0 123px;
@@ -484,9 +478,9 @@ body {
       flex: 1;
       width: 0;
       height: 36px;
-      padding: 0 10px;
+      padding: 0 36px 0 14px;
       border-radius: 4px;
-      font-size: 14px;
+      font-size: 12px;
       color: #212121;
       background-color: #ffffff; }
   .send-wrapper .main-content .send-form .balance {
@@ -513,7 +507,7 @@ body {
       height: 3px;
       border: none;
       border-radius: 2px;
-    }
+      background-color: transparent; }
       .send-wrapper .main-content .send-form .slider-group .slider .ui-slider-handle {
         position: absolute;
         display: inline-block;
@@ -549,8 +543,8 @@ body {
     font-size: 14px;
     color: #ffffff; }
     .send-wrapper .main-content .send-form .miner-cost .text {
-      flex: 0 0 70px;
-      width: 70px;
+      flex: 0 0 80px;
+      width: 80px;
       margin-right: 10px; }
     .send-wrapper .main-content .send-form .miner-cost .prompt-btn {
       flex: 0 0 12px;
@@ -571,6 +565,10 @@ body {
     .send-wrapper .main-content .send-total .send-total-box .total-num .value {
       padding: 0 5px;
       font-size: 28px; }
+    .send-wrapper .main-content .send-total .send-total-box .total-num .va {
+      padding: 0 5px;
+      font-size: 28px;
+      word-break: break-all; }
   .send-wrapper .main-content .send-total .send-total-box .msg {
     margin-bottom: 14px;
     line-height: 1.6;
@@ -681,9 +679,9 @@ body {
     align-items: center; }
     .receive-wrapper .cps-address .select-wallet .dropdown-box {
       flex: 1;
+      max-width: calc(100% - 40px);
       height: 36px;
       border-radius: 3px;
-      max-width: calc(100% - 40px);
       background-color: #ffffff; }
     .receive-wrapper .cps-address .select-wallet .copy {
       flex: 0 0 30px;

@@ -12,8 +12,8 @@
                       </i-select>
                   </div>
 
-                  <div class="tips_form_btn btn-flex"><a href="javascript:;" class="js_tips_btn " @click="proceedCreateToPassword">{{$t('创建')}}</a>
-                  <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                  <div class="tips_form_btn btn-flex"><a href="javascript:" class="js_tips_btn " @click="proceedCreateToPassword">{{$t('创建')}}</a>
+                  <a href="javascript:" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                   </div>
               </div>
           </div>
@@ -26,8 +26,8 @@
               <div class="tips_lower_tit">{{$t('温馨提示')}}</div>
               <div class="tips_main_tips">{{$t('请写在纸上并妥善保管，您将需要它来访问钱包。不要让任何人看到这段助记词，否则将存在巨大的数字资产安全风险。请在下方输入刚才的密码，确认您已经将助记词写在纸上并妥善保管，并完成新钱包的创建。')}}</div>
               <div class="tips_form has_input"><div class="tips_input"><input type="password" v-model="user_password"  v-bind:placeholder="$t('请输入密码')" value="" maxlength=""></div>
-                  <div class="tips_form_btn btn-flex"><a href="javascript:;" class="js_tips_btn ":loading="modal_loading" @click="createWallet">{{$t('确定')}}</a>
-                      <a href="javascript:;" class="js_tips_btn " @click="closeModal('password_create')">{{$t('关闭')}}</a></div>
+                  <div class="tips_form_btn btn-flex"><a href="javascript:" class="js_tips_btn " :loading="modal_loading" @click="createWallet">{{$t('确定')}}</a>
+                      <a href="javascript:" class="js_tips_btn " @click="closeModal('password_create')">{{$t('关闭')}}</a></div>
               </div>
           </div>
       </Modal>
@@ -42,8 +42,8 @@
                           <Option v-for="item in hdpaths" :value="item.value" :key="item.label">{{ $t(item.label) }}</Option>
                       </i-select>
                   </div>
-                  <div class="tips_form_btn btn-flex"><a href="javascript:;" class="js_tips_btn " @click="proceedStoreToPassword">{{$t('确定')}}</a>
-                      <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                  <div class="tips_form_btn btn-flex"><a href="javascript:" class="js_tips_btn " @click="proceedStoreToPassword">{{$t('确定')}}</a>
+                      <a href="javascript:" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                   </div>
               </div>
           </div>
@@ -56,8 +56,8 @@
                         <input type="text" v-model="wallet_alias" v-bind:placeholder="$t('请输入钱包备注')" value="" maxlength="5">
                     </div>
                     <div class="tips_form_btn btn-flex">
-                        <a href="javascript:;" class="js_tips_btn " @click="confirmEditAlias">{{$t('确定')}}</a>
-                        <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                        <a href="javascript:" class="js_tips_btn " @click="confirmEditAlias">{{$t('确定')}}</a>
+                        <a href="javascript:" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                     </div>
                 </div>
             </div>
@@ -69,8 +69,8 @@
                     <div class="tips_internal">{{$t('您将只能查看余额，而无法向外转账')}}</div>
                     <div class="tips_input"><input type="text" v-model="readonly_address" v-bind:placeholder="$t('请输入钱包地址')" value="" maxlength=""></div>
                     <div class="tips_form_btn btn-flex">
-                        <a href="javascript:;" class="js_tips_btn " @click="proceedStoreToAddress">{{$t('确定')}}</a>
-                        <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                        <a href="javascript:" class="js_tips_btn " @click="proceedStoreToAddress">{{$t('确定')}}</a>
+                        <a href="javascript:" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                     </div>
                 </div>
             </div>
@@ -80,8 +80,8 @@
               <div class="tips_main_title">{{$t('恢复钱包')}}</div>
               <div class="tips_form has_input">
                   <div class="tips_input"><input type="password" v-model="user_password" v-bind:placeholder="$t('请输入密码')" value=""  maxlength=""></div>
-                  <div class="tips_form_btn btn-flex"><a href="javascript:;" class="js_tips_btn " :loading="modal_loading" @click="restoreWallet">{{$t('确定')}}</a>
-                      <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                  <div class="tips_form_btn btn-flex"><a href="javascript:" class="js_tips_btn " :loading="modal_loading" @click="restoreWallet">{{$t('确定')}}</a>
+                      <a href="javascript:" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                   </div>
               </div>
           </div>
@@ -107,8 +107,8 @@
                     <div class="tips_input" v-if="current_wallet && current_wallet.keystore && !(download_key_url && download_key_url.length > 0)">
                         <input type="password" v-model="user_password"  v-bind:placeholder="$t('请输入密码')" value="" id="wallet_input" maxlength="">
                     </div>
-                    <div class="tips_form_btn btn-flex"><a href="javascript:;" class="js_tips_btn " :loading="modal_loading" @click="confirmDeleteWallet()">{{$t('删除')}}</a>
-                        <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                    <div class="tips_form_btn btn-flex"><a href="javascript:" class="js_tips_btn " :loading="modal_loading" @click="confirmDeleteWallet()">{{$t('删除')}}</a>
+                        <a href="javascript:" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                     </div>
                 </div>
             </div>
@@ -122,10 +122,10 @@
                 <div class="tips_internal" v-if="export_private_key">{{$t('下载私钥文件，妥善保存并确保文件的安全，泄露该文件会造成巨大的财产损失')}}</div>
                   <div class="tips_form_btn btn-flex" v-if="export_private_key">
                       <a :href="download_key_url" download="privatekey.txt" class="js_tips_btn hasdownload">DownLoad</a>
-                      <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                      <a href="javascript:" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                   </div>
                   <div class="tips_form_btn" v-else>
-                      <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                      <a href="javascript:" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                   </div>
               </div>
           </div>
@@ -147,8 +147,8 @@
               <div class="tips_form has_input">
                   <div class="tips_input"><input type="password" v-bind:placeholder="$t('请输入密码')" v-model="user_password"  value="" maxlength=""></div>
                   <div class="tips_form_btn btn-flex">
-                      <a href="javascript:;" class="js_tips_btn " :loading="modal_loading" @click="exportWallet">{{$t('确定')}}</a>
-                      <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a></div>
+                      <a href="javascript:" class="js_tips_btn " :loading="modal_loading" @click="exportWallet">{{$t('确定')}}</a>
+                      <a href="javascript:" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a></div>
               </div>
           </div>
       </Modal>
@@ -167,17 +167,17 @@
                     </div>
                 </div>
                 <div class="list-balance">
-                    <a href="javascript:;" class="js_addName" @click="editAlias(wallet)" v-if="wallet.alias.length == 0">{{$t('添加地址別名')}}</a>
-                    <a href="javascript:;" class="js_addName" @click="editAlias(wallet)" v-if="wallet.alias.length > 0"><span v-if="wallet.alias.length > 0">({{wallet.alias}})</span><i class="icon-edit"></i> </a>
+                    <a href="javascript:" class="js_addName" @click="editAlias(wallet)" v-if="wallet.alias.length == 0">{{$t('添加地址別名')}}</a>
+                    <a href="javascript:" class="js_addName" @click="editAlias(wallet)" v-if="wallet.alias.length > 0"><span v-if="wallet.alias.length > 0">({{wallet.alias}})</span><i class="icon-edit"></i> </a>
                     <span class="token-wrapper" v-for="(token, index) in wallet.balances" v-bind:key="index">
                         <span class="b-num">{{token.balance}}</span><span  class="b-unit">{{token.symbol}}</span>
                     </span>
                 </div>
             </div>
             <div class="list-lay-btn">
-                <a href="javascript:;" class="js_btn_mnemonic" v-if="wallet && wallet.keystore && wallet.keystore.encSeed && wallet.keystore.encSeed.encStr" @click="proceedExport(wallet)">{{$t('导出助记词')}}</a>
-                <a href="javascript:;" class="js_btn_key" v-if="wallet && wallet.keystore" @click="proceedExport(wallet, true)">{{$t('导出私钥')}}</a>
-                <a href="javascript:;" class="js_btn_delete" @click="deleteWallet(wallet)">{{$t('删除')}}</a>
+                <a href="javascript:" class="js_btn_mnemonic" v-if="wallet && wallet.keystore && wallet.keystore.encSeed && wallet.keystore.encSeed.encStr" @click="proceedExport(wallet)">{{$t('导出助记词')}}</a>
+                <a href="javascript:" class="js_btn_key" v-if="wallet && wallet.keystore" @click="proceedExport(wallet, true)">{{$t('导出私钥')}}</a>
+                <a href="javascript:" class="js_btn_delete" @click="deleteWallet(wallet)">{{$t('删除')}}</a>
             </div>
         </li>
       </ul>
@@ -311,7 +311,7 @@ export default {
     },
     updateBalances(displayError){
         var _this = this;
-        var web3 = web3Utils.getWeb3()
+        var web3 = web3Utils.getWeb3();
 
         this.$root.currentView == 'wallet'  && _this.wallet_list && _this.wallet_list.map(function (_wallet) {
 
@@ -360,7 +360,7 @@ export default {
                         token.balance = web3Utils.toRealAmount(
                             balance,
                             token.decimals
-                        )
+                        );
                         wallet.balances[i] = token;
                     });
                 }
@@ -368,7 +368,7 @@ export default {
         });
 
         if(displayError){
-            return
+
         }
         else{
             setTimeout(function() { _this.updateBalances() }, 10000);
@@ -389,7 +389,7 @@ export default {
         var $t = this.$root.$i18n.t;
 
       _wallet.balances = [];
-      _wallet.nonce = []
+      _wallet.nonce = [];
 
       try {
 
@@ -546,7 +546,7 @@ export default {
 
             var addresses = this.wallet_list.map(function(x) {
                 return x.address;
-            })
+            });
             dbUtils.set(
                 "address_list",
                 addresses.join(" ")
@@ -597,12 +597,12 @@ export default {
     exportWallet() {
       let _this = this,
         password = this.user_password,
-        keystore = undefined
+        keystore = undefined;
         //_.find(this.wallet_list, this.current_wallet).keystore; //_.find causes problems in offline mode
         var signingAddress = "";
         for(var i=0;i<this.wallet_list.length;i++){
           if(this.wallet_list[i].address == this.current_wallet.address){
-              keystore = this.wallet_list[i].keystore
+              keystore = this.wallet_list[i].keystore;
               signingAddress = this.wallet_list[i].address;
           }
         }
@@ -676,21 +676,21 @@ export default {
     showtooltip(tip, e){
 
         var $t = this.$root.$i18n.t;
-      var tooltip = document.createElement('div')
+      var tooltip = document.createElement('div');
       tooltip.style.cssText =
           'position:absolute; background:black; color:white; padding:4px;z-index:10000;'
           + 'border-radius:2px; font-size:12px;box-shadow:3px 3px 3px rgba(0,0,0,.4);'
-          + 'opacity:0;transition:opacity 0.3s'
-      tooltip.innerHTML = tip || $t('已复制!')
-      document.body.appendChild(tooltip)
+          + 'opacity:0;transition:opacity 0.3s';
+      tooltip.innerHTML = tip || $t('已复制!');
+      document.body.appendChild(tooltip);
 
-        var evt = e || event
+        var evt = e || event;
 
-        tooltip.style.left = evt.pageX - 10 + 'px'
-        tooltip.style.top = evt.pageY + 15 + 'px'
-        tooltip.style.opacity = 1
+        tooltip.style.left = evt.pageX - 10 + 'px';
+        tooltip.style.top = evt.pageY + 15 + 'px';
+        tooltip.style.opacity = 1;
         setTimeout(function(){
-            tooltip.style.opacity = 0
+            tooltip.style.opacity = 0;
             document.body.removeChild(tooltip)
         }, 500)
     },
@@ -700,18 +700,18 @@ export default {
         var _this = this;
 
         function selectElementText(el){
-            var range = document.createRange() // create new range object
-            range.selectNodeContents(el) // set range to encompass desired element text
-            var selection = window.getSelection() // get Selection object from currently user selected text
-            selection.removeAllRanges() // unselect any user selected text (if any)
+            var range = document.createRange(); // create new range object
+            range.selectNodeContents(el); // set range to encompass desired element text
+            var selection = window.getSelection(); // get Selection object from currently user selected text
+            selection.removeAllRanges(); // unselect any user selected text (if any)
             selection.addRange(range) // add range to Selection object to select it
         }
 
         selectElementText(event.target.parentElement.parentElement.children[0]);
         document.execCommand("copy");
 
-        this.showtooltip(_this.$root.$i18n.t("复制成功!"))
-        var selection = window.getSelection() // get Selection object from currently user selected text
+        this.showtooltip(_this.$root.$i18n.t("复制成功!"));
+        var selection = window.getSelection(); // get Selection object from currently user selected text
         selection.removeAllRanges() // unselect any user selected text (if any)
       //window.location.hash = "send";
     }

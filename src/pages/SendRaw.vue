@@ -5,15 +5,15 @@
               <div class="tips_main_title">{{$t('提示')}}</div>
               <div class="tips_main_tips">{{modal_info}}</div>
               <div class="tips_form_btn">
-                  <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                  <a href="javascript:" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
               </div>
           </div>
       </Modal>
 
     <div class="signed-sent-main">
-        <div><textarea v-model="target_address"  v-bind:placeholder="$t('请输入已签名交易数据')" class="signed-textarea"></textarea></div>
+        <div><textarea v-model.trim="target_address"  v-bind:placeholder="$t('请输入已签名交易数据')" class="signed-textarea"></textarea></div>
         <div class="signed-tips">{{$t('温馨提示：转账前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊的GAS手续费。您可以从任何钱包或交易所直接将ETH转入你的CPS地址，因为你的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币储存。')}}</div>
-        <div class="signed-btn"><a href="javascript:;"  v-bind:class="{'js_submit ':!modal_loading,'js_submit ivu-btn-loading':modal_loading}"  @click="transfer">{{$t('确定')}}</a></div>
+        <div class="signed-btn"><a href="javascript:" v-bind:class="{'js_submit ':!modal_loading,'js_submit ivu-btn-loading':modal_loading}" @click="transfer">{{$t('确定')}}</a></div>
     </div>
   </div>
 </template>
@@ -71,13 +71,17 @@ export default {
 
       _this.$Loading.start();
       _this.modal_loading = true;
-
+        if (!navigator.onLine) {
+            _this.modal_info = _this.$root.$i18n.t('网络异常');
+            _this.openModal('show_info');
+            return;
+        }
       this.doTransfer()
         .then(txhash => {
           _this.$Loading.finish();
           _this.modal_loading = false;
           _this.closeModal();
-          _this.$Message.success(_this.$root.$i18n.t('提交成功：')+`${txhash}`);
+          // _this.$Message.success(_this.$root.$i18n.t('提交成功：')+`${txhash}`);
           _this.modal_info = _this.$root.$i18n.t('提交成功：')+`${txhash}`;
           _this.openModal('show_info');
 
@@ -86,14 +90,14 @@ export default {
           _this.$Loading.error();
           _this.modal_loading = false;
           _this.closeModal();
-          _this.$Message.error(_this.$root.$i18n.t("提交失败"));
+          // _this.$Message.error(_this.$root.$i18n.t("提交失败"));
           _this.modal_info = _this.$root.$i18n.t('提交失败')+" "+translateError.translate(err.toString());
            _this.openModal('show_info');
         });
     },
     doTransfer(resolve, reject) {
       var _this = this;
-
+      this.target_address = this.target_address.replace(/\s+/g,"");
       return new Promise((resolve, reject) => {
         let web3 = web3Utils.getWeb3(),
           rawTxData = this.target_address;

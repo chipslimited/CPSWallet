@@ -26,7 +26,7 @@
       <section class="content container">
           <div class="wallet-address">
               <!--<div class="text">当前钱包地址 :</div>-->
-              <i-select id="select-address" v-model="address" slot="append" class="dropdown-box" v-bind:placeholder="$t('选择钱包')" @on-change="onWalletChange">
+              <i-select id="select-address" v-model="address" :not-found-text="$t('无匹配数据')" slot="append" class="dropdown-box" v-bind:placeholder="$t('选择钱包')" @on-change="onWalletChange">
                   <Option v-for="item in wallet_list" :value="item.address" :key="item.address">{{ item.address+(item.alias.length>0?"("+item.alias+")":"") }}</Option>
               </i-select>
               <div class="btn-group">

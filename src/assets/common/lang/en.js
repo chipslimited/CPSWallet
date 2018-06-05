@@ -44,7 +44,6 @@ module.exports = {
     '导出私钥M': 'Private key',
     '地址已经存在': 'Address already in wallet.',
     '输入字符先':'Please type first',
-    '输入字符先':'Please type first',
 
     '从': 'From',
     '付给': 'To',
@@ -54,13 +53,13 @@ module.exports = {
     '数量M': 'Amt',
     '币种': 'Type of token',
     '持有:': 'Holding:',
-    '燃料上限': 'Gas limits',
-    '燃料价格(Gwei)': 'GasPrice (Gwei)',
-    '燃料价格(Gwei)M': 'Gas Price',
+    '燃料上限': 'Gas limit',
+    '燃料价格(Gwei)': 'Gas price (Gwei)',
+    '燃料价格(Gwei)M': 'Gas price',
     '矿工费用': 'Miner\'s fee',
-    '“燃料上限” -> 燃料数量上限': '“Gas limits” -> The maximum gas you are willing to pay',
+    '“燃料上限” -> 燃料数量上限': '“Gas limit” -> The maximum gas you are willing to pay',
     '“燃料价格” -> 燃料单价上限': '“Gas price” -> The maximum price of gas',
-    '矿工费用＝实际燃料数量*实际燃料单价。实际燃料数 量和单价不会高于用户指定的上述两个上限，多余的会 退回。较低的燃料单价和数量可以节省矿工费用，但是\n    也会降低交易到账的速度。在联网设备发送时，会自动 获取燃料上限，在离线设备发送时，需手动设定燃料上 限。如果矿工费用不足以完成打包，或者当前交易的燃 料数量超过了区块的限制，这笔交易将失败。': 'Miner`s fee = actual_gas_used * actual_gas_price. The actual gas amount and price will not be higher than the limits specifed by the user, and the exceeing amount of price and gas will be refunded. You can specify a lower miner`s fee, but will also result in a slower transaction speed. Once the wallet is online, it will automatically get the current gas limit. Please refer to Etherum specification for further details.',
+    '矿工费用＝实际燃料数量*实际燃料单价。实际燃料数 量和单价不会高于用户指定的上述两个上限，多余的会 退回。较低的燃料单价和数量可以节省矿工费用，但是\n    也会降低交易到账的速度。在联网设备发送时，会自动 获取燃料上限，在离线设备发送时，需手动设定燃料上 限。如果矿工费用不足以完成打包，或者当前交易的燃 料数量超过了区块的限制，这笔交易将失败。': 'Miner`s fee = actual_gas_used * actual_gas_price. The actual gas amount and price will not be higher than the limit specifed by the user, and the exceeing amount of price and gas will be refunded. You can specify a lower miner`s fee, but will also result in a slower transaction speed. Once the wallet is online, it will automatically get the current gas limit. Please refer to Etherum specification for further details.',
     '共计：': 'Total: ',
     '（温馨提示：转帐前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊网络的GAS手续费。您可以从任何钱包或交易所直接将\nETH转入您的CPS地址，因为您的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币存储。）': '(Please note: Before transfering out, please make sure you have a certain amount of Ethereum in your wallet. Such ETH will be used to pay the miner`s fee for the transaction. Since your CPS adddress and ETH address are the same, you can either withdraw such ETH from an exchange or an existing walllet to the CPS address you are using.)',
     '身份验证': 'Verify identity',
@@ -117,4 +116,7 @@ module.exports = {
     '输入内容非法或密码错误':'Input incorrect or invalid password',
     '余额不足':'Insufficient fund',
     '密码错误':'Invalid password',
-}
+
+    '输入seed':'Please type first',
+    '网络异常':'network anomaly'
+};

@@ -11,8 +11,8 @@
                 </div>
             </div>
             <div class="his-search-btn">
-                <a href="javascript:;" class="js_search" @click="search">{{$t('搜索')}}</a><a href="javascript:;" @click="filter(keyword)" v-if="0">{{$t('在结果中搜索')}}</a>
-                <a href="javascript:;" @click="openExternal(explorer_address_link)" v-if="explorer_address_link.length > 0">{{$t('浏览器')}}</a>
+                <a href="javascript:" class="js_search" @click="search">{{$t('搜索')}}</a><a href="javascript:" @click="filter(keyword)" v-if="0">{{$t('在结果中搜索')}}</a>
+                <a href="javascript:" @click="openExternal(explorer_address_link)" v-if="explorer_address_link.length > 0">{{$t('浏览器')}}</a>
             </div>
             <div class="his-search-btn" v-if="pageCount > 1">
                 <MultiPage :current="page" :total="total" @on-change="refreshSearch" simple size="small" pageSize="25"></MultiPage>

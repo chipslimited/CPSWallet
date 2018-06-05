@@ -25,7 +25,7 @@
     },
     methods: {
       go (event) {
-        event.preventDefault()
+        event.preventDefault();
         var view = this.href.replace("/", "");
         this.$root.currentView = view;
         window.history.pushState(

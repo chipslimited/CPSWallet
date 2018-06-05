@@ -3,7 +3,7 @@
       <div class="send-top" v-bind:style="{'display':modal.show_offline_txn?'none':''}">
           <div class="input-item from">
               <div class="text">{{$t('从')}}</div>
-              <i-select v-model="current_wallet.address" class="dropdown-box" v-bind:placeholder="$t('选择钱包')" @on-change="changeTransferWallet">
+              <i-select v-model="current_wallet.address" :not-found-text="$t('无匹配数据')" class="dropdown-box" v-bind:placeholder="$t('选择钱包')" @on-change="changeTransferWallet">
                   <Option v-for="item in wallet_list.filter(function(x){return x.keystore})" :value="item.address" :key="item.address">{{ item.address+(item.alias.length>0?"("+item.alias+")":"") }}</Option>
               </i-select>
           </div>
@@ -49,7 +49,7 @@
           <div class="total">{{$t('共计：')}}<span class="total-num">{{transfer_token}}</span>&nbsp;{{token}}</div>
           <div class="prompt">{{$t('（温馨提示：转帐前请确保付款地址内拥有少量的ETH余额，这将用以缴纳以太坊网络的GAS手续费。您可以从任何钱包或交易所直接将\nETH转入您的CPS地址，因为您的CPS地址同时也是一个以太坊地址，并支持所有基于以太坊协议的代币存储。）')}}
           </div>
-          <div class="btn"><a href="javascript:;" class="js_submit" @click="proceedTranfer">{{$t('确定')}}</a></div>
+          <div class="btn"><a href="javascript:" class="js_submit" @click="proceedTranfer">{{$t('确定')}}</a></div>
       </div>
 
       <Modal v-model="modal.password_transaction" width="360" :closable="false" :mask-closable="false">
@@ -59,9 +59,9 @@
                   <div class="tips_input">
                       <input type="password" v-bind:placeholder="$t('请输入密码')" value="" v-model="user_password"  maxlength=""></div>
                   <div class="tips_form_btn btn-flex more_btn">
-                      <a href="javascript:;" class="js_tips_btn " @click="transferOffline" :loading="modal_loading">{{$t('离线交易')}}</a>
-                      <a href="javascript:;" v-bind:class="{'js_tips_btn ':!modal_loading,'js_tips_btn ivu-btn-loading':modal_loading}" @click="transfer" :loading="modal_loading">{{$t('现在发送')}}</a>
-                      <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                      <a href="javascript:" class="js_tips_btn " @click="transferOffline" :loading="modal_loading">{{$t('离线交易')}}</a>
+                      <a href="javascript:" v-bind:class="{'js_tips_btn ':!modal_loading,'js_tips_btn ivu-btn-loading':modal_loading}" @click="transfer" :loading="modal_loading">{{$t('现在发送')}}</a>
+                      <a href="javascript:" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                   </div>
               </div>
           </div>
@@ -73,8 +73,8 @@
                 <div class="tips_form has_input">
                     <div class="tips_input"><input type="text" v-model="current_wallet.custom_nonce"  v-bind:placeholder="$t('请输入nonce')" value="0" id="wallet_input" maxlength=""></div>
                     <div class="tips_form_btn btn-flex">
-                        <a href="javascript:;" class="js_tips_btn " @click="transferOffline2">{{$t('确定')}}</a>
-                        <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                        <a href="javascript:" class="js_tips_btn " @click="transferOffline2">{{$t('确定')}}</a>
+                        <a href="javascript:" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                 <div class="tips_main_title">{{$t('提示')}}</div>
                 <div class="tips_main_tips">{{modal_info}}</div>
                 <div class="tips_form_btn">
-                    <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                    <a href="javascript:" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                 </div>
             </div>
         </Modal>
@@ -104,7 +104,7 @@
               <div class="dotted"></div>
                   <br/>
                   <div class="tips_form_btn">
-                      <a href="javascript:;" class="js_tips_btn " @click="closeModal('show_offline_txn')">{{$t('关闭')}}</a>
+                      <a href="javascript:" class="js_tips_btn " @click="closeModal('show_offline_txn')">{{$t('关闭')}}</a>
                   </div>
               </div>
           </div>
@@ -146,19 +146,19 @@ export default {
     token: function() {
       let _this = this,
         //_token = _.find(this.current_wallet.balances, { address: _this.token_address });
-        _token = this.current_wallet && this.current_wallet.balances?this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined
+        _token = this.current_wallet && this.current_wallet.balances?this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined;
       return _token ? _token.symbol : "";
     },
     max: function() {
         let _this = this,
             //_token = _.find(this.current_wallet.balances, { value: _this.token_address });
-            _token = this.current_wallet && this.current_wallet.balances?this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined
+            _token = this.current_wallet && this.current_wallet.balances?this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined;
         return _token && _token.balance > 0 ? _token.balance : 9999999999;
     },
     bal:  function() {
         let _this = this,
             //_token = _.find(this.current_wallet.balances, { value: _this.token_address });
-            _token = this.current_wallet && this.current_wallet.balances?this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined
+            _token = this.current_wallet && this.current_wallet.balances?this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined;
         return _token && _token.balance ? _token.balance : null;
     },
     min: function() {
@@ -346,7 +346,7 @@ export default {
                 value: value,
                 gasPrice: gasPrice,
                 gas: gas
-            }
+            };
 
             gas = web3.eth.estimateGas(txn);
             txn = {
@@ -355,7 +355,7 @@ export default {
                   value: value,
                   gasPrice: gasPrice,
                   gas: gas
-              }
+              };
 
             web3.eth.sendTransaction(
               txn,
@@ -469,7 +469,7 @@ export default {
                           value: value.toString(),
                           gasPrice: gasPrice,
                           gas: gas
-                      }
+                      };
 
                       this.current_wallet.keystore.signTransaction(txn, function(err, result){
                           if (err) {
@@ -504,7 +504,7 @@ export default {
                           gasPrice: gasPrice,
                           gas: gas,
                           data: data,
-                      }
+                      };
 
                       this.current_wallet.keystore.signTransaction(txn, function(err, result){
                           if (err) {

@@ -27,7 +27,7 @@
               <div class="container">
                   <div class="input-group">
                       <div class="text">{{$t('从')}}</div>
-                      <i-select v-model="current_wallet.address" class="dropdown-box" v-bind:placeholder="$t('选择钱包')" @on-change="changeTransferWallet">
+                      <i-select v-model="current_wallet.address" :not-found-text="$t('无匹配数据')" class="dropdown-box" v-bind:placeholder="$t('选择钱包')" @on-change="changeTransferWallet">
                           <Option v-for="item in wallet_list.filter(function(x){return x.keystore})" :value="item.address" :key="item.address">{{ item.address+(item.alias.length>0?"("+item.alias+")":"") }}</Option>
                       </i-select>
                   </div>
@@ -82,9 +82,9 @@
                   <div class="tips_input">
                       <input type="password" v-bind:placeholder="$t('请输入密码')" value="" v-model="user_password"  maxlength=""></div>
                   <div class="tips_form_btn btn-flex more_btn">
-                      <a href="javascript:;" class="js_tips_btn " @click="transferOffline" :loading="modal_loading">{{$t('离线交易M')}}</a>
-                      <a href="javascript:;" v-bind:class="{'js_tips_btn ':!modal_loading,'js_tips_btn ivu-btn-loading':modal_loading}" @click="transfer" :loading="modal_loading">{{$t('现在发送M')}}</a>
-                      <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                      <a href="javascript:" class="js_tips_btn " @click="transferOffline" :loading="modal_loading">{{$t('离线交易M')}}</a>
+                      <a href="javascript:" v-bind:class="{'js_tips_btn ':!modal_loading,'js_tips_btn ivu-btn-loading':modal_loading}" @click="transfer" :loading="modal_loading">{{$t('现在发送M')}}</a>
+                      <a href="javascript:" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                   </div>
               </div>
           </div>
@@ -96,8 +96,8 @@
               <div class="tips_form has_input">
                   <div class="tips_input"><input type="text" v-model="current_wallet.custom_nonce"  v-bind:placeholder="$t('请输入nonce')" value="0" id="wallet_input" maxlength=""></div>
                   <div class="tips_form_btn btn-flex">
-                      <a href="javascript:;" class="js_tips_btn " @click="transferOffline2">{{$t('确定')}}</a>
-                      <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                      <a href="javascript:" class="js_tips_btn " @click="transferOffline2">{{$t('确定')}}</a>
+                      <a href="javascript:" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
                   </div>
               </div>
           </div>
@@ -107,7 +107,7 @@
               <div class="tips_main_title">{{$t('提示')}}</div>
               <div class="tips_main_tips">{{modal_info}}</div>
               <div class="tips_form_btn">
-                  <a href="javascript:;" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
+                  <a href="javascript:" class="js_tips_btn " @click="closeModal()">{{$t('关闭')}}</a>
               </div>
           </div>
       </Modal>
@@ -179,19 +179,19 @@ export default {
     token: function() {
       let _this = this,
         //_token = _.find(this.current_wallet.balances, { address: _this.token_address });
-        _token = this.current_wallet && this.current_wallet.balances?this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined
+        _token = this.current_wallet && this.current_wallet.balances?this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined;
       return _token ? _token.symbol : "";
     },
     max: function() {
         let _this = this,
             //_token = _.find(this.current_wallet.balances, { value: _this.token_address });
-            _token = this.current_wallet && this.current_wallet.balances?this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined
+            _token = this.current_wallet && this.current_wallet.balances?this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined;
         return _token && _token.balance > 0 ? _token.balance : 9999999999;
     },
     bal:  function() {
         let _this = this,
             //_token = _.find(this.current_wallet.balances, { value: _this.token_address });
-            _token = this.current_wallet && this.current_wallet.balances?this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined
+            _token = this.current_wallet && this.current_wallet.balances?this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined;
         return _token && _token.balance ? _token.balance : null;
     },
     min: function() {
@@ -405,7 +405,7 @@ export default {
 
               let
                   //_token = _.find(this.current_wallet.balances, { value: _this.token_address });
-                  _token = _this.current_wallet && _this.current_wallet.balances?_this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined
+                  _token = _this.current_wallet && _this.current_wallet.balances?_this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined;
               var bal = _token && _token.balance ? _token.balance : null;
               if(bal != null && typeof(bal) != 'undefined'){
                   if(parseFloat(bal) < parseFloat(valueEth)){
@@ -425,7 +425,7 @@ export default {
                 value: value,
                 gasPrice: gasPrice,
                 gas: gas
-            }
+            };
 
             gas = web3.eth.estimateGas(txn);
             txn = {
@@ -434,7 +434,7 @@ export default {
                   value: value,
                   gasPrice: gasPrice,
                   gas: gas
-              }
+              };
 
             web3.eth.sendTransaction(
               txn,
@@ -455,7 +455,7 @@ export default {
 
               let
                   //_token = _.find(this.current_wallet.balances, { value: _this.token_address });
-                  _token = _this.current_wallet && _this.current_wallet.balances?_this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined
+                  _token = _this.current_wallet && _this.current_wallet.balances?_this.current_wallet.balances.filter(x=>{return x.address == _this.token_address;})[0]:undefined;
               var bal = _token && _token.balance ? _token.balance : null;
               if(bal != null && typeof(bal) != 'undefined'){
                   if(parseFloat(bal) < parseFloat(valueEth)){
@@ -561,7 +561,7 @@ export default {
                           value: value.toString(),
                           gasPrice: gasPrice,
                           gas: gas
-                      }
+                      };
 
                       this.current_wallet.keystore.signTransaction(txn, function(err, result){
                           if (err) {
@@ -596,7 +596,7 @@ export default {
                           gasPrice: gasPrice,
                           gas: gas,
                           data: data,
-                      }
+                      };
 
                       this.current_wallet.keystore.signTransaction(txn, function(err, result){
                           if (err) {
@@ -665,7 +665,7 @@ export default {
               amountValid = amountValid.substring(0, amountValid.length-(amount_decimals.length-decimals-1));
           }
 
-          debugger
+          debugger;
           if(prev_amount != amountValid){
               setTimeout(function(){
                   _this.transfer_token = amountValid;

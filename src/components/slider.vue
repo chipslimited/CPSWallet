@@ -39,7 +39,6 @@
     </div>
 </template>
 <script>
-
     import VInputNumber from "./input-number.vue";
     import Emitter from "iview/src/mixins/emitter";
     import Tooltip from 'iview/src/components/tooltip/tooltip.vue';

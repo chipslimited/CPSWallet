@@ -62,7 +62,7 @@
                   null,
                   routes["/"+view],
                   `#${view}`
-              )
+              );
               var _this = this;
               _this.nav_menu = 'menu';
               _this.wrapper = _this.$root.currentView == 'wallet' ? 'index-wrapper wallet-wrapper' :
@@ -176,7 +176,7 @@
         position: absolute;
         right: 14px;
         top:50% ;
-        margin-top:-5px;
+        margin-top:-7px;
         border:10px solid transparent;
         border-top-color:#212121;
         transition: all 0.3s ease-in-out;
@@ -189,7 +189,7 @@
     }
 
     .ivu-select-visible .ivu-select-arrow:nth-of-type(2){
-        margin-top: -10px;
+        margin-top: -12px;
         transform: scale(0.5)rotate(-180deg);
         -webkit-transform: scale(0.5)rotate(-180deg);
         -moz-transform: scale(0.5)rotate(-180deg);
@@ -344,6 +344,7 @@
 
     .ivu-page-simple-pager {
         color: #ffffff;
+        vertical-align: middle;
     }
 
     .ivu-page-simple .ivu-page-simple-pager input {

@@ -47,6 +47,7 @@ a {
     //  left: 80%;
     //}
     .nav-box {
+      position: relative;
       height: 100%;
       display: flex;
       flex-flow: row nowrap;
@@ -114,7 +115,10 @@ a {
         }
       }
       .cps-logo {
-        display: inline-block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         img {
           width: 118px;
           height: 40px;
@@ -143,16 +147,17 @@ a {
           z-index: 999;
           .language-item {
             padding: 2px 5px;
-          }
-          .language-item:first-child {
-            background-color: #1d1d1d;
-          }
-          .language-item:nth-child(2) {
-            background-color: #202020;
-          }
-          .language-item:last-child {
             background-color: #272727;
           }
+          //.language-item:first-child {
+          //  background-color: #1d1d1d;
+          //}
+          //.language-item:nth-child(2) {
+          //  background-color: #202020;
+          //}
+          //.language-item:last-child {
+          //  background-color: #272727;
+          //}
         }
       }
     }
@@ -456,7 +461,6 @@ body {
         }
         .alias {
           line-height: 1.5;
-          margin-bottom: 8px;
           font-size: size(40);
           color: #ffffff;
           word-break: break-all;
@@ -477,15 +481,15 @@ body {
         }
         .btn-group {
           display: flex;
-          flex-flow: row nowrap;
-          justify-content: flex-end;
+          flex-flow: row wrap;
+          justify-content: flex-start;
           align-items: center;
           button {
             padding: 0 8px;
             height: size(97);
             line-height: size(97);
-            margin-left: 10px;
-            border-radius: size(20) ;
+            margin: 8px 10px 0 0;
+            border-radius: size(20);
             text-align: center;
             font-size: size(40);
             color: #000000;
@@ -524,6 +528,7 @@ body {
           flex: 1;
           height: 36px;
           border-radius: 3px;
+          max-width: calc(100% - 36px);
           background-color: #ffffff;
           &.type {
             flex: 0 0 size(355);
@@ -535,9 +540,9 @@ body {
           flex: 1;
           width: 0;
           height: 36px;
-          padding: 0 10px;
+          padding: 0 36px 0 14px;
           border-radius: 4px;
-          font-size: 14px;
+          font-size: 12px;
           color: #212121;
           background-color: #ffffff;
         }
@@ -568,7 +573,7 @@ body {
           height: size(8);
           border: none;
           border-radius: 2px;
-          background-color: #ffffff;
+          background-color: transparent;
           .ui-slider-handle {
             position: absolute;
             display: inline-block;
@@ -609,8 +614,8 @@ body {
         font-size: 14px;
         color: #ffffff;
         .text {
-          flex:  0 0 70px;
-          width: 70px;
+          flex:  0 0 80px;
+          width: 80px;
           margin-right: 10px;
         }
         .prompt-btn {
@@ -636,6 +641,11 @@ body {
           .value {
             padding: 0 5px;
             font-size: size(80);
+          }
+          .va {
+            padding: 0 5px;
+            font-size: size(80);
+            word-break: break-all;
           }
         }
         .msg {
@@ -755,6 +765,7 @@ body {
       align-items: center;
       .dropdown-box {
         flex: 1;
+        max-width: calc(100% - 40px);
         height: 36px;
         border-radius: 3px;
         background-color: #ffffff;

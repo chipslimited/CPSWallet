@@ -40,7 +40,7 @@ const i18n = new VueI18n({
         'TW': Object.assign(tw_a , tw),   // 中文语言包
         'EN': Object.assign(en_a, en)    // 英文语言包
     },
-})
+});
 
 if(locale == 'EN'){
     Vue.use(iView, { en });

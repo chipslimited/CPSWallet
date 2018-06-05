@@ -70,7 +70,7 @@ var wallet={
             msg:"",//提示信息
             autoClose : true,//是否有自动关闭功能
             autoCount : 3//倒计时时间
-        }
+        };
       var opt=$.extend(true,defaultOpt,opt||{});
       var target=$(".wallet_tips_toast");
       if(target.length>0){
@@ -270,7 +270,7 @@ var wallet={
         clearInterval(this.timer);
       }
       if( $('.wallet_tips_cover').length> 0) {
-        $('.set-wallet-item').removeClass('selected')
+        $('.set-wallet-item').removeClass('selected');
         $('.wallet_tips_cover').remove();
       }
     }

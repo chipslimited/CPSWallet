@@ -102,7 +102,7 @@
                         return typeof SmartPhone[property] == 'function';
                     });
 
-                    debugger
+                    debugger;
 
                     for (var index in getAllMethods) {
                         if (getAllMethods[index] === 'setUserAgent' || getAllMethods[index] === 'getUserAgent' ||
@@ -176,7 +176,7 @@
         <a id="header_restore_wallet" href="javascript:openModal('restore_wallet');" class="h-button js_restoreWallet wallet-buttons" style="display:none">恢复钱包</a>
         <a id="header_watch_wallet" href="javascript:openModal('watch_wallet');" class="h-button js_readOnlyWallet wallet-buttons" style="display:none">只读钱包</a>
         <div class="language-list">
-            <a id="current_locale" href="javascript:;">CN</a>
+            <a id="current_locale" href="javascript:">CN</a>
             <div class="language-change">
                 <div class="language-link">
                     <a href="javascript:changeLanguage('CN');">CN</a>
@@ -192,9 +192,10 @@
           </component>
         </main-layout>
     </div>
-    <script src="./dist/manifest.944559099a02f055896c.js"></script>
-    <script src="./dist/vendor.2172b3a65bb0209b3cdc.js"></script>
-      <script src="./dist/app.8fedf0739a4c38004ee4.js"></script>
+
+    <script src="./dist/manifest.0c310dd3bb503fed51c0.js"></script>
+    <script src="./dist/vendor.249df8523a0432845e67.js"></script>
+    <script src="./dist/app.8fedf0739a4c38004ee4.js"></script>
     <script>
         document.getElementById('header_create_wallet').innerText = window.i18n.t('创建新钱包');
         document.getElementById('header_restore_wallet').innerText = window.i18n.t('恢复钱包');

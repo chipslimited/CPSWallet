@@ -40,7 +40,7 @@ function setWebProvider(ks){
   var ERC20Contract = web3.eth.contract(erc20abi);//support for any ERC20-compatible token
 
   erc20tokens = erc20addrs.map(function (addr) {
-    var contract = ERC20Contract.at(addr)
+    var contract = ERC20Contract.at(addr);
       if(addr == CPS_TEST_ADDR){
           return {"address":addr, "contract": contract, "decimals": 8, "symbol": "CPSTest" };
       }
@@ -57,14 +57,14 @@ function setWebProvider(ks){
   })
 }
 var padding = function (str, decimals) {
-  str = str + ""
-  var pad = ""
+  str = str + "";
+  var pad = "";
   for (var i = 0; i < decimals; i++) {
     pad += "0";
   }
-  var ans = pad.substring(0, pad.length - str.length) + str
+  var ans = pad.substring(0, pad.length - str.length) + str;
   return ans;
-}
+};
 
 var toRealAmount = function (amount, decimals) {
 
@@ -82,7 +82,7 @@ var toRealAmount = function (amount, decimals) {
   }else{
     return amount/1.0e18;
   }
-}
+};
 
 
 function getWeb3(){

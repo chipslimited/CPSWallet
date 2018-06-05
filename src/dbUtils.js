@@ -9,5 +9,5 @@ const dbUtils = {
     remove: function (key) {
         localStorage.removeItem(key);
     }
-}
+};
 export default dbUtils;

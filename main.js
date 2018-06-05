@@ -223,7 +223,7 @@ function defaultMenuChs(app, shell) {
                 },
             ]
         });
-        const windowMenu = template.find(function(m) { return m.role === 'window' })
+        const windowMenu = template.find(function(m) { return m.role === 'window' });
         if (windowMenu) {
             windowMenu.submenu.push(
                 {
