@@ -41,34 +41,17 @@
 <script>
 
     import VInputNumber from "./input-number.vue";
-    function oneOf (value, validList) {
-        for (let i = 0; i < validList.length; i++) {
-            if (value === validList[i]) {
-                return true;
-            }
-        }
-        return false;
-    }
-    export function getStyle (element, styleName) {
-        if (!element || !styleName) return null;
-        styleName = camelCase(styleName);
-        if (styleName === 'float') {
-            styleName = 'cssFloat';
-        }
-        try {
-            const computed = document.defaultView.getComputedStyle(element, '');
-            return element.style[styleName] || computed ? computed[styleName] : null;
-        } catch(e) {
-            return element.style[styleName];
-        }
-    }
+    import Emitter from "iview/src/mixins/emitter";
+    import Tooltip from 'iview/src/components/tooltip/tooltip.vue';
+    import { getStyle, oneOf } from 'iview/src/utils/assist';
+    import { on, off } from 'iview/src/utils/dom';
 
     const prefixCls = 'ivu-slider';
 
     export default {
         name: 'VSlider',
-        mixins: [  ],
-        components: { VInputNumber },
+        mixins: [ Emitter ],
+        components: { VInputNumber, Tooltip },
         props: {
             min: {
                 type: Number,
