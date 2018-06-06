@@ -44,7 +44,7 @@
                       </i-select>
                       </div>
                   </div>
-                  <div class="balance">{{$t('持有:')}}<span class="num" v-if="bal">{{bal}}</span> <span class="num" v-if="!bal">({{$t('选择钱包')+"&nbsp;"+$t('币种')}})</span> {{token}}</div>
+                  <div class="balance">{{$t('持有:')}}<span class="num" v-if="bal">{{bal}}</span> <span class="num" v-if="!bal">({{$t('请选择钱包和币种')}})</span> {{token}}</div>
                   <br/>
                   <div class="slider-group">
                       <div class="text">{{$t('燃料上限')}}</div>

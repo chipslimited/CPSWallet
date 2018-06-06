@@ -14,10 +14,11 @@
       <div class="receive-bottom">
           <div class="title">{{$t('收款二维码 : ')}}<span id="selected_address">{{current_wallet.address}}</span></div>
           <div class="img-group" v-bind:style="current_wallet && current_wallet.address && current_wallet.address.length > 0?'':'display:none'">
-              <p class="qrcode" id="qrcode"></p><a id="qrcode_download" href="">
-              <div class="download"></div>
-              <div class="text">{{$t('点击下载')}}</div>
-          </a>
+              <p class="qrcode" id="qrcode"></p>
+              <a id="qrcode_download" href="">
+                <div class="download"></div>
+                <div class="text">{{$t('点击下载')}}</div>
+              </a>
           </div>
       </div>
   </div>

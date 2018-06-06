@@ -98,7 +98,7 @@
     * {
         box-sizing: content-box;
     }
-    body{font-family:"PingFang SC","microsoft yahei light","microsoft yahei","sans-serif";line-height:1; background-color:#272727;}
+    body{font-family:"Helvetica", "sans-serif";line-height:1; background-color:#272727;}
 
     .ivu-modal-content{
         background-color: transparent;
@@ -118,7 +118,7 @@
     }
 
     .ivu-select{
-        font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:36px;font-weight: bold;
+        font-family:"Helvetica", "sans-serif";line-height:36px;
         font-size: 12px;
         border-color: #212121;
     }
@@ -132,13 +132,13 @@
         border:none;
         height: 36px;
         font-size: 12px;
-        font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:20px;font-weight: bold;
+        font-family:"Helvetica", "sans-serif";line-height:20px;
     }
     .ivu-select-visible .ivu-select-selection {
         border-color:#333333;
         height: 36px;
         font-size: 12px;
-        font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:20px;font-weight: bold;
+        font-family:"Helvetica", "sans-serif";line-height:20px;
     }
 
     .ivu-select-dropdown{
@@ -202,7 +202,7 @@
     .ivu-select-single .ivu-select-selection .ivu-select-placeholder, .ivu-select-single .ivu-select-selection .ivu-select-selected-value{
         height: 36px;
         font-size: 12px;
-        font-family:"microsoft yahei light","microsoft yahei","sans-serif";line-height:36px;font-weight: bold;
+        font-family:"Helvetica", "sans-serif";line-height:36px;
         display:inline-block;
         position: relative;
         width:100%;

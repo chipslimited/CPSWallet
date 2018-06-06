@@ -2,7 +2,7 @@
 button, textarea, input, a {
   border: none;
   outline: none;
-  font-family: "Helvetica", "sans-serif"; }
+  font-family: "Helvetica", "sans-serif" !important; }
 
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
   color: #C9C9C9; }
@@ -185,7 +185,7 @@ body {
   -o-transform: translate3d(0, 0, 0);
   /* Opera */
   padding: 60px 0 17px;
-  font-family: "Helvetica", "sans-serif";
+  font-family: "Helvetica", "sans-serif" !important;
   transition: transform 0.3s ease-in-out;
   overflow-x: hidden; }
   .wallet-wrapper.open {
@@ -821,7 +821,7 @@ body {
       .transLog-wrapper .transLog-list .transLog-item .hash span {
         padding: 0 5px; }
     .transLog-wrapper .transLog-list .transLog-item .trans-info {
-      font-family: "Helvetica", "sans-serif";
+      font-family: "Helvetica", "sans-serif" !important;
       font-size: 12px;
       color: #ffffff; }
       .transLog-wrapper .transLog-list .transLog-item .trans-info .eth {

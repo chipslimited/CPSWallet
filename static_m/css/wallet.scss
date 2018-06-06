@@ -10,7 +10,7 @@ $text-color: #bebebe;
 button, textarea, input, a {
   border: none;
   outline: none;
-  font-family: "Helvetica", "sans-serif";
+  font-family: "Helvetica", "sans-serif" !important;
 }
 
 
@@ -349,7 +349,7 @@ body {
   -webkit-transform: translate3d(0, 0, 0); /* Safari 和 Chrome */
   -o-transform: translate3d(0, 0, 0); 	/* Opera */
   padding: 60px 0 size(49);
-  font-family: "Helvetica", "sans-serif";
+  font-family: "Helvetica", "sans-serif" !important;
   transition: transform 0.3s ease-in-out;
   overflow-x: hidden;
   &.open {
@@ -922,7 +922,7 @@ body {
         }
       }
       .trans-info {
-        font-family: "Helvetica", "sans-serif";
+        font-family: "Helvetica", "sans-serif" !important;
         font-size: size(35);
         color: #ffffff;
         .eth {

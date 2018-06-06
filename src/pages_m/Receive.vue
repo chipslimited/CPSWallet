@@ -39,7 +39,7 @@
               </div>
               <div class="qr-img">
                   <p class="qrcode" id="qrcode"></p>
-                  <a id="qrcode_download" class="text" href="" download v-if="current_wallet.address">
+                  <a id="qrcode_download" class="text" href="" download v-show="current_wallet.address">
                   <div class="download"></div>
                   {{$t('点击下载')}}</a>
               </div>

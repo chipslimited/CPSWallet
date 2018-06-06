@@ -1,5 +1,5 @@
 body {
-  font-family: "Helvetica", "sans-serif"; }
+  font-family: "Helvetica", "sans-serif" !important; }
 
 button:active {
   background-color: gainsboro !important; }

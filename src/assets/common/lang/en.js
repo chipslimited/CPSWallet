@@ -118,5 +118,6 @@ module.exports = {
     '密码错误':'Invalid password',
 
     '输入seed':'Please type first',
-    '网络异常':'network anomaly'
+    '网络异常':'network anomaly',
+    '请选择钱包和币种':'Select a wallet and type of token'
 };
