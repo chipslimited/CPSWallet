@@ -45,6 +45,7 @@ import MainLayout from "../layouts/MainLayout.vue";
 import MultiPage from "../components/MultiPage.vue"
 import web3Utils from "../web3Utils";
 const {shell} = require('electron');
+import translateError from '../translate_error'
 
 export default {
   data() {
