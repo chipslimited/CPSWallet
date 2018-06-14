@@ -140,7 +140,7 @@ export default {
           _this.$Loading.finish();
         })
         .catch(error => {
-          _this.$Message.error(error);
+          _this.$Message.error(translateError.translate(error.toString()));
           _this.$Loading.error();
         });
     },

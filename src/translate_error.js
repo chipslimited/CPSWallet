@@ -19,7 +19,7 @@ var translateError = {
         if(err.toString().indexOf("rlp: non-canonical") > 0){
             return window.i18n.t('输入内容非法');
         }
-        
+
         if(err.toString().indexOf("rlp: input string") > 0){
             return window.i18n.t('输入内容非法');
         }
