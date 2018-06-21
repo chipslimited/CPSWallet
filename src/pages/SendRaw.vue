@@ -78,7 +78,6 @@ export default {
           _this.$Loading.finish();
           _this.modal_loading = false;
           _this.closeModal();
-          _this.$Message.success(_this.$root.$i18n.t('提交成功：')+`${txhash}`);
           _this.modal_info = _this.$root.$i18n.t('提交成功：')+`${txhash}`;
           _this.openModal('show_info');
 
@@ -87,7 +86,6 @@ export default {
           _this.$Loading.error();
           _this.modal_loading = false;
           _this.closeModal();
-          _this.$Message.error(_this.$root.$i18n.t("提交失败"));
           _this.modal_info = _this.$root.$i18n.t('提交失败')+ translateError.translate(err.toString());
            _this.openModal('show_info');
         });

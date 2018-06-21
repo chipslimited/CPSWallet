@@ -8,7 +8,7 @@ var translateError = {
             return window.i18n.t('内容为空');
         }
 
-        if(err.toString().indexOf("cannot unmarshal hex string") > 0){
+        if(err.toString().indexOf("cannot unmarshal") > 0){
             return window.i18n.t('输入内容非法');
         }
 
@@ -45,7 +45,7 @@ var translateError = {
         }
 
         if(err.toString().indexOf("Invalid JSON RPC response") > 0){
-            return window.i18n.t('输入内容非法或密码错误');
+            return window.i18n.t('网络不可用');
         }
 
         if(err.toString().indexOf("insufficient funds for gas * price + value") > 0){

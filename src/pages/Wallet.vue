@@ -450,8 +450,9 @@ export default {
       return _.defaults({}, wallet, _wallet);
     },
     proceedStoreToPassword() {
+        var _this = this;
       if (!this.seed) {
-        this.$Message.error("输入seed");
+        this.$Message.error(_this.$root.$i18n.t("输入seed"));
       } else {
         this.openModal("password_restore");
       }
